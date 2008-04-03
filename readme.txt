@@ -38,5 +38,5 @@ I could extend this list, but just try it and experience it on your own!
 == Installation ==
 
 1. Upload `wp-content` to the base wordpress directory
-1. Give chmod 777 for `wp-contet/mytresures`, `wp-contet/mytresuresbackup` and `wp-contet/mytresuresimages`
+1. Give chmod 777 for `wp-content/mytresures`, `wp-content/mytresuresbackup` and `wp-content/mytresuresimages`
 1. Activate the plugin in wordpress admin
