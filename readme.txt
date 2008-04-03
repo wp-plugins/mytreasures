@@ -1,6 +1,6 @@
 === myTreasures ===
 Contributors: crazyiven
-Donate link: http://www.crazyiven.de/wordpress-plugins/mytreasures/donate/
+Donate link: http://www.crazyiven.de/wordpress-plugins/donate/
 Tags: posts, archive, database
 Requires at least: 2.0
 Tested up to: 2.3.3
