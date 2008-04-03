@@ -4,7 +4,7 @@ Donate link: http://example.com/
 Tags: posts, archive, database
 Requires at least: 2.0
 Tested up to: 2.3.3
-Stable tag: 1.0
+Stable tag: 0.0.997b3
 
 Here is a short description of the plugin.  This should be no more than 150 chars.  No markup here.
 
