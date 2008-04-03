@@ -10,6 +10,8 @@ The myTreasures project derived from the idea of presenting your own dvd collect
 
 == Description ==
 
+This is just a API Test, the real version of myTreasures will follow soon!
+
 myTreasures is a plugin to show your collection of fancy stuff in your wordpress blog. This collection could contain any media you want to.
 
 Here are a few ideas, what you can show in your blog with myTreasures:

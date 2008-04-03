@@ -13,6 +13,9 @@ Author URI: http://www.crazyiven.de/
 			* Code starts here - NO TOUCHING! (If you don't know what you're doing!) *
 			**************************************************************************
 
+ This is just a API Test, the real version of myTreasures will follow soon!
+
+
 */
 
 ?>
