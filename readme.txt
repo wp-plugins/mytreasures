@@ -13,25 +13,25 @@ The myTreasures project derived from the idea of presenting your own dvd collect
 = This is just a API Test, the real version of myTreasures will follow soon! =
 
 = Deutsch =
-myTreasures ist ein Plugin zur Veröffentlichung einer Sammlung auf Deinem Wordpress Blog. Durch die Möglichkeiten von myTreasures, kannst Du verschiedenes als Sammlung anzeigen lassen, wie z.B:
+myTreasures ist ein Plugin zur VerÃ¶ffentlichung einer Sammlung auf Deinem Wordpress Blog. Durch die MÃ¶glichkeiten von myTreasures, kannst Du verschiedenes als Sammlung anzeigen lassen, wie z.B:
 
     * DVDs
     * Spiele for XBox, PlayStation, Dreamcast, PC
     * Music CDs
-    * Autos & Motorräder
+    * Autos & MotorrÃ¤der
     * Schuhe & Klamotten
     * und vieles mehr
 
-Der größte Vorteile von myTreasures ist Flexibilität. Du kannst eigene Typen anlegen, mit eigenen Attributen die angezeigt werden sollen.Weitere Funktionen & Möglichkeiten von myTreasures:
+Der grÃ¶ÃŸte Vorteile von myTreasures ist FlexibilitÃ¤t. Du kannst eigene Typen anlegen, mit eigenen Attributen die angezeigt werden sollen.Weitere Funktionen & MÃ¶glichkeiten von myTreasures:
 
     * CSV Import einer Datenbank
     * Verschiedene Bereiche mit unterschiedlichen Attributen
     * Tracklist
-    * Minigalerie für Bilder Deiner Schätze
+    * Minigalerie fÃ¼r Bilder Deiner SchÃ¤tze
     * Bewertungssystem
     * Backup Funktion
 
-Ich könnte die Liste nun noch unendlich weiterführen, doch probiere es doch einfach aus!
+Ich kÃ¶nnte die Liste nun noch unendlich weiterfÃ¼hren, doch probiere es doch einfach aus!
 
 = Englisch =
 myTreasures is a plugin to show your collection of fancy stuff in your wordpress blog. This collection could contain any media you want to, e.g:
