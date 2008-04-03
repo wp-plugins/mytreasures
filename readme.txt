@@ -35,6 +35,8 @@ The best part of myTreasures is the flexibility to show all media / stuff you wa
 
 I could extend this list, but just try it and experience it on your own!
 
+The plugin is german only right now!
+
 == Installation ==
 
 1. Upload `wp-content` to the base wordpress directory
