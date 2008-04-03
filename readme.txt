@@ -10,27 +10,46 @@ The myTreasures project derived from the idea of presenting your own dvd collect
 
 == Description ==
 
-This is just a API Test, the real version of myTreasures will follow soon!
+= This is just a API Test, the real version of myTreasures will follow soon! =
 
-myTreasures is a plugin to show your collection of fancy stuff in your wordpress blog. This collection could contain any media you want to.
-
-Here are a few ideas, what you can show in your blog with myTreasures:
+= Deutsch =
+myTreasures ist ein Plugin zur Veröffentlichung einer Sammlung auf Deinem Wordpress Blog. Durch die Möglichkeiten von myTreasures, kannst Du verschiedenes als Sammlung anzeigen lassen, wie z.B:
 
 * DVDs
-* Games for XBox, PlayStation, Dreamcast, PC ...
+* Spiele for XBox, PlayStation, Dreamcast, PC
+* Music CDs
+* Autos & Motorräder
+* Schuhe & Klamotten
+* und vieles mehr
+
+Der größte Vorteile von myTreasures ist Flexibilität. Du kannst eigene Typen anlegen, mit eigenen Attributen die angezeigt werden sollen.Weitere Funktionen & Möglichkeiten von myTreasures:
+
+* CSV Import einer Datenbank
+* Verschiedene Bereiche mit unterschiedlichen Attributen
+* Tracklist
+* Minigalerie für Bilder Deiner Schätze
+* Bewertungssystem
+* Backup Funktion
+
+Ich könnte die Liste nun noch unendlich weiterführen, doch probiere es doch einfach aus!
+
+= Englisch =
+myTreasures is a plugin to show your collection of fancy stuff in your wordpress blog. This collection could contain any media you want to, e.g:
+
+* DVDs
+* Games for XBox, PlayStation, Dreamcast, PC
 * Music CDs
 * Cars & Bikes
-* Shoes, Clothing
+* Shoes & Clothing
 * And much much more
 
-The best part of myTreasures is the flexibility to show all media / stuff you want. You can create own types with own attributes to show with this plugin. But there are more features myTreasures can offer you:
+The best part of myTreasures is the flexibility. You can create own types with own attributes to show with this plugin. More features myTreasures can offer you:
 
 * CSV Import of your Database
 * Different categories of stuff with different attributes
 * Tracklist
 * Minigallery for images of your treasure
 * Ratingsystem
-* Many options to setup your installation of myTreasures
 * Export / Import of your myTreasures mySQL database
 
 I could extend this list, but just try it and experience it on your own!
