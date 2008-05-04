@@ -4,7 +4,7 @@ Donate link: http://www.crazyiven.de/wordpress-plugins/donate/
 Tags: posts, archive, database
 Requires at least: 2.0
 Tested up to: 2.5.1
-Stable tag: 0.0.9983
+Stable tag: 0.0.999
 
 The myTreasures project derived from the idea of presenting your own dvd collection nice and informatively in the internet.
 
