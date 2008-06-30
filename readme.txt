@@ -4,13 +4,11 @@ Donate link: http://www.crazyiven.de/wordpress-plugins/donate/
 Tags: posts, archive, database
 Requires at least: 2.0
 Tested up to: 2.5.1
-Stable tag: 0.0.999
+Stable tag: 1.0
 
 The myTreasures project derived from the idea of presenting your own dvd collection nice and informatively in the internet.
 
 == Description ==
-
-= This is just a API Test, the real version of myTreasures will follow soon! =
 
 = Deutsch =
 myTreasures ist ein Plugin zur Veröffentlichung einer Sammlung auf Deinem Wordpress Blog. Durch die Möglichkeiten von myTreasures, kannst Du verschiedenes als Sammlung anzeigen lassen, wie z.B:
@@ -53,8 +51,6 @@ The best part of myTreasures is the flexibility. You can create own types with o
  - Export / Import of your myTreasures mySQL database
 
 I could extend this list, but just try it and experience it on your own!
-
-The plugin is german only right now!
 
 == Installation ==
 
