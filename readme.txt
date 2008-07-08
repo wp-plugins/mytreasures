@@ -55,7 +55,7 @@ I could extend this list, but just try it and experience it on your own!
 == Installation ==
 
 1. Upload `mytreasures` to the wordpress plugin directory `wp-content/plugins`
-1. Give chmod 777 for `wp-content/mytreasures`, `wp-content/mytreasuresbackup` and `wp-content/mytreasuresimages`
+1. Create (with chmod 777) the folders `wp-content/mytreasures`, `wp-content/mytreasuresbackup` and `wp-content/mytreasuresimages`
 1. Activate the plugin in wordpress admin
 
 == Screenshots ==
