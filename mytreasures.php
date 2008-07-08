@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0
+Version: 1.0.1
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -13,14 +13,14 @@ Author URI: http://www.crazyiven.de/
 			**************************************************************************
 */
 
-	$myTreasuresDBVersion 		= "024";
-	$myTreasuresPluginVersion = "1.0";
+	$myTreasuresDBVersion 		= "025";
+	$myTreasuresPluginVersion = "1.0.1";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin Version ".$myTreasuresPluginVersion." for Wordpress</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 
 	if(isset($_GET['activate']) && $_GET['activate'] == 'true') {
 
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures` ( `id` int(10) unsigned NOT NULL auto_increment, `type` tinyint(5) unsigned NOT NULL default '0', `rating` char(2) NOT NULL default '', `description` longtext NOT NULL, `comment` longtext NOT NULL, `tracklist` longtext NOT NULL, `image` varchar(255) NOT NULL default '', `field01` longtext NOT NULL, `field02` longtext NOT NULL, `field03` longtext NOT NULL, `field04` longtext NOT NULL, `field05` longtext NOT NULL, `field06` longtext NOT NULL, `field07` longtext NOT NULL, `field08` longtext NOT NULL, `field09` longtext NOT NULL, `field10` longtext NOT NULL, `field11` longtext NOT NULL, `field12` longtext NOT NULL, `field13` longtext NOT NULL, `field14` longtext NOT NULL, `field15` longtext NOT NULL, `field16` longtext NOT NULL, `field17` longtext NOT NULL, `field18` longtext NOT NULL, `field19` longtext NOT NULL, `field20` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures` ( `id` int(10) unsigned NOT NULL auto_increment, `type` int(5) unsigned NOT NULL default '0', `rating` int(5) unsigned NOT NULL default '0', `description` longtext NOT NULL, `comment` longtext NOT NULL, `tracklist` longtext NOT NULL, `image` varchar(255) NOT NULL default '', `field01` longtext NOT NULL, `field02` longtext NOT NULL, `field03` longtext NOT NULL, `field04` longtext NOT NULL, `field05` longtext NOT NULL, `field06` longtext NOT NULL, `field07` longtext NOT NULL, `field08` longtext NOT NULL, `field09` longtext NOT NULL, `field10` longtext NOT NULL, `field11` longtext NOT NULL, `field12` longtext NOT NULL, `field13` longtext NOT NULL, `field14` longtext NOT NULL, `field15` longtext NOT NULL, `field16` longtext NOT NULL, `field17` longtext NOT NULL, `field18` longtext NOT NULL, `field19` longtext NOT NULL, `field20` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_options` (`id` char(1) NOT NULL default '', `version` varchar(10) NOT NULL default '', `option01` longtext NOT NULL, `option02` longtext NOT NULL, `option03` longtext NOT NULL, `option04` longtext NOT NULL, `option05` longtext NOT NULL, `option06` longtext NOT NULL, `option07` longtext NOT NULL, `option08` longtext NOT NULL, `option09` longtext NOT NULL, `option10` longtext NOT NULL, `option11` longtext NOT NULL, `option12` longtext NOT NULL, `option13` longtext NOT NULL, `option14` longtext NOT NULL, `option15` longtext NOT NULL, `option16` longtext NOT NULL, `option17` longtext NOT NULL, `option18` longtext NOT NULL, `option19` longtext NOT NULL, `option20` longtext NOT NULL, `option21` longtext NOT NULL, `option22` longtext NOT NULL, `option23` longtext NOT NULL, `option24` longtext NOT NULL, `option25` longtext NOT NULL, `option26` longtext NOT NULL, `option27` longtext NOT NULL, `option28` longtext NOT NULL, `option29` longtext NOT NULL, `option30` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_type` ( `id` int(10) unsigned NOT NULL auto_increment, `short` varchar(10) NOT NULL default '', `view` varchar(255) NOT NULL default '', `name` varchar(255) NOT NULL default '', `feature_tracklist` enum('0','1') NOT NULL default '0', `feature_sort1` varchar(10) NOT NULL default '', `feature_sort2` varchar(10) NOT NULL default '', `feature_sort3` varchar(10) NOT NULL default '', `feature_sort4` varchar(10) NOT NULL default '', `feature_sort5` varchar(10) NOT NULL default '', `field01` varchar(255) NOT NULL default '', `field02` varchar(255) NOT NULL default '', `field03` varchar(255) NOT NULL default '', `field04` varchar(255) NOT NULL default '', `field05` varchar(255) NOT NULL default '', `field06` varchar(255) NOT NULL default '', `field07` varchar(255) NOT NULL default '', `field08` varchar(255) NOT NULL default '', `field09` varchar(255) NOT NULL default '', `field10` varchar(255) NOT NULL default '', `field11` varchar(255) NOT NULL default '', `field12` varchar(255) NOT NULL default '', `field13` varchar(255) NOT NULL default '', `field14` varchar(255) NOT NULL default '', `field15` varchar(255) NOT NULL default '', `field16` varchar(255) NOT NULL default '', `field17` varchar(255) NOT NULL default '', `field18` varchar(255) NOT NULL default '', `field19` varchar(255) NOT NULL default '', `field20` varchar(255) NOT NULL default '', PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_images` ( `id` int(10) unsigned NOT NULL auto_increment, `orderid` int(5) unsigned NOT NULL default '0', `treasureid` int(10) unsigned NOT NULL default '0', `name` varchar(255) NOT NULL default '', `comment` mediumtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
@@ -261,6 +261,14 @@ Author URI: http://www.crazyiven.de/
 
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option14` = '', `version` = '0243' WHERE `id` = '1'");
 			$myTreasuresVersionRightNow = "024";
+
+		}
+
+		if(($myTreasuresVersionRightNow == '024' || $myTreasuresVersionRightNow == '0243') && $myTreasuresDBVersion >= '025') {
+
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures` CHANGE `type` `type` INT( 5 ) UNSIGNED NOT NULL DEFAULT '0', CHANGE `rating` `rating` INT( 5 ) UNSIGNED NOT NULL DEFAULT '0'");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '025' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "025";
 
 		}
 
@@ -538,7 +546,7 @@ Author URI: http://www.crazyiven.de/
 
 			if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; $imagelinkbig = get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
 			if($myTreasures_options[option14] == 'yes' && $imagelinkbig) { $coverimage = "<a href=\"".$imagelinkbig."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\"><img src=\"".$imagelink."\" alt=\"".$result01[field01]."\" title=\"".$result01[field01]."\" style=\"padding: 10px;\"></a>"; } else { $coverimage = "<img src=\"".$imagelink."\" alt=\"".$result01[field01]."\" title=\"".$result01[field01]."\" style=\"padding: 10px;\">"; }
-			if($result01[tracklist] && $result01[type] == '17') { $result01[description] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>"; $all_tracks = explode("#NT#",$result01[tracklist]); foreach($all_tracks AS $track) { list($name,$length) = explode("#L#",$track); if($name) { $result01[description] .= "<br />".sprintf('%02d',(++$i)).". ".$name; } if($name && $length) { $result01[description] .= " (".$length." Min)"; } } }
+			if($result01[tracklist]) { $result01[description] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>"; $all_tracks = explode("#NT#",$result01[tracklist]); foreach($all_tracks AS $track) { list($name,$length) = explode("#L#",$track); if($name) { $result01[description] .= "<br />".sprintf('%02d',(++$i)).". ".$name; } if($name && $length) { $result01[description] .= " (".$length." Min)"; } } }
 			$content = "<p><h2>".$result01[field01]."</h2><table width=\"100%\"><tr><td>";
 			if($myTreasures_options[option13] != 'table') {
 
