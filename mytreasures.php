@@ -36,7 +36,7 @@ Author URI: http://www.crazyiven.de/
 	$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
 	$myTreasures_options = mysql_fetch_array($myTreasures_query);
 	if(!$myTreasures_options[option01]) { $myTreasures_options[option01] = "list"; }
-	if($myTreasuresDBVersion > $myTreasures_options[version]) { myTreasures_update($myTreasures_options[version]); }
+	if($myTreasuresDBVersion != $myTreasures_options[version]) { myTreasures_update($myTreasures_options[version]); }
 
 	$myTreasures_query = mysql_query("SELECT `short` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
 	while($result = mysql_fetch_array($myTreasures_query)) { 
