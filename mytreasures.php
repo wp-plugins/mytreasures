@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.1
+Version: 1.0.2
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -14,7 +14,7 @@ Author URI: http://www.crazyiven.de/
 */
 
 	$myTreasuresDBVersion 		= "025";
-	$myTreasuresPluginVersion = "1.0.1";
+	$myTreasuresPluginVersion = "1.0.2";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin Version ".$myTreasuresPluginVersion." for Wordpress</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 
@@ -997,7 +997,7 @@ Author URI: http://www.crazyiven.de/
 	add_action('init', 'myTreasuresRewriteRules');
 	add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRules');
 	add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRulesTest');
-	
 	*/
+	
 
 ?>
