@@ -3,8 +3,8 @@ Contributors: crazyiven
 Donate link: http://www.crazyiven.de/wordpress-plugins/donate/
 Tags: posts, archive, database
 Requires at least: 2.0
-Tested up to: 2.5.1
-Stable tag: 1.0.2
+Tested up to: 2.6.1
+Stable tag: 1.0.3
 
 The myTreasures project derived from the idea of presenting your own dvd collection nice and informatively in the internet.
 
@@ -55,7 +55,7 @@ I could extend this list, but just try it and experience it on your own!
 == Installation ==
 
 1. Upload `mytreasures` to the wordpress plugin directory `wp-content/plugins`
-1. Create (with chmod 777) the folders `wp-content/mytreasures`, `wp-content/mytreasuresbackup` and `wp-content/mytreasuresimages`
+1. Create (with chmod 777) the folders `wp-content/mytreasures`, `wp-content/mytreasures/coverupload`, `wp-content/mytreasuresbackup` and `wp-content/mytreasuresimages`
 1. Activate the plugin in wordpress admin
 
 == Screenshots ==

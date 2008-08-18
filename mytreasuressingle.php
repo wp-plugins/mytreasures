@@ -12,6 +12,10 @@
 
 		include("mytreasuresinstall.php");
 
+	} elseif(!$myTreasures_options[changelog]) {
+
+		include("mytreasureschangelog.php");
+
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
 		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
@@ -53,15 +57,12 @@
 
 				if($_FILES['image']['type'] == "image/pjpeg" || $_FILES['image']['type'] == "image/jpeg" || $_FILES['image']['type'] == "image/gif" || $_FILES['image']['type'] == "image/png") {
 
-					$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
-					$result02 = mysql_fetch_array($query02);
 					$imagename = "ownupload_".time().".".myTreasuresGetImageType($_FILES['image']['name']);
+					if($myTreasures_options[option03] == 'yes') {
 
-					if($result02[option03] == 'yes') {
-
-						if($result02[option04] == 'fixedheight') { $height = $result02[option05]; $width = "0"; $resizeby = "height"; $cutimage = false; }
-						if($result02[option04] == 'fixedwidth') { $height = "0"; $width = $result02[option06]; $resizeby = "width"; $cutimage = false; }
-						if($result02[option04] == 'fixedboth') { $height = $result02[option07]; $width = $result02[option08]; $resizeby = "width"; $cutimage = true; }
+						if($myTreasures_options[option04] == 'fixedheight') { $height = $myTreasures_options[option05]; $width = "0"; $resizeby = "height"; $cutimage = false; }
+						if($myTreasures_options[option04] == 'fixedwidth') { $height = "0"; $width = $myTreasures_options[option06]; $resizeby = "width"; $cutimage = false; }
+						if($myTreasures_options[option04] == 'fixedboth') { $height = $myTreasures_options[option07]; $width = $myTreasures_options[option08]; $resizeby = "width"; $cutimage = true; }
 						if(!myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,$width,$height,$resizeby,$cutimage)) {
 
 							echo "<div id=\"message\" class=\"updated fade\"><p><strong>".__("The system had problems to save the image / cover. Please retry it!",$myTreasuresTextdomain)."</strong></p></div>";
@@ -75,7 +76,7 @@
 
 					}
 
-					if($result02[option14] == 'yes') {
+					if($myTreasures_options[option14] == 'yes') {
 
 						copy($_FILES['image']['tmp_name'],$path."big_".$imagename);
 						chmod($path."big_".$imagename, 0666);

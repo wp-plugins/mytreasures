@@ -62,8 +62,6 @@
 
 			} elseif($_POST[setupmoreinfos]) { 
 
-				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_type` (`name`, `short`, `view`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`, `feature_sort1`, `feature_sort2`, `feature_sort3`, `feature_sort4`, `feature_sort5`, `feature_tracklist`) VALUES ('".$_POST[name]."', '".strtolower($_POST[short])."', '0', '".$_POST[field01]."', '".$_POST[field02]."', '".$_POST[field03]."', '".$_POST[field04]."', '".$_POST[field05]."', '".$_POST[field06]."', '".$_POST[field07]."', '".$_POST[field08]."', '".$_POST[field09]."', '".$_POST[field10]."', '".$_POST[field11]."', '".$_POST[field12]."', '".$_POST[field13]."', '".$_POST[field14]."', '".$_POST[field15]."', '".$_POST[field16]."', '".$_POST[field17]."', '".$_POST[field18]."', '".$_POST[field19]."', '".$_POST[field20]."', '$feature_sort1', '$feature_sort2', '$feature_sort3', '$feature_sort4', '$feature_sort5', '$_POST[feature_tracklist]')");
-
 ?>
 
 <div class="wrap">

@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.2
+Version: 1.0.3
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -13,15 +13,16 @@ Author URI: http://www.crazyiven.de/
 			**************************************************************************
 */
 
-	$myTreasuresDBVersion 		= "025";
-	$myTreasuresPluginVersion = "1.0.2";
+	$myTreasutesRewriteDebug	= false;
+	$myTreasuresDBVersion 		= "028";
+	$myTreasuresPluginVersion = "1.0.3";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin Version ".$myTreasuresPluginVersion." for Wordpress</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 
 	if(isset($_GET['activate']) && $_GET['activate'] == 'true') {
 
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures` ( `id` int(10) unsigned NOT NULL auto_increment, `type` int(5) unsigned NOT NULL default '0', `rating` int(5) unsigned NOT NULL default '0', `description` longtext NOT NULL, `comment` longtext NOT NULL, `tracklist` longtext NOT NULL, `image` varchar(255) NOT NULL default '', `field01` longtext NOT NULL, `field02` longtext NOT NULL, `field03` longtext NOT NULL, `field04` longtext NOT NULL, `field05` longtext NOT NULL, `field06` longtext NOT NULL, `field07` longtext NOT NULL, `field08` longtext NOT NULL, `field09` longtext NOT NULL, `field10` longtext NOT NULL, `field11` longtext NOT NULL, `field12` longtext NOT NULL, `field13` longtext NOT NULL, `field14` longtext NOT NULL, `field15` longtext NOT NULL, `field16` longtext NOT NULL, `field17` longtext NOT NULL, `field18` longtext NOT NULL, `field19` longtext NOT NULL, `field20` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_options` (`id` char(1) NOT NULL default '', `version` varchar(10) NOT NULL default '', `option01` longtext NOT NULL, `option02` longtext NOT NULL, `option03` longtext NOT NULL, `option04` longtext NOT NULL, `option05` longtext NOT NULL, `option06` longtext NOT NULL, `option07` longtext NOT NULL, `option08` longtext NOT NULL, `option09` longtext NOT NULL, `option10` longtext NOT NULL, `option11` longtext NOT NULL, `option12` longtext NOT NULL, `option13` longtext NOT NULL, `option14` longtext NOT NULL, `option15` longtext NOT NULL, `option16` longtext NOT NULL, `option17` longtext NOT NULL, `option18` longtext NOT NULL, `option19` longtext NOT NULL, `option20` longtext NOT NULL, `option21` longtext NOT NULL, `option22` longtext NOT NULL, `option23` longtext NOT NULL, `option24` longtext NOT NULL, `option25` longtext NOT NULL, `option26` longtext NOT NULL, `option27` longtext NOT NULL, `option28` longtext NOT NULL, `option29` longtext NOT NULL, `option30` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures` ( `id` int(10) unsigned NOT NULL auto_increment, `type` int(5) unsigned NOT NULL default '0', `rating` int(5) unsigned NOT NULL default '0', `description` longtext NOT NULL, `comment` longtext NOT NULL, `tracklist` longtext NOT NULL, `image` varchar(255) NOT NULL default '', `rentto` varchar(255) NOT NULL default '', `field01` longtext NOT NULL, `field02` longtext NOT NULL, `field03` longtext NOT NULL, `field04` longtext NOT NULL, `field05` longtext NOT NULL, `field06` longtext NOT NULL, `field07` longtext NOT NULL, `field08` longtext NOT NULL, `field09` longtext NOT NULL, `field10` longtext NOT NULL, `field11` longtext NOT NULL, `field12` longtext NOT NULL, `field13` longtext NOT NULL, `field14` longtext NOT NULL, `field15` longtext NOT NULL, `field16` longtext NOT NULL, `field17` longtext NOT NULL, `field18` longtext NOT NULL, `field19` longtext NOT NULL, `field20` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_options` (`id` char(1) NOT NULL default '', `version` varchar(10) NOT NULL default '', `changelog` varchar(1) NOT NULL default '', `option01` longtext NOT NULL, `option02` longtext NOT NULL, `option03` longtext NOT NULL, `option04` longtext NOT NULL, `option05` longtext NOT NULL, `option06` longtext NOT NULL, `option07` longtext NOT NULL, `option08` longtext NOT NULL, `option09` longtext NOT NULL, `option10` longtext NOT NULL, `option11` longtext NOT NULL, `option12` longtext NOT NULL, `option13` longtext NOT NULL, `option14` longtext NOT NULL, `option15` longtext NOT NULL, `option16` longtext NOT NULL, `option17` longtext NOT NULL, `option18` longtext NOT NULL, `option19` longtext NOT NULL, `option20` longtext NOT NULL, `option21` longtext NOT NULL, `option22` longtext NOT NULL, `option23` longtext NOT NULL, `option24` longtext NOT NULL, `option25` longtext NOT NULL, `option26` longtext NOT NULL, `option27` longtext NOT NULL, `option28` longtext NOT NULL, `option29` longtext NOT NULL, `option30` longtext NOT NULL, `option31` longtext NOT NULL, `option32` longtext NOT NULL, `option33` longtext NOT NULL, `option34` longtext NOT NULL, `option35` longtext NOT NULL, `option36` longtext NOT NULL, `option37` longtext NOT NULL, `option38` longtext NOT NULL, `option39` longtext NOT NULL, `option40` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_type` ( `id` int(10) unsigned NOT NULL auto_increment, `short` varchar(10) NOT NULL default '', `view` varchar(255) NOT NULL default '', `name` varchar(255) NOT NULL default '', `feature_tracklist` enum('0','1') NOT NULL default '0', `feature_sort1` varchar(10) NOT NULL default '', `feature_sort2` varchar(10) NOT NULL default '', `feature_sort3` varchar(10) NOT NULL default '', `feature_sort4` varchar(10) NOT NULL default '', `feature_sort5` varchar(10) NOT NULL default '', `field01` varchar(255) NOT NULL default '', `field02` varchar(255) NOT NULL default '', `field03` varchar(255) NOT NULL default '', `field04` varchar(255) NOT NULL default '', `field05` varchar(255) NOT NULL default '', `field06` varchar(255) NOT NULL default '', `field07` varchar(255) NOT NULL default '', `field08` varchar(255) NOT NULL default '', `field09` varchar(255) NOT NULL default '', `field10` varchar(255) NOT NULL default '', `field11` varchar(255) NOT NULL default '', `field12` varchar(255) NOT NULL default '', `field13` varchar(255) NOT NULL default '', `field14` varchar(255) NOT NULL default '', `field15` varchar(255) NOT NULL default '', `field16` varchar(255) NOT NULL default '', `field17` varchar(255) NOT NULL default '', `field18` varchar(255) NOT NULL default '', `field19` varchar(255) NOT NULL default '', `field20` varchar(255) NOT NULL default '', PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_images` ( `id` int(10) unsigned NOT NULL auto_increment, `orderid` int(5) unsigned NOT NULL default '0', `treasureid` int(10) unsigned NOT NULL default '0', `name` varchar(255) NOT NULL default '', `comment` mediumtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 
@@ -38,9 +39,10 @@ Author URI: http://www.crazyiven.de/
 	if(!$myTreasures_options[option01]) { $myTreasures_options[option01] = "list"; }
 	if($myTreasuresDBVersion != $myTreasures_options[version]) { myTreasures_update($myTreasures_options[version]); }
 
-	$myTreasures_query = mysql_query("SELECT `short` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
+	$myTreasures_query = mysql_query("SELECT `id`, `short`, `name` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
 	while($result = mysql_fetch_array($myTreasures_query)) { 
 
+		$myTreasuresMediaTypeArray[$result[id]] = $result[name];
 		$myTreasures_tags .= $result[short]."|";
 	
 	}
@@ -272,6 +274,31 @@ Author URI: http://www.crazyiven.de/
 
 		}
 
+		if($myTreasuresVersionRightNow == '025' && $myTreasuresDBVersion >= '026') {
+
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures` ADD `rentto` VARCHAR( 255 ) NOT NULL AFTER `image`");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '026' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "026";
+
+		}
+
+		if($myTreasuresVersionRightNow == '026' && $myTreasuresDBVersion >= '027') {
+
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_options` ADD `option31` LONGTEXT NOT NULL AFTER `option30`, ADD `option32` LONGTEXT NOT NULL AFTER `option31`, ADD `option33` LONGTEXT NOT NULL AFTER `option32`, ADD `option34` LONGTEXT NOT NULL AFTER `option33`, ADD `option35` LONGTEXT NOT NULL AFTER `option34`, ADD `option36` LONGTEXT NOT NULL AFTER `option35`, ADD `option37` LONGTEXT NOT NULL AFTER `option36`, ADD `option38` LONGTEXT NOT NULL AFTER `option37`, ADD `option39` LONGTEXT NOT NULL AFTER `option38`, ADD `option40` LONGTEXT NOT NULL AFTER `option39`");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '027' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "027";
+
+		}
+
+		if($myTreasuresVersionRightNow == '027' && $myTreasuresDBVersion >= '028') {
+
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_options` ADD `option31` LONGTEXT NOT NULL AFTER `option30`, ADD `option32` LONGTEXT NOT NULL AFTER `option31`, ADD `option33` LONGTEXT NOT NULL AFTER `option32`, ADD `option34` LONGTEXT NOT NULL AFTER `option33`, ADD `option35` LONGTEXT NOT NULL AFTER `option34`, ADD `option36` LONGTEXT NOT NULL AFTER `option35`, ADD `option37` LONGTEXT NOT NULL AFTER `option36`, ADD `option38` LONGTEXT NOT NULL AFTER `option37`, ADD `option39` LONGTEXT NOT NULL AFTER `option38`, ADD `option40` LONGTEXT NOT NULL AFTER `option39`");
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_options` ADD `changelog`  VARCHAR( 1 ) NOT NULL AFTER `version`");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '028' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "028";
+
+		}
+
 	}
 
 	function myTreasures($content) {
@@ -280,15 +307,15 @@ Author URI: http://www.crazyiven.de/
 
 		if(preg_match($myTreasuresCodeSearch[singlemedia],$content,$return)) {
 
-				return preg_replace($myTreasuresCodeSearch[singlemedia],showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$return[1]),$content);
+				return preg_replace($myTreasuresCodeSearch[singlemedia],showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
 
 		} elseif(preg_match($myTreasuresCodeSearch[medialist],$content,$return)) {
 
-				return preg_replace($myTreasuresCodeSearch[medialist],showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$return[1]),$content);
+				return preg_replace($myTreasuresCodeSearch[medialist],showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
 
 		} elseif(preg_match($myTreasuresCodeSearch[standalone],$content,$return)) {
 
-				return preg_replace($myTreasuresCodeSearch[standalone],showmyTreasuresContainer($return[1],$wp_query->query_vars['mytreasuresort']),$content);
+				return preg_replace($myTreasuresCodeSearch[standalone],showmyTreasuresContainer($return[1],$wp_query->query_vars['mytreasuresort'],"single"),$content);
 
 		} else {
 
@@ -309,20 +336,42 @@ Author URI: http://www.crazyiven.de/
 
 		}
 
-		if($wp_rewrite->using_permalinks()) {
+		if($wp_rewrite->using_permalinks() && get_post_type() == 'page') {
 
-			if($name) {
+			if($name && $value) {
 
 				return clean_url($myTreasuresLinkBasepath.$value."/".$name."/");
 
-			} else {
+			} elseif($value != '') {
 
 				return $myTreasuresLinkBasepath.$value."/";
+
+			} else {
+
+				return $myTreasuresLinkBasepath;
+
+			}
+
+		} elseif($wp_rewrite->using_permalinks() && get_post_type() != 'page') {
+
+			$myTreasuresLinkBasepath = get_permalink();
+			if($type == "mytreasuresort") {
+
+				return $myTreasuresLinkBasepath."?mytreasuresort=".$value;
+
+			} elseif($type == "mytreasureid") {
+
+				return $myTreasuresLinkBasepath."?mytreasureid=".$value;
+
+			} elseif($type == "glossarview") {
+
+				return $myTreasuresLinkBasepath."?mytreasuresort=list&mytreasureglossar=".strtolower($value);
 
 			}
 
 		} else {
 
+			$myTreasuresLinkBasepath = get_permalink();
 			if($type == "mytreasuresort") {
 
 				return $myTreasuresLinkBasepath."&mytreasuresort=".$value;
@@ -331,13 +380,17 @@ Author URI: http://www.crazyiven.de/
 
 				return $myTreasuresLinkBasepath."&mytreasureid=".$value;
 
+			} elseif($type == "glossarview") {
+
+				return $myTreasuresLinkBasepath."&mytreasuresort=list&mytreasureglossar=".strtolower($value);
+
 			}
 
 		}
 
 	}
 
-	function showmyTreasuresContainer($myTreasuredID = false, $myTreasuredSort = false, $myTreasureType = false) {
+	function showmyTreasuresContainer($myTreasuredID = false, $myTreasuredSort = false, $myTreasureGlossar = false, $myTreasureType = false) {
 
 		global $myTreasuresSortTypes, $myTreasures_options, $myTreasuresCopyRight;
 
@@ -368,7 +421,7 @@ Author URI: http://www.crazyiven.de/
 
 		/* Content generieren */
 		
-			$returncode .= showmyTreasuresContent($myTreasuredID, $myTreasuredSort, $myTreasureType);
+			$returncode .= showmyTreasuresContent($myTreasuredID, $myTreasuredSort, $myTreasureType, $myTreasureGlossar);
 
 		/* Footer generieren */
 
@@ -426,7 +479,7 @@ Author URI: http://www.crazyiven.de/
 		
 	}
 
-	function showmyTreasuresContent($myTreasuredID = false, $myTreasuredSort = false, $myTreasureType = false) {
+	function showmyTreasuresContent($myTreasuredID = false, $myTreasuredSort = false, $myTreasureType = false, $myTreasureGlossar = false) {
 
 		global $myTreasuresSortTypes, $myTreasures_options, $userdata, $myTreasuresTextdomain, $wpdb;
 	  get_currentuserinfo();
@@ -468,16 +521,39 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "list") {
 
 			$content = "<p>";
-			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
-			$myTreasuresCountMedia = mysql_num_rows($query01);
-			while($result01 = mysql_fetch_array($query01)) {
+			
+			if($myTreasures_options[option28] == 'glossar') {
 
-				if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
-				$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$rating."<br />";
+				$content .= "<a href=\"".myTresuresBuildLink("0","glossarview")."\">#</a> <a href=\"".myTresuresBuildLink("a","glossarview")."\">A</a> <a href=\"".myTresuresBuildLink("b","glossarview")."\">B</a> <a href=\"".myTresuresBuildLink("c","glossarview")."\">C</a> <a href=\"".myTresuresBuildLink("d","glossarview")."\">D</a> <a href=\"".myTresuresBuildLink("e","glossarview")."\">E</a> <a href=\"".myTresuresBuildLink("f","glossarview")."\">F</a> <a href=\"".myTresuresBuildLink("g","glossarview")."\">G</a> <a href=\"".myTresuresBuildLink("h","glossarview")."\">H</a> <a href=\"".myTresuresBuildLink("i","glossarview")."\">I</a> <a href=\"".myTresuresBuildLink("j","glossarview")."\">J</a> <a href=\"".myTresuresBuildLink("k","glossarview")."\">K</a> <a href=\"".myTresuresBuildLink("l","glossarview")."\">L</a> <a href=\"".myTresuresBuildLink("m","glossarview")."\">M</a> <a href=\"".myTresuresBuildLink("n","glossarview")."\">N</a> <a href=\"".myTresuresBuildLink("o","glossarview")."\">O</a> <a href=\"".myTresuresBuildLink("p","glossarview")."\">P</a> <a href=\"".myTresuresBuildLink("q","glossarview")."\">Q</a> <a href=\"".myTresuresBuildLink("r","glossarview")."\">R</a> <a href=\"".myTresuresBuildLink("s","glossarview")."\">S</a> <a href=\"".myTresuresBuildLink("t","glossarview")."\">T</a> <a href=\"".myTresuresBuildLink("u","glossarview")."\">U</a> <a href=\"".myTresuresBuildLink("v","glossarview")."\">V</a> <a href=\"".myTresuresBuildLink("w","glossarview")."\">W</a> <a href=\"".myTresuresBuildLink("x","glossarview")."\">X</a> <a href=\"".myTresuresBuildLink("y","glossarview")."\">Y</a> <a href=\"".myTresuresBuildLink("z","glossarview")."\">Z</a><br /><br />";
+				if($myTreasuresTypesQuery) { $regexp = "AND `field01` NOT REGEXP '^[a-z]'"; } else { $regexp = "WHERE `field01` NOT REGEXP '^[a-z]'"; }
+				if($myTreasureGlossar) { if($myTreasuresTypesQuery) { $regexp = "AND `field01` REGEXP '^[".$myTreasureGlossar."]'"; } else { $regexp = "WHERE `field01` REGEXP '^[".$myTreasureGlossar."]'"; } }
+				$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery $regexp ORDER BY `field01`");
+				$myTreasuresCountMedia = mysql_num_rows($query01);
+				if(!$myTreasuresCountMedia) { $content .= __("No media",$myTreasuresTextdomain); }
+				while($result01 = mysql_fetch_array($query01)) {
+
+					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
+					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$rating."<br />";
+
+				}
+
+				if($myTreasures_options[option16] == 'yes') { $content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />"; }
+
+			} else {
+
+				$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
+				$myTreasuresCountMedia = mysql_num_rows($query01);
+				while($result01 = mysql_fetch_array($query01)) {
+
+					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
+					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$rating."<br />";
+
+				}
+
+				if($myTreasures_options[option16] == 'yes') { $content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />"; }
 
 			}
 
-			if($myTreasures_options[option16] == 'yes') { $content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />"; }
 			$content .= "</p>";
 
 		}
@@ -485,19 +561,21 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "rating") {
 
 			$content = "<p>";
-			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `rating` DESC, `field01` DESC");
+			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `rating` DESC, `field01` ASC");
 			$myTreasuresCountMedia = mysql_num_rows($query01);
 			while($result01 = mysql_fetch_array($query01)) {
 
+				$showdetails = false;
 				$rating = myTreasures_rating($result01[rating]);
-				if($result01[rating] < 1) { $result01[rating] = "Unbestimmt"; $searchrating = ""; } else { $result01[rating] = $result01[rating]; $searchrating = $result01[rating]; }
-				if($sorttype != $rating && $result01[rating] != "Unbestimmt") {
+				if($result01[rating] < 1) { $result01[rating] = "NOTSET"; $searchrating = ""; } else { $result01[rating] = $result01[rating]; $searchrating = $result01[rating]; }
+				if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '$searchrating' $myTreasuresTypesQueryCount")).")"; }
+				if($sorttype != $rating && $result01[rating] != "NOTSET") {
 
-					$content .= "<h2>".number_format(($result01[rating]/10),1,",","")." (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '$searchrating' $myTreasuresTypesQueryCount")).")</h2>";
+					$content .= "<h2>".number_format(($result01[rating]/10),1,",","").$showdetails."</h2>";
 
 				} elseif($sorttype != $rating) {
 
-					$content .= "<h2>Unbestimmt (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '$searchrating' $myTreasuresTypesQueryCount")).")</h2>";
+					$content .= "<h2>".__("Unknown",$myTreasuresTextdomain).$showdetails."</h2>";
 
 				}
 
@@ -513,13 +591,14 @@ Author URI: http://www.crazyiven.de/
 
 		if($myTreasuredSort == "covers") {
 
-			$content = "<p align=\"center\">";
+			$content = "<p align=\"center\"><div id=\"overDiv\" style=\"position:absolute; visibility:hidden; z-index:1000;\"></div>";
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
 			while($result01 = mysql_fetch_array($query01)) {
 
 				++$myTreasuresCountMedia;
-				if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
-				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\"><img src=\"".$imagelink."\" alt=\"".$result01[field01]."\" title=\"".$result01[field01]."\" style=\"padding: 5px;\" border=\"0\"></a>";
+				if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
+				if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<center><img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'></center><br />"; } else { $imagebig = false; }
+				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\" onmouseover=\"return overlib('".$imagebig.$result01[field01]."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\"></a>";
 				if(preg_match("/^([0-9]+)$/",$myTreasures_options[option09]) && $myTreasures_options[option09] > 0) { if($myTreasuresCountMedia % $myTreasures_options[option09] == 0) { $content .= "<br />"; } }
 
 			}
@@ -545,7 +624,9 @@ Author URI: http://www.crazyiven.de/
 			while($result03 = mysql_fetch_array($query03)) { $moreimages .= "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/big/".$result03[name]."\" target=\"_target\" ".$imagesystems." title=\"".$result03[comment]."\"><img src=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/small/".$result03[name]."\" border=\"0\"></a> "; }
 
 			if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; $imagelinkbig = get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
-			if($myTreasures_options[option14] == 'yes' && $imagelinkbig) { $coverimage = "<a href=\"".$imagelinkbig."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\"><img src=\"".$imagelink."\" alt=\"".$result01[field01]."\" title=\"".$result01[field01]."\" style=\"padding: 10px;\"></a>"; } else { $coverimage = "<img src=\"".$imagelink."\" alt=\"".$result01[field01]."\" title=\"".$result01[field01]."\" style=\"padding: 10px;\">"; }
+			if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
+			if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'>"; } else { $imagebig = false; }
+			if($myTreasures_options[option14] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $coverimage = "<a href=\"".$imagelinkbig."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\" onmouseover=\"return overlib('".$imagebig."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 10px;\"></a>"; } else { $coverimage = "<img src=\"".$imagelink."\" style=\"padding: 10px;\">"; }
 			if($result01[tracklist]) { $result01[description] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>"; $all_tracks = explode("#NT#",$result01[tracklist]); foreach($all_tracks AS $track) { list($name,$length) = explode("#L#",$track); if($name) { $result01[description] .= "<br />".sprintf('%02d',(++$i)).". ".$name; } if($name && $length) { $result01[description] .= " (".$length." Min)"; } } }
 			$content = "<p><h2>".$result01[field01]."</h2><table width=\"100%\"><tr><td>";
 			if($myTreasures_options[option13] != 'table') {
@@ -584,6 +665,7 @@ Author URI: http://www.crazyiven.de/
 			if($userdata->user_level >= 6) 								{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Options",$myTreasuresTextdomain)."</td><td align=\"left\" valign=\"top\"><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresoverview.php&action=edit&id=".$result01[id]."\" target=\"_blank\">".__("Edit this entry",$myTreasuresTextdomain)."</a></td></tr>"; } 
 			if($moreimages) 															{ $content .= "<tr><td align=\"left\" height=\"10\" colspan=\"2\">&nbsp;</tr><tr><td align=\"left\" colspan=\"2\"><b>".__("Images",$myTreasuresTextdomain).":</b><br />".$moreimages."</td>"; }
 			$content .= "</table></p>";
+			if(get_post_type() == 'post' && $myTreasureGlossar != 'single') { $content .= "<p><a href=\"".get_permalink()."\">".__("Back",$myTreasuresTextdomain)."</a></p>"; }
 
 		}
 
@@ -596,11 +678,13 @@ Author URI: http://www.crazyiven.de/
 			$myTreasuresCountMedia = mysql_num_rows($query01);
 			while($result01 = mysql_fetch_array($query01)) {
 
+				$showdetails = false;
 				if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
 				if($result01[$result02["feature_".$myTreasuredSort]] == "") { $result01[$result02["feature_".$myTreasuredSort]] = __("Unknown",$myTreasuresTextdomain); $searchsort = ""; } else { $result01[$result02["feature_".$myTreasuredSort]] = $result01[$result02["feature_".$myTreasuredSort]]; $searchsort = $result01[$result02["feature_".$myTreasuredSort]]; }
+				if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `".$result02["feature_".$myTreasuredSort]."` = '$searchsort' $myTreasuresTypesQueryCount")).")"; }
 				if($sorttype != $result01[$result02["feature_".$myTreasuredSort]]) {
 
-					$content .= "<h2>".$result01[$result02["feature_".$myTreasuredSort]]." (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `".$result02["feature_".$myTreasuredSort]."` = '$searchsort' $myTreasuresTypesQueryCount")).")</h2>";
+					$content .= "<h2>".$result01[$result02["feature_".$myTreasuredSort]].$showdetails."</h2>";
 
 				}
 				$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid")."\">".$result01[field01]."</a> ".$rating."<br />";
@@ -871,12 +955,15 @@ Author URI: http://www.crazyiven.de/
 
 		}
 
+		echo "<script type=\"text/javascript\" src=\"".get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/js/overlib/overlib.js\"></script>";
+
 	}
 
 	function myTreasuresGETVars($qvars) {
 
 	  $qvars[] = 'mytreasureid';
 	  $qvars[] = 'mytreasuresort';
+	  $qvars[] = 'mytreasureglossar';
 	  return $qvars;
 
 	}
@@ -907,7 +994,7 @@ Author URI: http://www.crazyiven.de/
 
 				}
 
-  			$new_rules = array($name.'/list' => 'index.php?mytreasuresort=list&pagename='.$name,$name.'/rating' => 'index.php?mytreasuresort=rating&pagename='.$name,$name.'/covers' => 'index.php?mytreasuresort=covers&pagename='.$name,$name.'/sort1' => 'index.php?mytreasuresort=sort1&pagename='.$name,$name.'/sort2' => 'index.php?mytreasuresort=sort2&pagename='.$name,$name.'/sort3' => 'index.php?mytreasuresort=sort3&pagename='.$name,$name.'/sort4' => 'index.php?mytreasuresort=sort4&pagename='.$name,$name.'/sort5' => 'index.php?mytreasuresort=sort5&pagename='.$name,$name.'/([0-9]+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/([0-9]+)/(.+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name);
+  			$new_rules = array($name.'/list' => 'index.php?mytreasuresort=list&pagename='.$name,$name.'/rating' => 'index.php?mytreasuresort=rating&pagename='.$name,$name.'/covers' => 'index.php?mytreasuresort=covers&pagename='.$name,$name.'/sort1' => 'index.php?mytreasuresort=sort1&pagename='.$name,$name.'/sort2' => 'index.php?mytreasuresort=sort2&pagename='.$name,$name.'/sort3' => 'index.php?mytreasuresort=sort3&pagename='.$name,$name.'/sort4' => 'index.php?mytreasuresort=sort4&pagename='.$name,$name.'/sort5' => 'index.php?mytreasuresort=sort5&pagename='.$name,$name.'/([0-9]+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/([0-9]+)/(.+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/0' =>  'index.php?mytreasuresort=list&mytreasureglossar=&pagename='.$name,$name.'/a' =>  'index.php?mytreasuresort=list&mytreasureglossar=a&pagename='.$name,$name.'/b' =>  'index.php?mytreasuresort=list&mytreasureglossar=b&pagename='.$name,$name.'/c' =>  'index.php?mytreasuresort=list&mytreasureglossar=c&pagename='.$name,$name.'/d' =>  'index.php?mytreasuresort=list&mytreasureglossar=d&pagename='.$name,$name.'/e' =>  'index.php?mytreasuresort=list&mytreasureglossar=e&pagename='.$name,$name.'/f' =>  'index.php?mytreasuresort=list&mytreasureglossar=f&pagename='.$name,$name.'/g' =>  'index.php?mytreasuresort=list&mytreasureglossar=g&pagename='.$name,$name.'/h' =>  'index.php?mytreasuresort=list&mytreasureglossar=h&pagename='.$name,$name.'/i' =>  'index.php?mytreasuresort=list&mytreasureglossar=i&pagename='.$name,$name.'/j' =>  'index.php?mytreasuresort=list&mytreasureglossar=j&pagename='.$name,$name.'/k' =>  'index.php?mytreasuresort=list&mytreasureglossar=k&pagename='.$name,$name.'/l' =>  'index.php?mytreasuresort=list&mytreasureglossar=l&pagename='.$name,$name.'/m' =>  'index.php?mytreasuresort=list&mytreasureglossar=m&pagename='.$name,$name.'/n' =>  'index.php?mytreasuresort=list&mytreasureglossar=n&pagename='.$name,$name.'/o' =>  'index.php?mytreasuresort=list&mytreasureglossar=o&pagename='.$name,$name.'/p' =>  'index.php?mytreasuresort=list&mytreasureglossar=p&pagename='.$name,$name.'/q' =>  'index.php?mytreasuresort=list&mytreasureglossar=q&pagename='.$name,$name.'/r' =>  'index.php?mytreasuresort=list&mytreasureglossar=r&pagename='.$name,$name.'/s' =>  'index.php?mytreasuresort=list&mytreasureglossar=s&pagename='.$name,$name.'/t' =>  'index.php?mytreasuresort=list&mytreasureglossar=t&pagename='.$name,$name.'/u' =>  'index.php?mytreasuresort=list&mytreasureglossar=u&pagename='.$name,$name.'/v' =>  'index.php?mytreasuresort=list&mytreasureglossar=v&pagename='.$name,$name.'/w' =>  'index.php?mytreasuresort=list&mytreasureglossar=w&pagename='.$name,$name.'/x' =>  'index.php?mytreasuresort=list&mytreasureglossar=x&pagename='.$name,$name.'/y' =>  'index.php?mytreasuresort=list&mytreasureglossar=y&pagename='.$name,$name.'/z' =>  'index.php?mytreasuresort=list&mytreasureglossar=z&pagename='.$name);
 				$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 
 			}
@@ -943,7 +1030,6 @@ Author URI: http://www.crazyiven.de/
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuressingle.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Overview",$myTreasuresTextdomain), 'myTreasures'), __(__("Overview",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresoverview.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresmediatype.php');
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Image overview",$myTreasuresTextdomain), 'myTreasures'), __(__("Image overview",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresimages.php');	
 
 			if($waiting_rating) {
 
@@ -987,17 +1073,13 @@ Author URI: http://www.crazyiven.de/
 	* Debugin rewrite Rules - DONT TOUCH!
 	*/
 	
-	/*
-	function myTreasuresUpdateRewriteRulesTest($wp_rewrite) {
+	if($myTreasutesRewriteDebug) {
 
-		echo print_r($wp_rewrite->rules);
+		function myTreasuresUpdateRewriteRulesTest($wp_rewrite) { echo print_r($wp_rewrite->rules); }
+		add_action('init', 'myTreasuresRewriteRules');
+		add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRules');
+		add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRulesTest');
 
 	}
-
-	add_action('init', 'myTreasuresRewriteRules');
-	add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRules');
-	add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRulesTest');
-	*/
 	
-
 ?>

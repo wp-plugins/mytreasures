@@ -12,6 +12,10 @@
 
 		include("mytreasuresinstall.php");
 
+	} elseif(!$myTreasures_options[changelog]) {
+
+		include("mytreasureschangelog.php");
+
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
 		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
@@ -104,7 +108,7 @@
 
 					}
 
-					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `image` = '$imagename', `rating` = '$_POST[rating]', `description` = '".$_POST[description]."', `comment` = '".$_POST[comment]."', `tracklist` = '$tracks', `field01` = '".$_POST[field01]."', `field02` = '".$_POST[field02]."', `field03` = '".$_POST[field03]."', `field04` = '".$_POST[field04]."', `field05` = '".$_POST[field05]."', `field06` = '".$_POST[field06]."', `field07` = '".$_POST[field07]."', `field08` = '".$_POST[field08]."', `field09` = '".$_POST[field09]."', `field10` = '".$_POST[field10]."', `field11` = '".$_POST[field11]."', `field12` = '".$_POST[field12]."', `field13` = '".$_POST[field13]."', `field14` = '".$_POST[field14]."', `field15` = '".$_POST[field15]."', `field16` = '".$_POST[field16]."', `field17` = '".$_POST[field17]."', `field18` = '".$_POST[field18]."', `field19` = '".$_POST[field19]."', `field20` = '".$_POST[field20]."' WHERE `id` = '$result01[id]'");
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `rentto` = '$_POST[rentto]', `type` = '$_POST[type]', `image` = '$imagename', `rating` = '$_POST[rating]', `description` = '".$_POST[description]."', `comment` = '".$_POST[comment]."', `tracklist` = '$tracks', `field01` = '".$_POST[field01]."', `field02` = '".$_POST[field02]."', `field03` = '".$_POST[field03]."', `field04` = '".$_POST[field04]."', `field05` = '".$_POST[field05]."', `field06` = '".$_POST[field06]."', `field07` = '".$_POST[field07]."', `field08` = '".$_POST[field08]."', `field09` = '".$_POST[field09]."', `field10` = '".$_POST[field10]."', `field11` = '".$_POST[field11]."', `field12` = '".$_POST[field12]."', `field13` = '".$_POST[field13]."', `field14` = '".$_POST[field14]."', `field15` = '".$_POST[field15]."', `field16` = '".$_POST[field16]."', `field17` = '".$_POST[field17]."', `field18` = '".$_POST[field18]."', `field19` = '".$_POST[field19]."', `field20` = '".$_POST[field20]."' WHERE `id` = '$result01[id]'");
 					echo "<div id=\"message\" class=\"updated fade\"><p><strong>".sprintf(__("The media <i>%s</i> was edited successfully!",$myTreasuresTextdomain),$_POST[field01])."</strong></p></div>";
 
 				} else {
@@ -131,6 +135,7 @@
 					if(!$_POST[field20]) { $_POST[field20] = $result01[field20]; }
 					if(!$_POST[description]) { $_POST[description] = $result01[description]; }
 					if(!$_POST[comment]) { $_POST[comment] = $result01[comment]; }
+					if(!$_POST[rentto]) { $_POST[rentto] = $result01[rentto]; }
 					if(!$_POST[rating]) { $_POST[rating] = ($result01[rating]); }
 					if($result_type[feature_tracklist]) { $all_tracks = explode("#NT#",$result01[tracklist]); foreach($all_tracks AS $track) { list($_POST[trackname][(++$counttracks)],$_POST[tracklength][$counttracks]) = explode("#L#",$track); } }
 
@@ -172,6 +177,14 @@
 <br /><?php echo __("My comment",$myTreasuresTextdomain); ?>
 <br /><textarea name="comment" style="height: 150px; width: 90%;"><?php echo stripslashes($_POST[comment]); ?></textarea>
 <br />
+
+<?php if($myTreasures_options[option29] == 'yes') { ?>
+<br /><?php echo __("Rent to",$myTreasuresTextdomain); ?>
+<br /><textarea style="height: 16px; width: 90%;" name="rentto"><?php echo stripslashes($_POST[rentto]); ?></textarea>
+<br />
+
+<?php } ?>
+
 <br /><?php echo __("Rating (in stars)",$myTreasuresTextdomain); ?>
 <br /><?php echo __("bad",$myTreasuresTextdomain); ?> <?php for($i = 0.5; $i <= 5; $i += 0.5) { ?><input type="radio" name="rating" value="<?php echo ($i*10); ?>" <?php if($_POST[rating] == ($i*10)) { echo "checked"; } ?>><?php echo number_format($i,1,",",""); ?>&nbsp;&nbsp;<?php } ?> <?php echo __("good",$myTreasuresTextdomain); ?>
 <br />
@@ -186,7 +199,11 @@
 <?php } ?>
 
 <br /><?php echo __("Image / Cover",$myTreasuresTextdomain); ?>
-<br /><input type="file" name="image" size="39" class="uploadform"></p>
+<br /><input type="file" name="image" size="39" class="uploadform">
+<br />
+<br /><?php echo __("Choose media type",$myTreasuresTextdomain); ?>
+<br /><?php echo __("Please just change the media type if both types have similar / identical values for each field!",$myTreasuresTextdomain); ?>
+<br /><select name="type" style="width: 200px;"><?php foreach($myTreasuresMediaTypeArray AS $id => $name) { ?><option value="<?php echo $id; ?>" <?php if($result01[type] == $id) { echo "selected"; } ?>><?php echo $name; ?></option><?php } ?></select></p>
 <div class="submit"><input type="submit" value=" <?php echo __("Edit media",$myTreasuresTextdomain); ?> "></div>
 </form>
 
@@ -291,9 +308,9 @@
 
 	<tr <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
 		<td align="left"><?php echo $result01[id]; ?></td>
-		<td align="left"><?php echo $result01[field01]; if(strlen($result01[image]) < 3) { echo " (<b>".__("No Image / Cover!",$myTreasuresTextdomain)."</b>)"; } ?></td>
+		<td align="left" <?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "style=\"font-style: italic;\""; } ?>><?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "<b>".__("Rent to",$myTreasuresTextdomain).":</b> ".$result01[rentto]." - "; }; echo $result01[field01]; if(strlen($result01[image]) < 3) { echo " (<b>".__("No Image / Cover!",$myTreasuresTextdomain)."</b>)"; } ?></td>
 		<td align="left"><?php echo $result01[name]; ?></td>
-		<td align="center">[<a href="?page=mytreasures/mytreasuresoverview.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresoverview.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a>]</td>
+		<td align="center">[<a href="?page=mytreasures/mytreasuresoverview.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresoverview.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresimages.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate images",$myTreasuresTextdomain); ?></a>]</td>
 	</tr>	
 
 <?php
