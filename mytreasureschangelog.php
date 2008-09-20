@@ -14,8 +14,8 @@
 <h2>Changelog</h2>
 <p><b>Neues in 1.0.4 // New in 1.0.4</b>
 <ul>
-	<li>Kürzerer Hinweis auf das Plugin // Copyright is shorter</li>
-	<li>Link Datenbank für Medien // link database for media</li>
+	<li>K&uuml;rzerer Hinweis auf das Plugin // Copyright is shorter</li>
+	<li>Link Datenbank f&uuml;r Medien // link database for media</li>
 	<li>Kleine Design Fehler behoben // fixed some small display problems</li>
 </ul>
 </p>
