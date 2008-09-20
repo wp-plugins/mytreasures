@@ -12,6 +12,17 @@
 <form action="" method="post">
 <div class="wrap">
 <h2>Changelog</h2>
+<p><b>Neues in 1.0.4 // New in 1.0.4</b>
+<ul>
+	<li>Kürzerer Hinweis auf das Plugin // Copyright is shorter</li>
+	<li>Link Datenbank für Medien // link database for media</li>
+	<li>Kleine Design Fehler behoben // fixed some small display problems</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</div>
+</form>
+<br /><br />
 <p><b>Neues in 1.0.3 // New in 1.0.3</b>
 <ul>
 	<li>Ab jetzt gibts diesen Changelog // Using this Changelog</li>
@@ -25,9 +36,6 @@
 	<li>Option ob die Zahl der Medien innerhalb der eigenen Sortierung gezeigt werden soll (z.B. Genre)// Option if you want to show the media count of an own sort (e.g. Genre)</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</div>
-</form>
 
 <?php
 

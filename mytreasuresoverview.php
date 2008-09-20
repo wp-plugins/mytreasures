@@ -310,7 +310,7 @@
 		<td align="left"><?php echo $result01[id]; ?></td>
 		<td align="left" <?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "style=\"font-style: italic;\""; } ?>><?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "<b>".__("Rent to",$myTreasuresTextdomain).":</b> ".$result01[rentto]." - "; }; echo $result01[field01]; if(strlen($result01[image]) < 3) { echo " (<b>".__("No Image / Cover!",$myTreasuresTextdomain)."</b>)"; } ?></td>
 		<td align="left"><?php echo $result01[name]; ?></td>
-		<td align="center">[<a href="?page=mytreasures/mytreasuresoverview.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresoverview.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresimages.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate images",$myTreasuresTextdomain); ?></a>]</td>
+		<td align="center">[<a href="?page=mytreasures/mytreasuresoverview.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresoverview.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresimages.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate images",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasureslinks.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate links",$myTreasuresTextdomain); ?></a>]</td>
 	</tr>	
 
 <?php

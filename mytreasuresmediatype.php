@@ -76,8 +76,12 @@
 					while($result02 = mysql_fetch_array($query02)) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `$_POST[change_feature1]` = '".$result02[$_POST[change_feature2]]."', `$_POST[change_feature2]` = '".$result02[$_POST[change_feature1]]."' WHERE `id` = '$result02[id]'"); }
 					mysql_query("UPDATE `".$wpdb->prefix."mytreasures_type` SET `$_POST[change_feature1]` = '".$result01[$_POST[change_feature2]]."', `$_POST[change_feature2]` = '".$result01[$_POST[change_feature1]]."' WHERE `id` = '$result01[id]'");
 					echo '<div id="message" class="updated fade"><p><strong>'.sprintf(__("You've switched <i>%s</i> and <i>%s</i> successfully!",$myTreasuresTextdomain),$result01[$_POST[change_feature1]],$result01[$_POST[change_feature2]]).'</strong></p></div>';
+					$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '$_GET[id]'");
+					$result01 = mysql_fetch_array($query01);
 
-				} elseif(strlen($_POST[name]) > 0 && strlen($_POST[field01]) > 0 && strlen($_POST[edit]) > 0) { 
+				}
+				
+				if(strlen($_POST[name]) > 0 && strlen($_POST[field01]) > 0 && strlen($_POST[edit]) > 0) { 
 
 					if($_POST[feature_sort1]) { $feature_sort1 = $_POST[feature_sort1]; }
 					if($_POST[feature_sort2]) { $feature_sort2 = $_POST[feature_sort2]; }

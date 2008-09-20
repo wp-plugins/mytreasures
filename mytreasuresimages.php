@@ -106,6 +106,7 @@
 
 ?>
 
+<br /><br />
 <div class="wrap">
 <h2><?php echo __("Activ images",$myTreasuresTextdomain); ?></h2>
 <form action="" method="post"><p><?php foreach($imagearray AS $image) { echo "<p style=\"float: left; margin-right: 10px; text-align: center;\"><img src=\"../wp-content/mytreasuresimages/small/".$image[name]."\"><br /><textarea style=\"height: 16px; width: 100px;\" name=\"comment[".$image[id]."]\">".stripslashes($image[comment])."</textarea><br />".__("Order:",$myTreasuresTextdomain)." <input type=\"text\" style=\"height: 16px; width: 20px; text-align: center;\" name=\"orderid[".$image[id]."]\" value=\"".$image[orderid]."\"><br /><input type=\"checkbox\" name=\"deletepic[".$image[id]."]\" value=\"1\"> ".__("Delete image",$myTreasuresTextdomain)."</p> "; } ?></p><p style="clear: both;"></p><div class="submit"><input type="submit" name="changepics" value=" <?php echo __("Save changings",$myTreasuresTextdomain); ?> "></div></div></form>
