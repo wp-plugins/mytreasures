@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.3
+Version: 1.0.5
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -15,7 +15,7 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion 		= "029";
-	$myTreasuresPluginVersion = "1.0.4";
+	$myTreasuresPluginVersion = "1.0.5";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 
@@ -424,7 +424,7 @@ Author URI: http://www.crazyiven.de/
 			$returncode = "";	
 			if($myTreasuresShowHeader) {
 
-				$returncode .= showmyTreasuresHeader($myTreasuredID,$myTreasureType);
+				$returncode .= showmyTreasuresHeader($myTreasuredID,$myTreasureType, $myTreasuredSort);
 
 			}
 
@@ -440,7 +440,7 @@ Author URI: http://www.crazyiven.de/
 
 	}
 
-	function showmyTreasuresHeader($myTreasuredID = false, $myTreasureType = false) {
+	function showmyTreasuresHeader($myTreasuredID = false, $myTreasureType = false, $myTreasuredSort = false) {
 
 		global $myTreasures_options, $myTreasuresTextdomain, $wpdb;
 
@@ -483,7 +483,9 @@ Author URI: http://www.crazyiven.de/
 
 		}
 
-		$header .= $sort1.$sort2.$sort3.$sort4.$sort5.$rating.$cover."</p>";
+		if($myTreasures_options[option31] == 'yes' && ($myTreasuredSort != 'list' || ($myTreasuredSort == 'list' && $myTreasures_options[option28] != 'glossar'))) { $search = "<br /><br /><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"text\" name=\"mytreasuressearch\" value=\" ".__("Search...",$myTreasuresTextdomain)." \" onFocus=\"if(this.value==this.defaultValue) this.value='';\" onBlur=\"if(this.value=='') this.value=this.defaultValue;\" style=\"width: 50%\"></form>"; }
+
+		$header .= $sort1.$sort2.$sort3.$sort4.$sort5.$rating.$cover.$search."</p>";
 		return $header;
 		
 	}
@@ -530,6 +532,7 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "list") {
 
 			$content = "<p>";
+			if($_POST[mytreasuressearch] && $myTreasures_options[option28] != 'glossar') { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
 			
 			if($myTreasures_options[option28] == 'glossar') {
 
@@ -570,6 +573,7 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "rating") {
 
 			$content = "<p>";
+			if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `rating` DESC, `field01` ASC");
 			$myTreasuresCountMedia = mysql_num_rows($query01);
 			while($result01 = mysql_fetch_array($query01)) {
@@ -600,6 +604,7 @@ Author URI: http://www.crazyiven.de/
 
 		if($myTreasuredSort == "covers") {
 
+			if($_POST[mytreasuressearch]) { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
 			$content = "<p align=\"center\"><div id=\"overDiv\" style=\"position:absolute; visibility:hidden; z-index:1000;\"></div>";
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
 			while($result01 = mysql_fetch_array($query01)) {
@@ -687,6 +692,7 @@ Author URI: http://www.crazyiven.de/
 			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
 			$result02 = mysql_fetch_array($query02);
 			$content = "<p>";
+			if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$result02["feature_".$myTreasuredSort]."`, `field01`");
 			$myTreasuresCountMedia = mysql_num_rows($query01);
 			while($result01 = mysql_fetch_array($query01)) {
