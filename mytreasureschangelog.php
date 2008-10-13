@@ -2,7 +2,7 @@
 
 	if($_POST[donereadingchangelog]) {
 
-		mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `changelog` = '1' WHERE `id` = '1'");
+		mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `changelog` = '".$myTreasuresPluginVersion."' WHERE `id` = '1'");
 		echo "<div class=\"wrap\"><h2>Changelog</h2><p>Have fun with the new Version!</p></div>" ;
 
 	} else {
@@ -12,6 +12,15 @@
 <form action="" method="post">
 <div class="wrap">
 <h2>Changelog</h2>
+<p><b>Neues in 1.0.5 // New in 1.0.5</b>
+<ul>
+	<li>Suche wieder aktivierbar // Search function is back!</li>
+	<li>Code aufger&auml;umt // code clean up</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>Neues in 1.0.4 // New in 1.0.4</b>
 <ul>
 	<li>K&uuml;rzerer Hinweis auf das Plugin // Copyright is shorter</li>
@@ -19,10 +28,6 @@
 	<li>Kleine Design Fehler behoben // fixed some small display problems</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</div>
-</form>
-<br /><br />
 <p><b>Neues in 1.0.3 // New in 1.0.3</b>
 <ul>
 	<li>Ab jetzt gibts diesen Changelog // Using this Changelog</li>
@@ -36,6 +41,7 @@
 	<li>Option ob die Zahl der Medien innerhalb der eigenen Sortierung gezeigt werden soll (z.B. Genre)// Option if you want to show the media count of an own sort (e.g. Genre)</li>
 </ul>
 </p>
+</div>
 
 <?php
 

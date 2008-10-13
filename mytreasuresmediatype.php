@@ -12,7 +12,7 @@
 
 		include("mytreasuresinstall.php");
 
-	} elseif(!$myTreasures_options[changelog]) {
+	} elseif($myTreasures_options[changelog] != $myTreasuresPluginVersion) {
 
 		include("mytreasureschangelog.php");
 

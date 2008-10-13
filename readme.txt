@@ -20,7 +20,7 @@ myTreasures ist ein Plugin zur Veröffentlichung einer Sammlung auf Deinem Wordp
  - Schuhe & Klamotten
  - und vieles mehr
 
-Der größte Vorteile von myTreasures ist Flexibilität. Du kannst eigene Typen anlegen, mit eigenen Attributen die angezeigt werden sollen.Weitere Funktionen & Möglichkeiten von myTreasures:
+Der größte Vorteile von myTreasures ist Flexibilität. Du kannst eigene Typen anlegen, mit eigenen Attributen die angezeigt werden sollen. Weitere Funktionen & Möglichkeiten von myTreasures:
 
  - CSV Import einer Datenbank
  - Verschiedene Bereiche mit unterschiedlichen Attributen
