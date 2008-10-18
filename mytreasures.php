@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.5
+Version: 1.0.6
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -15,12 +15,40 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion 		= "030";
-	$myTreasuresPluginVersion = "1.0.5";
+	$myTreasuresPluginVersion = "1.0.6";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 
 	if((isset($_GET['activate-multi']) && $_GET['activate-multi'] == 'true') || (isset($_GET['activate']) && $_GET['activate'] == 'true') || (isset($_GET['action']) && $_GET['action'] == 'activate')) {
 
+		add_action('init', 'myTreasuresInstall');
+
+	} else {
+
+		$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
+		$myTreasures_options = mysql_fetch_array($myTreasures_query);
+		if(!$myTreasures_options[option01]) { $myTreasures_options[option01] = "list"; }
+		if($myTreasuresDBVersion != $myTreasures_options[version]) { myTreasuresUpdate($myTreasures_options[version]); }
+
+		$myTreasures_query = mysql_query("SELECT `id`, `short`, `name` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
+		while($result = mysql_fetch_array($myTreasures_query)) { 
+
+			$myTreasuresMediaTypeArray[$result[id]] = $result[name];
+			$myTreasures_tags .= $result[short]."|";
+	
+		}
+
+		$myTreasures_tags 									= substr($myTreasures_tags,0,-1);
+		$myTreasuresCodeSearch[medialist]		= "/\[mytreasurelist=([,(".str_replace("-","\-",$myTreasures_tags).")]+)\]/";
+		$myTreasuresCodeSearch[standalone]	= "/\[mytreasure=([0-9]+)\]/";
+		$myTreasuresCodeSearch[singlemedia]	= "/\[my((".str_replace("-","\-",$myTreasures_tags).")?)treasures\]/";
+		$myTreasuresSortTypes 							= "/(list|rating|covers|sort1|sort2|sort3|sort4|sort5)/";
+
+	}
+
+	function myTreasuresInstall() {
+
+		global $myTreasuresTable, $wpdb;
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures` ( `id` int(10) unsigned NOT NULL auto_increment, `type` int(5) unsigned NOT NULL default '0', `rating` int(5) unsigned NOT NULL default '0', `description` longtext NOT NULL, `comment` longtext NOT NULL, `tracklist` longtext NOT NULL, `image` varchar(255) NOT NULL default '', `rentto` varchar(255) NOT NULL default '', `field01` longtext NOT NULL, `field02` longtext NOT NULL, `field03` longtext NOT NULL, `field04` longtext NOT NULL, `field05` longtext NOT NULL, `field06` longtext NOT NULL, `field07` longtext NOT NULL, `field08` longtext NOT NULL, `field09` longtext NOT NULL, `field10` longtext NOT NULL, `field11` longtext NOT NULL, `field12` longtext NOT NULL, `field13` longtext NOT NULL, `field14` longtext NOT NULL, `field15` longtext NOT NULL, `field16` longtext NOT NULL, `field17` longtext NOT NULL, `field18` longtext NOT NULL, `field19` longtext NOT NULL, `field20` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_options` (`id` char(1) NOT NULL default '', `version` varchar(10) NOT NULL default '', `changelog` varchar(20) NOT NULL default '', `option01` longtext NOT NULL, `option02` longtext NOT NULL, `option03` longtext NOT NULL, `option04` longtext NOT NULL, `option05` longtext NOT NULL, `option06` longtext NOT NULL, `option07` longtext NOT NULL, `option08` longtext NOT NULL, `option09` longtext NOT NULL, `option10` longtext NOT NULL, `option11` longtext NOT NULL, `option12` longtext NOT NULL, `option13` longtext NOT NULL, `option14` longtext NOT NULL, `option15` longtext NOT NULL, `option16` longtext NOT NULL, `option17` longtext NOT NULL, `option18` longtext NOT NULL, `option19` longtext NOT NULL, `option20` longtext NOT NULL, `option21` longtext NOT NULL, `option22` longtext NOT NULL, `option23` longtext NOT NULL, `option24` longtext NOT NULL, `option25` longtext NOT NULL, `option26` longtext NOT NULL, `option27` longtext NOT NULL, `option28` longtext NOT NULL, `option29` longtext NOT NULL, `option30` longtext NOT NULL, `option31` longtext NOT NULL, `option32` longtext NOT NULL, `option33` longtext NOT NULL, `option34` longtext NOT NULL, `option35` longtext NOT NULL, `option36` longtext NOT NULL, `option37` longtext NOT NULL, `option38` longtext NOT NULL, `option39` longtext NOT NULL, `option40` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_type` ( `id` int(10) unsigned NOT NULL auto_increment, `short` varchar(10) NOT NULL default '', `view` varchar(255) NOT NULL default '', `name` varchar(255) NOT NULL default '', `feature_tracklist` enum('0','1') NOT NULL default '0', `feature_sort1` varchar(10) NOT NULL default '', `feature_sort2` varchar(10) NOT NULL default '', `feature_sort3` varchar(10) NOT NULL default '', `feature_sort4` varchar(10) NOT NULL default '', `feature_sort5` varchar(10) NOT NULL default '', `field01` varchar(255) NOT NULL default '', `field02` varchar(255) NOT NULL default '', `field03` varchar(255) NOT NULL default '', `field04` varchar(255) NOT NULL default '', `field05` varchar(255) NOT NULL default '', `field06` varchar(255) NOT NULL default '', `field07` varchar(255) NOT NULL default '', `field08` varchar(255) NOT NULL default '', `field09` varchar(255) NOT NULL default '', `field10` varchar(255) NOT NULL default '', `field11` varchar(255) NOT NULL default '', `field12` varchar(255) NOT NULL default '', `field13` varchar(255) NOT NULL default '', `field14` varchar(255) NOT NULL default '', `field15` varchar(255) NOT NULL default '', `field16` varchar(255) NOT NULL default '', `field17` varchar(255) NOT NULL default '', `field18` varchar(255) NOT NULL default '', `field19` varchar(255) NOT NULL default '', `field20` varchar(255) NOT NULL default '', PRIMARY KEY  (`id`)) TYPE=MyISAM;");
@@ -35,26 +63,7 @@ Author URI: http://www.crazyiven.de/
 
 	}
 
-	$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
-	$myTreasures_options = mysql_fetch_array($myTreasures_query);
-	if(!$myTreasures_options[option01]) { $myTreasures_options[option01] = "list"; }
-	if($myTreasuresDBVersion != $myTreasures_options[version]) { myTreasures_update($myTreasures_options[version]); }
-
-	$myTreasures_query = mysql_query("SELECT `id`, `short`, `name` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
-	while($result = mysql_fetch_array($myTreasures_query)) { 
-
-		$myTreasuresMediaTypeArray[$result[id]] = $result[name];
-		$myTreasures_tags .= $result[short]."|";
-	
-	}
-
-	$myTreasures_tags 									= substr($myTreasures_tags,0,-1);
-	$myTreasuresCodeSearch[medialist]		= "/\[mytreasurelist=([,(".str_replace("-","\-",$myTreasures_tags).")]+)\]/";
-	$myTreasuresCodeSearch[standalone]	= "/\[mytreasure=([0-9]+)\]/";
-	$myTreasuresCodeSearch[singlemedia]	= "/\[my((".str_replace("-","\-",$myTreasures_tags).")?)treasures\]/";
-	$myTreasuresSortTypes 							= "/(list|rating|covers|sort1|sort2|sort3|sort4|sort5)/";
-
-	function myTreasures_update($myTreasuresVersionRightNow) {
+	function myTreasuresUpdate($myTreasuresVersionRightNow) {
 
 		global $myTreasuresDBVersion, $wpdb;
 		if($myTreasuresVersionRightNow == '' && $myTreasuresDBVersion >= '005') {
@@ -552,7 +561,7 @@ Author URI: http://www.crazyiven.de/
 				if(!$myTreasuresCountMedia) { $content .= __("No media",$myTreasuresTextdomain); }
 				while($result01 = mysql_fetch_array($query01)) {
 
-					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
+					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
 					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$rating."<br />";
 
 				}
@@ -565,7 +574,7 @@ Author URI: http://www.crazyiven.de/
 				$myTreasuresCountMedia = mysql_num_rows($query01);
 				while($result01 = mysql_fetch_array($query01)) {
 
-					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
+					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
 					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$rating."<br />";
 
 				}
@@ -587,7 +596,7 @@ Author URI: http://www.crazyiven.de/
 			while($result01 = mysql_fetch_array($query01)) {
 
 				$showdetails = false;
-				$rating = myTreasures_rating($result01[rating]);
+				$rating = myTreasuresRating($result01[rating]);
 				if($result01[rating] < 1) { $result01[rating] = "NOTSET"; $searchrating = ""; } else { $result01[rating] = $result01[rating]; $searchrating = $result01[rating]; }
 				if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '$searchrating' $myTreasuresTypesQueryCount")).")"; }
 				if($sorttype != $rating && $result01[rating] != "NOTSET") {
@@ -687,7 +696,7 @@ Author URI: http://www.crazyiven.de/
 			if($myTreasures_options[option20] == 'no' || $morelinks)	{ $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>Links</td><td align=\"left\" valign=\"top\">".$morelinks; }
 			if($myTreasures_options[option20] == 'no')								{ $content .= "<a type=amzn search=\"".str_replace("\"","",$result01[field01])."\">Amazon.de</a><SCRIPT charset=\"utf-8\" type=\"text/javascript\" src=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822/DE/crazyivende-21/8005/fa48ef75-2c02-4e40-a251-4ac49ca85046\"></SCRIPT><NOSCRIPT><A HREF=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822%2FDE%2Fcrazyivende-21%2F8005%2Ffa48ef75-2c02-4e40-a251-4ac49ca85046&Operation=NoScript\">Amazon.de Widgets</A></NOSCRIPT>"; }
 			if($myTreasures_options[option20] == 'no' || $morelinks)	{ $content .= "</td></tr>"; }
-			if($result01[rating]) 																		{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Rating",$myTreasuresTextdomain).":<br /><font style=\"font-size: 10px; font-weight: normal;\">".__("max. 5 stars",$myTreasuresTextdomain)."</font></td><td align=\"left\" valign=\"top\">".myTreasures_rating($result01[rating])."</td></tr>"; }
+			if($result01[rating]) 																		{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Rating",$myTreasuresTextdomain).":<br /><font style=\"font-size: 10px; font-weight: normal;\">".__("max. 5 stars",$myTreasuresTextdomain)."</font></td><td align=\"left\" valign=\"top\">".myTreasuresRating($result01[rating])."</td></tr>"; }
 			if($userdata->user_level >= 6) 														{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Options",$myTreasuresTextdomain)."</td><td align=\"left\" valign=\"top\"><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresoverview.php&action=edit&id=".$result01[id]."\" target=\"_blank\">".__("Edit this entry",$myTreasuresTextdomain)."</a></td></tr>"; } 
 			if($moreimages) 																					{ $content .= "<tr><td align=\"left\" height=\"10\" colspan=\"2\">&nbsp;</tr><tr><td align=\"left\" colspan=\"2\"><b>".__("Images",$myTreasuresTextdomain).":</b><br />".$moreimages."</td>"; }
 			$content .= "</table></p>";
@@ -706,7 +715,7 @@ Author URI: http://www.crazyiven.de/
 			while($result01 = mysql_fetch_array($query01)) {
 
 				$showdetails = false;
-				if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasures_rating($result01[rating]); } else { $rating = false; }
+				if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
 				if($result01[$result02["feature_".$myTreasuredSort]] == "") { $result01[$result02["feature_".$myTreasuredSort]] = __("Unknown",$myTreasuresTextdomain); $searchsort = ""; } else { $result01[$result02["feature_".$myTreasuredSort]] = $result01[$result02["feature_".$myTreasuredSort]]; $searchsort = $result01[$result02["feature_".$myTreasuredSort]]; }
 				if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `".$result02["feature_".$myTreasuredSort]."` = '$searchsort' $myTreasuresTypesQueryCount")).")"; }
 				if($sorttype != $result01[$result02["feature_".$myTreasuredSort]]) {
@@ -733,7 +742,7 @@ Author URI: http://www.crazyiven.de/
 
 	}
 
-	function myTreasures_rating($rating) {
+	function myTreasuresRating($rating) {
 
 		for($i = ($rating/10); $i > 0.5; $i--) {
 
@@ -932,26 +941,6 @@ Author URI: http://www.crazyiven.de/
 		$sub = "Add Newsletter";
 		$msg = "Add Newsletter";
 		$to 	= "newsletter@mytreasures.de";
-		$xtra	= "From: ".get_bloginfo('admin_email')." (".get_bloginfo('name').")\nContent-Type: text/plain\nContent-Transfer-Encoding: 8bit\nX-Mailer: PHP ". phpversion();
-		@mail($to,$sub,$msg,$xtra);
-
-	}
-
-	function myTreasuresAmazonemail($check) {
-
-		if($check == "no") {
-
-			$sub = "Amazon System erlaubt";
-			$msg = "Der User folgenden Blogs hat der Nutzung des Amazon System zugestimmt:\n\n".get_bloginfo('wpurl');
-
-		} else {
-
-			$sub = "Amazon System NICHT erlaubt";
-			$msg = "Der User folgenden Blogs hat der Nutzung des Amazon System NICHT zugestimmt:\n\n".get_bloginfo('wpurl');
-
-		}
-
-		$to 	= "contact@crazyiven.de";
 		$xtra	= "From: ".get_bloginfo('admin_email')." (".get_bloginfo('name').")\nContent-Type: text/plain\nContent-Transfer-Encoding: 8bit\nX-Mailer: PHP ". phpversion();
 		@mail($to,$sub,$msg,$xtra);
 

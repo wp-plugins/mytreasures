@@ -1,7 +1,7 @@
 <?php
 
-	if($_POST[amazonok]) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'no' WHERE `id` = '1'"); myTreasuresAmazonemail("no"); $myTreasures_options[option20] = "no"; }
-	if($_POST[amazonnok]) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'yes' WHERE `id` = '1'"); myTreasuresAmazonemail("yes"); $myTreasures_options[option20] = "yes"; }
+	if($_POST[amazonok]) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'no' WHERE `id` = '1'");
+	if($_POST[amazonnok]) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'yes' WHERE `id` = '1'");
 
 	if(!current_user_can('level_10')) {
 
@@ -58,7 +58,6 @@
 				$_POST[option10] = $_POST[option10_tmp];
 				$_POST[option19] = $_POST[option19_tmp];
 				
-				if($myTreasures_options[option20] != $_POST[option20]) { myTreasuresAmazonemail($_POST[option20]); }
 				mysql_query("TRUNCATE TABLE `".$wpdb->prefix."mytreasures_options`");
 				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `changelog`, `option01`, `option02`, `option03`, `option04`, `option05`, `option06`, `option07`, `option08`, `option09`, `option10`, `option11`, `option12`, `option13`, `option14`, `option15`, `option16`, `option17`, `option18`, `option19`, `option20`, `option21`, `option22`, `option23`, `option24`, `option25`, `option26`, `option27`, `option28`, `option29`, `option30`, `option31`, `option32`, `option33`, `option34`, `option35`, `option36`, `option37`, `option38`, `option39`, `option40`) VALUES ('1', '$result01[version]', '$result01[changelog]', '$_POST[option01]', '$_POST[option02]', '$_POST[option03]', '$_POST[option04]', '$_POST[option05]', '$_POST[option06]', '$_POST[option07]', '$_POST[option08]', '$_POST[option09]', '$_POST[option10]', '$_POST[option11]', '$_POST[option12]', '$_POST[option13]', '$_POST[option14]', '$_POST[option15]', '$_POST[option16]', '$_POST[option17]', '$_POST[option18]', '$_POST[option19]', '$_POST[option20]', '$_POST[option21]', '$_POST[option22]', '$_POST[option23]', '$_POST[option24]', '$_POST[option25]', '$_POST[option26]', '$_POST[option27]', '$_POST[option28]', '$_POST[option29]', '$_POST[option30]', '$_POST[option31]', '$_POST[option32]', '$_POST[option33]', '$_POST[option34]', '$_POST[option35]', '$_POST[option36]', '$_POST[option37]', '$_POST[option38]', '$_POST[option39]', '$_POST[option40]')");
 				echo '<div id="message" class="updated fade"><p><strong>'.__("Options saved successfully",$myTreasuresTextdomain).'</strong></p></div>';
