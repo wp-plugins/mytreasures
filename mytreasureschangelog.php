@@ -12,15 +12,21 @@
 <form action="" method="post">
 <div class="wrap">
 <h2>Changelog</h2>
+<p><b>Neues in 1.0.6 // New in 1.0.6</b>
+<ul>
+	<li>DB Bug bei frischer Neuinstall // Database bug @ first install</li>
+	<li>Funktionen umbenannt // renamed some functions</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>Neues in 1.0.5 // New in 1.0.5</b>
 <ul>
 	<li>Suche wieder aktivierbar // Search function is back!</li>
 	<li>Code aufger&auml;umt // code clean up</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>Neues in 1.0.4 // New in 1.0.4</b>
 <ul>
 	<li>K&uuml;rzerer Hinweis auf das Plugin // Copyright is shorter</li>
