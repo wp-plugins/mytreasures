@@ -1,4 +1,4 @@
-=== myTreasures ===
+﻿=== myTreasures ===
 Contributors: crazyiven
 Donate link: http://www.crazyiven.de/wordpress-plugins/donate/
 Tags: posts, archive, database

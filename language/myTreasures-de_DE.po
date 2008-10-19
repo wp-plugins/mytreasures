@@ -79,8 +79,16 @@ msgid "Backup"
 msgstr "BackUp"
 
 #
+msgid "Help / Support"
+msgstr "Hilfe / Support"
+
+#
 msgid "Help"
 msgstr "Hilfe"
+
+#
+msgid "Support"
+msgstr "Support"
 
 #
 msgid "Infos"
@@ -993,4 +1001,28 @@ msgstr "Markierte Links l&ouml;schen"
 #
 msgid "Search..."
 msgstr "Suche..."
+
+#
+msgid "If you need help, just fill out this form and try to explain your problem as good as you can."
+msgstr "Wenn Du ein Problem hast, schildere es einfach und schicke das Formular ab."
+
+#
+msgid "Link to blog"
+msgstr "Link zum Blog"
+
+#
+msgid "Link"
+msgstr "Link"
+
+#
+msgid "Your Problem"
+msgstr "Dein Problem"
+
+#
+msgid "Send to support@mytreasures.de"
+msgstr "An support@mytreasures.de schicken"
+
+#
+msgid "Your Problem has been send to support@mytreasures.de"
+msgstr "Dein Problem wurde erfolgreich an support@mytreasures.de geschickt"
 

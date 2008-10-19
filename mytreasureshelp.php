@@ -45,4 +45,50 @@
 
 </table>
 </center>
+<br /><br />
+<h2><?php echo __("Support",$myTreasuresTextdomain); ?></h2>
+<?php
+
+	if($_POST[mytreasuresproblemhelp] && $_POST[sendmytreasuresproblemhelp]) {
+
+		myTreasuresSupportEMail($_POST[mytreasuresproblemhelp]);
+		echo __("Your Problem has been send to support@mytreasures.de",$myTreasuresTextdomain);
+
+	} else {
+
+?>
+
+<form action="" method="post">
+<p><?php echo __("If you need help, just fill out this form and try to explain your problem as good as you can.",$myTreasuresTextdomain); ?></p>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Link to blog",$myTreasuresTextdomain); ?></b></td>
+	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo get_bloginfo('wpurl'); ?>" disabled /></td>
+</tr>
+<tr class='alternate'>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Server Software",$myTreasuresTextdomain); ?></b></td>
+	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo $_SERVER["SERVER_SOFTWARE"]; ?>" disabled /></td>
+</tr>
+<tr>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Client Server",$myTreasuresTextdomain); ?></b></td>
+	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo $_SERVER["HTTP_USER_AGENT"]; ?>" disabled /></td>
+</tr>
+<tr class='alternate'>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("MySQL Version",$myTreasuresTextdomain); ?></b></td>
+	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo mysql_get_client_info(); ?>" disabled /></td>
+</tr>
+<tr>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Your Problem",$myTreasuresTextdomain); ?></b></td>
+	<td align="left"  valign="top"><textarea style="width: 350px; height: 250px;" name="mytreasuresproblemhelp"></textarea></td>
+</tr>
+</table>
+<div class="submit"><input type="submit" name="sendmytreasuresproblemhelp" value=" <?php echo __("Send to support@mytreasures.de",$myTreasuresTextdomain); ?> "></div>
+</form>
+
+<?php
+
+	}
+
+?>
+
 </div>

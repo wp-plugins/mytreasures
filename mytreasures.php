@@ -946,6 +946,16 @@ Author URI: http://www.crazyiven.de/
 
 	}
 
+	function myTreasuresSupportEMail($problem) {
+
+		$sub 	= "myTreasures Support";
+		$msg 	= "Folgendes Problem wurde gemeldet:\n\nLink zum Blog:\n".get_bloginfo('wpurl')."\n\nServer Software:\n".$_SERVER["SERVER_SOFTWARE"]."\n\nClient Server:\n".$_SERVER["HTTP_USER_AGENT"]."\n\nMySQL Version:\n".mysql_get_client_info()."\n\nProblem:\n".$problem;
+		$to 	= "support@mytreasures.de";
+		$xtra	= "From: ".get_bloginfo('admin_email')." (".get_bloginfo('name').")\nContent-Type: text/plain\nContent-Transfer-Encoding: 8bit\nX-Mailer: PHP ". phpversion();
+		@mail($to,$sub,$msg,$xtra);
+
+	}
+
 	function myTreasuresAddHeader() {
 
 		global $myTreasures_options;
@@ -998,20 +1008,24 @@ Author URI: http://www.crazyiven.de/
 		$query01 = mysql_query("SELECT `post_content`, `post_parent`, `post_name` FROM `".$wpdb->prefix."posts` WHERE `post_content` LIKE '%[my%' AND `post_type` = 'page'");
 		while($result01 = mysql_fetch_array($query01)) {
 
-			if(preg_match($myTreasuresCodeSearch[medialist],$result01[post_content]) || preg_match($myTreasuresCodeSearch[standalone],$result01[post_content]) || preg_match($myTreasuresCodeSearch[singlemedia],$result01[post_content])) {
+			if($myTreasuresCodeSearch[medialist] && $myTreasuresCodeSearch[standalone] && $myTreasuresCodeSearch[singlemedia]) {
 
-				$name = $result01[post_name];
-				$result02[post_parent] = $result01[post_parent];
-				while($result02[post_parent] != 0) {
+				if(preg_match($myTreasuresCodeSearch[medialist],$result01[post_content]) || preg_match($myTreasuresCodeSearch[standalone],$result01[post_content]) || preg_match($myTreasuresCodeSearch[singlemedia],$result01[post_content])) {
 
-					$query02 = mysql_query("SELECT `post_content`, `post_parent`, `post_name` FROM `".$wpdb->prefix."posts` WHERE `id` = '$result02[post_parent]' AND `post_type` = 'page'");
-					$result02 = mysql_fetch_array($query02);
-					$name = $result02[post_name]."/".$name;
+					$name = $result01[post_name];
+					$result02[post_parent] = $result01[post_parent];
+					while($result02[post_parent] != 0) {
+
+						$query02 = mysql_query("SELECT `post_content`, `post_parent`, `post_name` FROM `".$wpdb->prefix."posts` WHERE `id` = '$result02[post_parent]' AND `post_type` = 'page'");
+						$result02 = mysql_fetch_array($query02);
+						$name = $result02[post_name]."/".$name;
+
+					}
+
+  				$new_rules = array($name.'/list' => 'index.php?mytreasuresort=list&pagename='.$name,$name.'/rating' => 'index.php?mytreasuresort=rating&pagename='.$name,$name.'/covers' => 'index.php?mytreasuresort=covers&pagename='.$name,$name.'/sort1' => 'index.php?mytreasuresort=sort1&pagename='.$name,$name.'/sort2' => 'index.php?mytreasuresort=sort2&pagename='.$name,$name.'/sort3' => 'index.php?mytreasuresort=sort3&pagename='.$name,$name.'/sort4' => 'index.php?mytreasuresort=sort4&pagename='.$name,$name.'/sort5' => 'index.php?mytreasuresort=sort5&pagename='.$name,$name.'/([0-9]+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/([0-9]+)/(.+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/0' =>  'index.php?mytreasuresort=list&mytreasureglossar=&pagename='.$name,$name.'/a' =>  'index.php?mytreasuresort=list&mytreasureglossar=a&pagename='.$name,$name.'/b' =>  'index.php?mytreasuresort=list&mytreasureglossar=b&pagename='.$name,$name.'/c' =>  'index.php?mytreasuresort=list&mytreasureglossar=c&pagename='.$name,$name.'/d' =>  'index.php?mytreasuresort=list&mytreasureglossar=d&pagename='.$name,$name.'/e' =>  'index.php?mytreasuresort=list&mytreasureglossar=e&pagename='.$name,$name.'/f' =>  'index.php?mytreasuresort=list&mytreasureglossar=f&pagename='.$name,$name.'/g' =>  'index.php?mytreasuresort=list&mytreasureglossar=g&pagename='.$name,$name.'/h' =>  'index.php?mytreasuresort=list&mytreasureglossar=h&pagename='.$name,$name.'/i' =>  'index.php?mytreasuresort=list&mytreasureglossar=i&pagename='.$name,$name.'/j' =>  'index.php?mytreasuresort=list&mytreasureglossar=j&pagename='.$name,$name.'/k' =>  'index.php?mytreasuresort=list&mytreasureglossar=k&pagename='.$name,$name.'/l' =>  'index.php?mytreasuresort=list&mytreasureglossar=l&pagename='.$name,$name.'/m' =>  'index.php?mytreasuresort=list&mytreasureglossar=m&pagename='.$name,$name.'/n' =>  'index.php?mytreasuresort=list&mytreasureglossar=n&pagename='.$name,$name.'/o' =>  'index.php?mytreasuresort=list&mytreasureglossar=o&pagename='.$name,$name.'/p' =>  'index.php?mytreasuresort=list&mytreasureglossar=p&pagename='.$name,$name.'/q' =>  'index.php?mytreasuresort=list&mytreasureglossar=q&pagename='.$name,$name.'/r' =>  'index.php?mytreasuresort=list&mytreasureglossar=r&pagename='.$name,$name.'/s' =>  'index.php?mytreasuresort=list&mytreasureglossar=s&pagename='.$name,$name.'/t' =>  'index.php?mytreasuresort=list&mytreasureglossar=t&pagename='.$name,$name.'/u' =>  'index.php?mytreasuresort=list&mytreasureglossar=u&pagename='.$name,$name.'/v' =>  'index.php?mytreasuresort=list&mytreasureglossar=v&pagename='.$name,$name.'/w' =>  'index.php?mytreasuresort=list&mytreasureglossar=w&pagename='.$name,$name.'/x' =>  'index.php?mytreasuresort=list&mytreasureglossar=x&pagename='.$name,$name.'/y' =>  'index.php?mytreasuresort=list&mytreasureglossar=y&pagename='.$name,$name.'/z' =>  'index.php?mytreasuresort=list&mytreasureglossar=z&pagename='.$name);
+					$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 
 				}
-
-  			$new_rules = array($name.'/list' => 'index.php?mytreasuresort=list&pagename='.$name,$name.'/rating' => 'index.php?mytreasuresort=rating&pagename='.$name,$name.'/covers' => 'index.php?mytreasuresort=covers&pagename='.$name,$name.'/sort1' => 'index.php?mytreasuresort=sort1&pagename='.$name,$name.'/sort2' => 'index.php?mytreasuresort=sort2&pagename='.$name,$name.'/sort3' => 'index.php?mytreasuresort=sort3&pagename='.$name,$name.'/sort4' => 'index.php?mytreasuresort=sort4&pagename='.$name,$name.'/sort5' => 'index.php?mytreasuresort=sort5&pagename='.$name,$name.'/([0-9]+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/([0-9]+)/(.+)' => 'index.php?mytreasureid='.$wp_rewrite->preg_index(1).'&pagename='.$name,$name.'/0' =>  'index.php?mytreasuresort=list&mytreasureglossar=&pagename='.$name,$name.'/a' =>  'index.php?mytreasuresort=list&mytreasureglossar=a&pagename='.$name,$name.'/b' =>  'index.php?mytreasuresort=list&mytreasureglossar=b&pagename='.$name,$name.'/c' =>  'index.php?mytreasuresort=list&mytreasureglossar=c&pagename='.$name,$name.'/d' =>  'index.php?mytreasuresort=list&mytreasureglossar=d&pagename='.$name,$name.'/e' =>  'index.php?mytreasuresort=list&mytreasureglossar=e&pagename='.$name,$name.'/f' =>  'index.php?mytreasuresort=list&mytreasureglossar=f&pagename='.$name,$name.'/g' =>  'index.php?mytreasuresort=list&mytreasureglossar=g&pagename='.$name,$name.'/h' =>  'index.php?mytreasuresort=list&mytreasureglossar=h&pagename='.$name,$name.'/i' =>  'index.php?mytreasuresort=list&mytreasureglossar=i&pagename='.$name,$name.'/j' =>  'index.php?mytreasuresort=list&mytreasureglossar=j&pagename='.$name,$name.'/k' =>  'index.php?mytreasuresort=list&mytreasureglossar=k&pagename='.$name,$name.'/l' =>  'index.php?mytreasuresort=list&mytreasureglossar=l&pagename='.$name,$name.'/m' =>  'index.php?mytreasuresort=list&mytreasureglossar=m&pagename='.$name,$name.'/n' =>  'index.php?mytreasuresort=list&mytreasureglossar=n&pagename='.$name,$name.'/o' =>  'index.php?mytreasuresort=list&mytreasureglossar=o&pagename='.$name,$name.'/p' =>  'index.php?mytreasuresort=list&mytreasureglossar=p&pagename='.$name,$name.'/q' =>  'index.php?mytreasuresort=list&mytreasureglossar=q&pagename='.$name,$name.'/r' =>  'index.php?mytreasuresort=list&mytreasureglossar=r&pagename='.$name,$name.'/s' =>  'index.php?mytreasuresort=list&mytreasureglossar=s&pagename='.$name,$name.'/t' =>  'index.php?mytreasuresort=list&mytreasureglossar=t&pagename='.$name,$name.'/u' =>  'index.php?mytreasuresort=list&mytreasureglossar=u&pagename='.$name,$name.'/v' =>  'index.php?mytreasuresort=list&mytreasureglossar=v&pagename='.$name,$name.'/w' =>  'index.php?mytreasuresort=list&mytreasureglossar=w&pagename='.$name,$name.'/x' =>  'index.php?mytreasuresort=list&mytreasureglossar=x&pagename='.$name,$name.'/y' =>  'index.php?mytreasuresort=list&mytreasureglossar=y&pagename='.$name,$name.'/z' =>  'index.php?mytreasuresort=list&mytreasureglossar=z&pagename='.$name);
-				$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 
 			}
 
@@ -1055,7 +1069,7 @@ Author URI: http://www.crazyiven.de/
 
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Options",$myTreasuresTextdomain), 'myTreasures'), __(__("Options",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresoptions.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Backup",$myTreasuresTextdomain), 'myTreasures'), __(__("Backup",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresbackup.php');	
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Help",$myTreasuresTextdomain), 'myTreasures'), __(__("Help",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasureshelp.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Help / Support",$myTreasuresTextdomain), 'myTreasures'), __(__("Help / Support",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasureshelp.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Infos",$myTreasuresTextdomain), 'myTreasures'), __(__("Infos",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresinfo.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', "", "", 6,dirname(__FILE__).'/mytreasuresimages.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', "", "", 6,dirname(__FILE__).'/mytreasureslinks.php');	
