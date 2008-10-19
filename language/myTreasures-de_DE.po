@@ -1026,3 +1026,11 @@ msgstr "An support@mytreasures.de schicken"
 msgid "Your Problem has been send to support@mytreasures.de"
 msgstr "Dein Problem wurde erfolgreich an support@mytreasures.de geschickt"
 
+#
+msgid "Do you want to delete the following media?"
+msgstr "M&ouml;chten sie wirklich die folgenden Medien l&ouml;schen"
+
+#
+msgid "Delete marked media"
+msgstr "Markierte Medien l&ouml;schen"
+

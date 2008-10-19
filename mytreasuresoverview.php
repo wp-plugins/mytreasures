@@ -277,6 +277,71 @@
 
 			}
 
+			if($_POST[deletemarked] && $_POST[deletemedia]) {
+
+?>
+
+<div class="wrap">
+<h2><?php echo __("Delete media",$myTreasuresTextdomain); ?></h2>
+
+<?php
+
+				if($_POST[del] || $_POST[dontdel]) {
+
+					if($_POST[del]) {
+
+						$deleteditems = false;
+						foreach($_POST[deletemedia] AS $id => $name) {
+
+							$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$id'");
+							$result01 = mysql_fetch_array($query01);
+							mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$result01[id]'");
+							@unlink($path.$result01[image]);
+							@unlink($path."big_".$result01[image]);
+							$deleteditems .= "<br />- ".$result01[field01];
+
+						}
+						$deleteditems .= "<br />";
+						$message = sprintf(__("The media <i>%s</i> was deleted successfully!",$myTreasuresTextdomain),$deleteditems);
+
+					} else {
+
+						$deleteditems = false;
+						foreach($_POST[deletemedia] AS $id => $name) {
+
+							$deleteditems .= "<br />- ".$name;
+
+						}
+						$deleteditems .= "<br />";
+						$message = sprintf(__("The media <i>%s</i> has NOT be deleted!",$myTreasuresTextdomain),$deleteditems);
+
+					}
+
+					echo '<div id="message" class="updated fade"><p><strong>'.$message.'</strong></p></div>';
+
+				} else {
+
+?>
+
+<form action="" method="post">
+<input type="hidden" name="deletemarked" value="1" />
+<p><?php echo __("Do you want to delete the following media?",$myTreasuresTextdomain); foreach($_POST[deletemedia] AS $id => $name) { echo "<input type=\"hidden\" name=\"deletemedia[".$id."]\" value=\"".$name."\" /><br />- ".$name; } ?></p>
+<div class="submit"><input type="submit" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
+</form>
+
+<?php
+
+			}
+
+?>
+
+</div>
+<br /><br />
+
+<?php
+
+			}
+
 			switch($_GET[sortlist]) {
 				case 'id': $order = "id"; $orderquery = "`".$wpdb->prefix."mytreasures`.`id`"; break;
 				case 'title': $order = "title"; $orderquery = "`".$wpdb->prefix."mytreasures`.`field01`"; break;
@@ -286,11 +351,28 @@
 
 ?>
 
+<script type="text/javascript">
+<!-- 
+function markallmedia() {
+
+	for(var i = 0; i < document.myform.elements.length; i++) {
+    if(document.myform.elements[i].type == 'checkbox'){
+      document.myform.elements[i].checked = !(document.myform.elements[i].checked);
+    }
+  }
+	document.myform.elements[0].checked = !(document.myform.elements[0].checked);
+
+}
+//-->
+</script>  
+
 <div class="wrap">
 <h2><?php echo __("Overview",$myTreasuresTextdomain); ?></h2>
 <p><?php echo __("Please click on the heading to sort the list!",$myTreasuresTextdomain); ?></p>
+<form name="myform" action="" method="post">
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
+		<td align="center"><input type="checkbox" name="doit" onClick="markallmedia();"></td>
 		<td align="left"><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></td></td>
 		<td align="left"><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel</a></td>
 		<td align="left"><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=type" style="font-weight: bold; <?php if($order == 'type') { echo "font-style:italic;"; } ?>"><?php echo __("Type",$myTreasuresTextdomain); ?></a></td>
@@ -307,6 +389,7 @@
 ?>
 
 	<tr <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
+		<td align="center"><input type="checkbox" name="deletemedia[<?php echo $result01[id]; ?>]" value="<?php echo $result01[field01]; ?>" /></td>
 		<td align="left"><?php echo $result01[id]; ?></td>
 		<td align="left" <?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "style=\"font-style: italic;\""; } ?>><?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "<b>".__("Rent to",$myTreasuresTextdomain).":</b> ".$result01[rentto]." - "; }; echo $result01[field01]; if(strlen($result01[image]) < 3) { echo " (<b>".__("No Image / Cover!",$myTreasuresTextdomain)."</b>)"; } ?></td>
 		<td align="left"><?php echo $result01[name]; ?></td>
@@ -332,6 +415,8 @@
 ?>
 
 </table>
+<div class="submit"><input type="submit" name="deletemarked" value=" <?php echo __("Delete marked media",$myTreasuresTextdomain); ?> "></div>
+</form>
 </div>
 
 <?php
