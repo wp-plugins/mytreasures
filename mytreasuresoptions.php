@@ -101,7 +101,7 @@
 		29 - Möchte das "Verliehen an" System nutzen (nein / JA)
 		30 - OverLIB Funktion (nein / JA)
 		31 - Suche aktiviert (nein / JA)
-		32 - FREI
+		32 - Branding Text
 		33 - FREI
 		34 - FREI
 		35 - FREI
@@ -152,6 +152,8 @@
 <br /><input name="option14" type="radio" value="yes" <?php if($result01[option14] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Save and show big cover / image",$myTreasuresTextdomain); ?>
 <br /><input name="option30" type="radio" value="no" <?php if($result01[option30] == '' || $result01[option30] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Don't show big cover on mouseover (if available!)",$myTreasuresTextdomain); ?>
 <br /><input name="option30" type="radio" value="yes" <?php if($result01[option30] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show big cover on mouseover (if available!)",$myTreasuresTextdomain); ?>
+<br /><?php echo __("Insert this branding text to the bottom right corner of the covers:",$myTreasuresTextdomain); ?>
+<br /><input name="option32" type="text" value="<?php echo addslashes(htmlentities($result01[option32])); ?>">
 </p>
 <p>
 <b><?php echo __("Options for list view",$myTreasuresTextdomain); ?></b>

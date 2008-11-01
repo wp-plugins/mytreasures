@@ -78,7 +78,7 @@
 							if($result02[option04] == 'fixedheight') { $height = $result02[option05]; $width = "0"; $resizeby = "height"; $cutimage = false; }
 							if($result02[option04] == 'fixedwidth') { $height = "0"; $width = $result02[option06]; $resizeby = "width"; $cutimage = false; }
 							if($result02[option04] == 'fixedboth') { $height = $result02[option07]; $width = $result02[option08]; $resizeby = "width"; $cutimage = true; }
-							if(!myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,$width,$height,$resizeby,$cutimage)) {
+							if(!myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,$width,$height,$resizeby,$cutimage,$result02[option32])) {
 
 								echo "<div id=\"message\" class=\"updated fade\"><p><strong>".__("The system had problems to save the image / cover. Please retry it!",$myTreasuresTextdomain)."</strong></p></div>";
 
@@ -86,14 +86,14 @@
 
 						} else {
 
-							copy($_FILES['image']['tmp_name'],$path.$imagename);
+							myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,"","","","",$myTreasures_options[option32]);
 							chmod($path.$imagename, 0666);
 
 						}
 
 						if($result02[option14] == 'yes') {
 
-							copy($_FILES['image']['tmp_name'],$path."big_".$imagename);
+							myTreasuresImageResize($_FILES['image']['tmp_name'],$path."big_".$imagename,"","","","",$myTreasures_options[option32]);
 							chmod($path."big_".$imagename, 0666);
 
 						}
@@ -193,7 +193,7 @@
 
 <br /><?php echo __("Current Image / Cover",$myTreasuresTextdomain); ?> (<?php echo $result01[image]; ?>):
 <br /><img src="../wp-content/mytreasures/<?php echo $result01[image]; ?>" />
-<br /><input type="checkbox" name="deletecover" value="1"> <?php echo __("Current Image / Cover",$myTreasuresTextdomain); ?>
+<br /><input type="checkbox" name="deletecover" value="1"> <?php echo __("Delete current Image / Cover",$myTreasuresTextdomain); ?>
 <br />
 
 <?php } ?>

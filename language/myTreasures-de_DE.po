@@ -1034,3 +1034,15 @@ msgstr "M&ouml;chten sie wirklich die folgenden Medien l&ouml;schen"
 msgid "Delete marked media"
 msgstr "Markierte Medien l&ouml;schen"
 
+#
+msgid "Insert this branding text to the bottom right corner of the covers:"
+msgstr "F&uuml;ge folgenden Text unten rechts in die Cover ein:"
+
+#
+msgid "Delete current Image / Cover"
+msgstr "L&ouml;sche aktuelles Cover"
+
+#
+msgid "Current Image / Cover"
+msgstr "Aktuelles Cover"
+

@@ -52,18 +52,18 @@
 							if($myTreasures_options[option04] == 'fixedheight') { $height = $myTreasures_options[option05]; $width = "0"; $resizeby = "height"; $cutimage = false; }
 							if($myTreasures_options[option04] == 'fixedwidth') { $height = "0"; $width = $myTreasures_options[option06]; $resizeby = "width"; $cutimage = false; }
 							if($myTreasures_options[option04] == 'fixedboth') { $height = $myTreasures_options[option07]; $width = $myTreasures_options[option08]; $resizeby = "width"; $cutimage = true; }
-							myTreasuresImageResize($coverpath.$uploadedimage,$path.$imagename,$width,$height,$resizeby,$cutimage);
+							myTreasuresImageResize($coverpath.$uploadedimage,$path.$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options[option32]);
 
 						} else {
 
-							copy($coverpath.$uploadedimage,$path.$imagename);
+							myTreasuresImageResize($coverpath.$uploadedimage,$path.$imagename,"","","","",$myTreasures_options[option32]);
 							chmod($path.$imagename, 0666);
 
 						}
 
 						if($myTreasures_options[option14] == 'yes') {
 
-							copy($coverpath.$uploadedimage,$path."big_".$imagename);
+							myTreasuresImageResize($coverpath.$uploadedimage,$path."big_".$imagename,"","","","",$myTreasures_options[option32]);
 							chmod($path."big_".$imagename, 0666);
 
 						}

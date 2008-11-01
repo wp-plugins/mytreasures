@@ -63,7 +63,7 @@
 						if($myTreasures_options[option04] == 'fixedheight') { $height = $myTreasures_options[option05]; $width = "0"; $resizeby = "height"; $cutimage = false; }
 						if($myTreasures_options[option04] == 'fixedwidth') { $height = "0"; $width = $myTreasures_options[option06]; $resizeby = "width"; $cutimage = false; }
 						if($myTreasures_options[option04] == 'fixedboth') { $height = $myTreasures_options[option07]; $width = $myTreasures_options[option08]; $resizeby = "width"; $cutimage = true; }
-						if(!myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,$width,$height,$resizeby,$cutimage)) {
+						if(!myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options[option32])) {
 
 							echo "<div id=\"message\" class=\"updated fade\"><p><strong>".__("The system had problems to save the image / cover. Please retry it!",$myTreasuresTextdomain)."</strong></p></div>";
 
@@ -71,14 +71,14 @@
 
 					} else {
 
-						copy($_FILES['image']['tmp_name'],$path.$imagename);
+						myTreasuresImageResize($_FILES['image']['tmp_name'],$path.$imagename,"","","","",$myTreasures_options[option32]);
 						chmod($path.$imagename, 0666);
 
 					}
 
 					if($myTreasures_options[option14] == 'yes') {
 
-						copy($_FILES['image']['tmp_name'],$path."big_".$imagename);
+						myTreasuresImageResize($_FILES['image']['tmp_name'],$path."big_".$imagename,"","","","",$myTreasures_options[option32]);
 						chmod($path."big_".$imagename, 0666);
 
 					}

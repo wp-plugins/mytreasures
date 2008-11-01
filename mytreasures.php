@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.6
+Version: 1.0.7
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -15,7 +15,7 @@ Author URI: http://www.crazyiven.de/
 	
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion 		= "030";
-	$myTreasuresPluginVersion = "1.0.6";
+	$myTreasuresPluginVersion = "1.0.7";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	register_activation_hook( __FILE__, 'myTreasuresInstall');
@@ -632,7 +632,7 @@ Author URI: http://www.crazyiven.de/
 			while($result01 = mysql_fetch_array($query01)) {
 
 				++$myTreasuresCountMedia;
-				if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
+				if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
 				if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<center><img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'></center><br />"; } else { $imagebig = false; }
 				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\" onmouseover=\"return overlib('".$imagebig.$result01[field01]."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\"></a>";
 				if(preg_match("/^([0-9]+)$/",$myTreasures_options[option09]) && $myTreasures_options[option09] > 0) { if($myTreasuresCountMedia % $myTreasures_options[option09] == 0) { $content .= "<br />"; } }
@@ -661,8 +661,8 @@ Author URI: http://www.crazyiven.de/
 			$query04 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$result01[id]'");
 			while($result04 = mysql_fetch_array($query04)) { $morelinks .= "<a href=\"".$result04[link]."\" target=\"_blank\">".$result04[name]."</a><br />"; }
 
-			if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; $imagelinkbig = get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
-			if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/default.jpg"; }
+			if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; $imagelinkbig = get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
+			if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
 			if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'>"; } else { $imagebig = false; }
 			if($myTreasures_options[option14] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $coverimage = "<a href=\"".$imagelinkbig."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\" onmouseover=\"return overlib('".$imagebig."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 10px;\"></a>"; } else { $coverimage = "<img src=\"".$imagelink."\" style=\"padding: 10px;\">"; }
 			if($result01[tracklist]) { $result01[description] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>"; $all_tracks = explode("#NT#",$result01[tracklist]); foreach($all_tracks AS $track) { list($name,$length) = explode("#L#",$track); if($name) { $result01[description] .= "<br />".sprintf('%02d',(++$i)).". ".$name; } if($name && $length) { $result01[description] .= " (".$length." Min)"; } } }
@@ -786,14 +786,70 @@ Author URI: http://www.crazyiven.de/
 
 	}
 
-	function myTreasuresImageResize($source,$destination,$width = false,$height = false,$resizeby = false,$cutimage = false) {
+	function myTreasuresImageResize($source,$destination,$width = false,$height = false,$resizeby = false,$cutimage = false,$branding = false) {
 
 		list($srcwidth,$srcheight,$srctype) = getimagesize($source);
 
 		if(!$width && !$height || $srcwidth < $width || $srcheight < $height) {
 
-			@copy($source,$destination);
-			chmod($destination, 0666);
+			if($branding) {
+
+				if($srctype == 1 && function_exists('imagecreatefromgif')) {
+	
+					$resource = imagecreatefromgif($source);
+
+				} elseif($srctype == 2 && function_exists('imagecreatefromjpeg')) {
+
+					$resource = imagecreatefromjpeg($source);
+
+			  } elseif($srctype == 3 && function_exists('imagecreatefrompng')) {
+
+			  	$resource = imagecreatefrompng($source);
+
+				} 
+
+				$font = 2;
+				$spacer = 4;
+				$height = ImageFontHeight($font) + $spacer * 2;
+				$width = ImageFontWidth($font) * strlen($branding) + $spacer * 2;
+
+				if($height * 2 <= ImageSY($resource) && $width * 2 <= ImageSX($resource) && $branding != '') {
+
+					$x = (ImageSX($resource)-$width);
+					$y = (ImageSY($resource)-$height);
+					$bgim = ImageCreate($width,$height);
+					$bgcol = imageColorAllocate($bgim,0,0,0);
+					ImageFill($bgim,0,0,$bgcol);
+					ImageCopyMerge($resource, $bgim, $x, $y, 0, 0, $width, $height, 30);
+					ImageDestroy($bgim);
+					$col = ImageColorAllocate($resource,255,255,255);
+					ImageString($resource,$font, $x + $spacer, $y + $spacer, $branding, $col);
+
+				}
+
+				if($srctype == 1 && function_exists('imagegif')) {
+
+					imagegif($resource,$destination);
+					return true;
+
+				} elseif($srctype == 2 && function_exists('imagejpeg')) {
+
+					imagejpeg($resource,$destination);
+					return true;
+
+			  } elseif($srctype == 3 && function_exists('imagepng')) {
+
+					imagepng($resource,$destination);
+					return true;
+
+				}
+
+			} else {
+		
+				copy($source,$destination);
+		
+			}
+
 			return true;
 
 		}
@@ -888,41 +944,62 @@ Author URI: http://www.crazyiven.de/
 
 			}
 
-		if(function_exists('imagecreatetruecolor') && function_exists('imagecopyresampled')) {
+			if(function_exists('imagecreatetruecolor') && function_exists('imagecopyresampled')) {
 
-			$image = imagecreatetruecolor($width, $height);
+				$image = imagecreatetruecolor($width, $height);
 
-		} elseif(function_exists('imagecreate') && function_exists('imagecopyresized')) {
+			} elseif(function_exists('imagecreate') && function_exists('imagecopyresized')) {
 
-			$image = imagecreate($width,$height);
+				$image = imagecreate($width,$height);
 
-		} else {
+			} else {
 
-			return false;
+				return false;
 
-		}
+			}
 
 			imagecopy($image,$resource,0,0,$cutfromwidth,$cutfromheight,$width,$height);
 			$resource = $image;
 
 		}
 
+		if($branding) {
+
+			$im = $resource;
+			$font = 2;
+			$spacer = 4;
+			$height = ImageFontHeight($font) + $spacer * 2;
+			$width = ImageFontWidth($font) * strlen($branding) + $spacer * 2;
+			
+			if($height * 2 <= ImageSY($resource) && $width * 2 <= ImageSX($resource) && $branding != '') {
+
+				$x = (ImageSX($im)-$width);
+				$y = (ImageSY($im)-$height);
+				$bgim = ImageCreate($width,$height);
+				$bgcol = imageColorAllocate($bgim,0,0,0);
+				ImageFill($bgim,0,0,$bgcol);
+				ImageCopyMerge($resource, $bgim, $x, $y, 0, 0, $width, $height, 30);
+				ImageDestroy($bgim);
+				$col = ImageColorAllocate($im, 255,255,255);
+				ImageString($resource,$font, $x + $spacer, $y + $spacer, $branding, $col);
+
+			}
+
+		}
+
 		if($srctype == 1 && function_exists('imagegif')) {
 
 			imagegif($resource,$destination);
-			chmod($destination, 0666);
 			return true;
 
 		} elseif($srctype == 2 && function_exists('imagejpeg')) {
 
 			imagejpeg($resource,$destination);
-			chmod($destination, 0666);
 			return true;
 
 	  } elseif($srctype == 3 && function_exists('imagepng')) {
 
 			imagepng($resource,$destination);
-			chmod($destination, 0666);
 			return true;
 
 		} else {

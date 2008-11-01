@@ -12,15 +12,23 @@
 <form action="" method="post">
 <div class="wrap">
 <h2>Changelog</h2>
+<p><b>Neues in 1.0.7 // New in 1.0.7</b>
+<ul>
+	<li>L&ouml;schung von mehreren Eintr&auml;gen zugleich // Added feature to delete multiple media at once</li>
+	<li>Neue Art der Installation // Changed way of installation (wordpress hook)</li>
+	<li>Text Branding m&ouml;glich f&uuml; Cover // Added text branding of cover images</li>
+	<li>default.jpg von wp-content/mytreasures/ nach wp-content/plugins/mytreasures/images/ verschoben // Moved default.jpg from wp-content/mytreasures/ into wp-content/plugins/mytreasures/images/</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>Neues in 1.0.6 // New in 1.0.6</b>
 <ul>
 	<li>DB Bug bei frischer Neuinstall // Database bug @ first install</li>
 	<li>Funktionen umbenannt // renamed some functions</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>Neues in 1.0.5 // New in 1.0.5</b>
 <ul>
 	<li>Suche wieder aktivierbar // Search function is back!</li>
