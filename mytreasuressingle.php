@@ -110,7 +110,7 @@
 <form action="" method="post" enctype="multipart/form-data">
 <input type="hidden" name="treasuretype" value="<?php echo $_POST[treasuretype]; ?>">
 <p><?php if($_POST[doit] && !strlen($_POST[field01]) > 0) { echo "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />"; } echo $result_type["field01"]; ?><font style="color: #FF0000;">*</font>
-<br /><textarea style="height: 16px; width: 90%;" name="field01"><?php echo stripslashes($_POST[field01]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="field01"><?php echo stripslashes($_POST[field01]); ?></textarea>
 <?php if($check_doubletitle && $_POST[doit]) { ?>
 <br /><br /><b><?php echo __("Important information",$myTreasuresTextdomain); ?></b><br /><?php echo __("This title is already in database, continue adding?",$myTreasuresTextdomain); ?>
 <br /><input type="checkbox" name="override" value="1"> <?php echo __("Yes",$myTreasuresTextdomain); ?>
@@ -125,7 +125,7 @@
 
 		if($result_type[$field]) {
 
-			echo "<br /><br />".$result_type[$field]."<br /><textarea style=\"height: 16px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
+			echo "<br /><br />".$result_type[$field]."<br /><textarea style=\"height: 30px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
 
 		}
 
@@ -137,9 +137,9 @@
 
 <br />
 <br /><?php echo __("Track",$myTreasuresTextdomain); ?> #<?php echo $tracklist; ?>
-<br /><textarea style="height: 16px; width: 90%;" name="trackname[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[trackname][$tracklist]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="trackname[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[trackname][$tracklist]); ?></textarea>
 <br /><?php echo __("Length (in minutes)",$myTreasuresTextdomain); ?>
-<br /><textarea style="height: 16px; width: 90%;" name="tracklength[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[tracklength][$tracklist]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="tracklength[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[tracklength][$tracklist]); ?></textarea>
 <?php } } else { ?>
 <br />
 <br /><?php echo __("Description",$myTreasuresTextdomain); ?>

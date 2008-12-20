@@ -143,7 +143,7 @@
 
 <form action="" method="post" enctype="multipart/form-data">
 <p><?php if($_POST[doit] && !strlen($_POST[field01]) > 0) { echo "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />"; } echo $result_type["field01"]; ?><font style="color: #FF0000;">*</font>
-<br /><textarea style="height: 16px; width: 90%;" name="field01"><?php echo stripslashes($_POST[field01]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="field01"><?php echo stripslashes($_POST[field01]); ?></textarea>
 <?php 
 
 	for($i = 2; $i <= 20; $i++) {
@@ -152,7 +152,7 @@
 
 		if($result_type[$field]) {
 
-			echo "<br /><br />".$result_type[$field]."<br /><textarea style=\"height: 16px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
+			echo "<br /><br />".$result_type[$field]."<br /><textarea style=\"height: 30px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
 
 		}
 
@@ -164,9 +164,9 @@
 
 <br />
 <br /><?php echo __("Track",$myTreasuresTextdomain); ?> #<?php echo $tracklist; ?>
-<br /><textarea style="height: 16px; width: 90%;"name="trackname[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[trackname][$tracklist]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;"name="trackname[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[trackname][$tracklist]); ?></textarea>
 <br /><?php echo __("Length (in minutes)",$myTreasuresTextdomain); ?>
-<br /><textarea style="height: 16px; width: 90%;"name="tracklength[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[tracklength][$tracklist]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;"name="tracklength[<?php echo $tracklist; ?>]"><?php echo stripslashes($_POST[tracklength][$tracklist]); ?></textarea>
 <?php } } else { ?>
 <br />
 <br /><?php echo __("Description",$myTreasuresTextdomain); ?>
@@ -180,7 +180,7 @@
 
 <?php if($myTreasures_options[option29] == 'yes') { ?>
 <br /><?php echo __("Rent to",$myTreasuresTextdomain); ?>
-<br /><textarea style="height: 16px; width: 90%;" name="rentto"><?php echo stripslashes($_POST[rentto]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="rentto"><?php echo stripslashes($_POST[rentto]); ?></textarea>
 <br />
 
 <?php } ?>
@@ -368,45 +368,69 @@ function markallmedia() {
 
 <div class="wrap">
 <h2><?php echo __("Overview",$myTreasuresTextdomain); ?></h2>
-<p><?php echo __("Please click on the heading to sort the list!",$myTreasuresTextdomain); ?></p>
-<form name="myform" action="" method="post">
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td align="center"><input type="checkbox" name="doit" onClick="markallmedia();"></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></td></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel</a></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=type" style="font-weight: bold; <?php if($order == 'type') { echo "font-style:italic;"; } ?>"><?php echo __("Type",$myTreasuresTextdomain); ?></a></td>
-		<td align="center"><b><?php echo __("Options",$myTreasuresTextdomain); ?></b></td>
-	</tr>
 
 <?php
 
 			$query01 = mysql_query("SELECT `".$wpdb->prefix."mytreasures`.*, `".$wpdb->prefix."mytreasures_type`.`name` FROM `".$wpdb->prefix."mytreasures` LEFT JOIN `".$wpdb->prefix."mytreasures_type` ON `".$wpdb->prefix."mytreasures`.`type` = `".$wpdb->prefix."mytreasures_type`.`id` ORDER BY ".$orderquery."");
 			if(mysql_num_rows($query01)) {
 
-				while($result01 = mysql_fetch_array($query01)) {
+?>
+
+<p><?php echo __("Please click on the heading to sort the list!",$myTreasuresTextdomain); ?></p>
+<form name="myform" action="" method="post">
+<table class="widefat fixed" cellspacing="0">
+<thead>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-cb check-column" style=""><input type="checkbox" /></th>
+	<th scope="col"  class="manage-column column-username" style=""><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel</a></th>
+	<th scope="col"  class="manage-column column-name" style=""><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=type" style="font-weight: bold; <?php if($order == 'type') { echo "font-style:italic;"; } ?>"><?php echo __("Type",$myTreasuresTextdomain); ?></a></th>
+	<th scope="col"  class="manage-column column-posts num" style=""><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></th>
+</tr>
+</thead>
+
+<tfoot>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-cb check-column" style=""><input type="checkbox" /></th>
+	<th scope="col"  class="manage-column column-username" style=""><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel</a></th>
+	<th scope="col"  class="manage-column column-name" style=""><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=type" style="font-weight: bold; <?php if($order == 'type') { echo "font-style:italic;"; } ?>"><?php echo __("Type",$myTreasuresTextdomain); ?></a></th>
+	<th scope="col"  class="manage-column column-posts num" style=""><a href="?page=mytreasures/mytreasuresoverview.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></th>
+</tr>
+</tfoot>
+
+<tbody id="users" class="list:user user-list">
+
+<?php
+
+		while($result01 = mysql_fetch_array($query01)) {
 
 ?>
 
-	<tr <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
-		<td align="center"><input type="checkbox" name="deletemedia[<?php echo $result01[id]; ?>]" value="<?php echo $result01[field01]; ?>" /></td>
-		<td align="left"><?php echo $result01[id]; ?></td>
-		<td align="left" <?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "style=\"font-style: italic;\""; } ?>><?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "<b>".__("Rent to",$myTreasuresTextdomain).":</b> ".$result01[rentto]." - "; }; echo $result01[field01]; if(strlen($result01[image]) < 3) { echo " (<b>".__("No Image / Cover!",$myTreasuresTextdomain)."</b>)"; } ?></td>
-		<td align="left"><?php echo $result01[name]; ?></td>
-		<td align="center">[<a href="?page=mytreasures/mytreasuresoverview.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresoverview.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresimages.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate images",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasureslinks.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate links",$myTreasuresTextdomain); ?></a>]</td>
-	</tr>	
+<tr id='user-1' <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
+	<th scope='row' class='check-column'><input type='checkbox' name='deletemedia[<?php echo $result01[id]; ?>]' id='user_1' value='<?php echo $result01[field01]; ?>' /></th>
+	<td class="username column-username"<?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "style=\"font-style: italic;\""; } ?>><?php if($result01[rentto] && $myTreasures_options[option29] == 'yes') { echo "<b>".__("Rent to",$myTreasuresTextdomain).":</b> ".$result01[rentto]." - "; }; echo $result01[field01]; if(strlen($result01[image]) < 3) { echo " (<b>".__("No Image / Cover!",$myTreasuresTextdomain)."</b>)"; } ?><br /><div class="row-actions"><span class='edit'><a href="?page=mytreasures/mytreasuresoverview.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a> | <a href="?page=mytreasures/mytreasuresoverview.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a> | <a href="?page=mytreasures/mytreasuresimages.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate images",$myTreasuresTextdomain); ?></a> | <a href="?page=mytreasures/mytreasureslinks.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate links",$myTreasuresTextdomain); ?></a></span></div></td>
+	<td class="name column-name"><?php echo $result01[name]; ?></td>
+	<td class="posts column-posts num"><?php echo $result01[id]; ?></td>
+</tr>
+
 
 <?php
 
 				}
 
+?>
+
+</tbody>
+</table>
+<div class="submit"><input type="submit" name="deletemarked" value=" <?php echo __("Delete marked media",$myTreasuresTextdomain); ?> "></div>
+</form>
+
+<?php
+
 			} else {
 
 ?>
 
-<tr>
-	<td colspan="5" align="left"><?php echo __("No media in database!",$myTreasuresTextdomain); ?></td>
-</tr>
+<p><?php echo __("No media in database!",$myTreasuresTextdomain); ?></p>
 
 <?php
 
@@ -414,9 +438,6 @@ function markallmedia() {
 
 ?>
 
-</table>
-<div class="submit"><input type="submit" name="deletemarked" value=" <?php echo __("Delete marked media",$myTreasuresTextdomain); ?> "></div>
-</form>
 </div>
 
 <?php

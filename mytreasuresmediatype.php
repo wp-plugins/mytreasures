@@ -127,7 +127,7 @@
 
 <form action="" method="post" enctype="multipart/form-data">
 <p><?php if($_POST[doit] && !strlen($_POST[name]) > 0) { echo "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />"; } ?>Name<font style="color: #FF0000;">*</font>
-<br /><textarea style="height: 16px; width: 90%;" name="name"><?php echo stripslashes($_POST[name]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="name"><?php echo stripslashes($_POST[name]); ?></textarea>
 <br />
 <br /><?php echo __("<b>Information</b><br />Following fields are for your own details of this media type",$myTreasuresTextdomain); ?>
 
@@ -164,7 +164,7 @@
 			$selectinput5 .= "<option value=\"".$field."\" ".$checked5.">".sprintf(__("Content of %s (Must have content!)",$myTreasuresTextdomain),$field1)."</option>";
 			$selectinput6 .= "<option value=\"".$field."\">".sprintf(__("Content of %s",$myTreasuresTextdomain),$field1)."</option>";
 		} 
-			echo "<br /><br />".$field1."<br /><textarea style=\"height: 16px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
+			echo "<br /><br />".$field1."<br /><textarea style=\"height: 30px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
 
 	}
 
@@ -341,13 +341,13 @@
 <h2><?php echo __("Add new media type",$myTreasuresTextdomain); ?></h2>
 <form action="" method="post" enctype="multipart/form-data">
 <p><?php if($_POST[doit] && !strlen($_POST[name]) > 0) { echo "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />"; } ?>Name<font style="color: #FF0000;">*</font>
-<br /><textarea style="height: 16px; width: 90%;" name="name"><?php echo stripslashes($_POST[name]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="name"><?php echo stripslashes($_POST[name]); ?></textarea>
 <?php if($check_doubletitle && $_POST[doit]) { ?>
 <br /><br /><?php echo __("<b>Important information</b><br />This name is already in database!",$myTreasuresTextdomain); ?>
 <br />
 <?php } ?>
 <br /><br /><?php if($_POST[doit] && !preg_match("/^([a-zA-Z0-9]+)$/",$_POST[short])) { echo "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />"; } ?>Tag<font style="color: #FF0000;">*</font> <?php echo __("(Not changeable, just numbers & letters!)",$myTreasuresTextdomain); ?>
-<br /><textarea style="height: 16px; width: 90%;" name="short"><?php echo stripslashes($_POST[short]); ?></textarea>
+<br /><textarea style="height: 30px; width: 90%;" name="short"><?php echo stripslashes($_POST[short]); ?></textarea>
 <?php if($check_doubletshort && $_POST[doit]) { ?>
 <br /><br /><?php echo __("<b>Important information</b><br />This tag is already in database!",$myTreasuresTextdomain); ?>
 <?php } ?>
@@ -364,7 +364,7 @@
 		if($i == 1) { $field1 .= "<font style=\"color: #FF0000;\">*</font>"; }
 		if($i < 10) { $field = "field0".$i; } else { $field = "field".$i; }
 		if($i > 1) { $selectinput .= "<option value=\"".$field."\">".sprintf(__("Content of %s (Must have content!)",$myTreasuresTextdomain),$field1)."</option>"; } 
-			echo "<br /><br />".$field1."<br /><textarea style=\"height: 16px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
+			echo "<br /><br />".$field1."<br /><textarea style=\"height: 30px; width: 90%;\" name=\"".$field."\">".stripslashes($_POST[$field])."</textarea>";
 
 	}
 

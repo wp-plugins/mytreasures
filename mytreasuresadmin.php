@@ -195,25 +195,27 @@
 
 		echo __("Just upload your covers to \"wp-content/mytreasures/coverupload/\" and you can manager multiple covers in this area!",$myTreasuresTextdomain); 
 			
-			$coverarray = false;
-			if($directoryhandler = opendir($coverpath)) { while (($file = readdir($directoryhandler)) !== false) { $filetype = myTreasuresGetImageType($file); if($filetype == 'jpeg' || $filetype == 'jpg' || $filetype == 'gif' || $filetype == 'png') { $coverarray[] = $file; } } } closedir($directoryhandler);
+		$coverarray = false;
+		if($directoryhandler = opendir($coverpath)) { while (($file = readdir($directoryhandler)) !== false) { $filetype = myTreasuresGetImageType($file); if($filetype == 'jpeg' || $filetype == 'jpg' || $filetype == 'gif' || $filetype == 'png') { $coverarray[] = $file; } } } closedir($directoryhandler);
 		if($coverarray) {
 
 			$selectoptions = "<option value=\"0\">".__("Please choose:",$myTreasuresTextdomain)."</option>";
-			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `image` = '' ORDER BY `field01`");
+			$query01 = mysql_query("SELECT `media`.`id`, `media`.`field01`, `mediatype`.`name` FROM `".$wpdb->prefix."mytreasures` AS `media` LEFT JOIN `".$wpdb->prefix."mytreasures_type` AS `mediatype` ON `mediatype`.`id` = `media`.`type` WHERE `media`.`image` = '' ORDER BY `media`.`field01`");
 			while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01[id]."\">".$result01[field01]."</option>"; }
 			$selectoptions .= "<option value=\"0\">".__("Following media already have cover:",$myTreasuresTextdomain)."</option>";
-			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `image` != '' ORDER BY `field01`");
+			$query01 = mysql_query("SELECT `media`.`id`, `media`.`field01`, `mediatype`.`name` FROM `".$wpdb->prefix."mytreasures` AS `media` LEFT JOIN `".$wpdb->prefix."mytreasures_type` AS `mediatype` ON `mediatype`.`id` = `media`.`type` WHERE `media`.`image` != '' ORDER BY `media`.`field01`");
 			while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01[id]."\">".$result01[field01]."</option>"; }
 			echo "<form method=\"post\" action=\"\">";
-			foreach($coverarray AS $image) { echo "<br /><br /><img src=\"../wp-content/mytreasures/coverupload/".$image."\"><br /><select name=\"multipleimageupload[".$image."]\" style=\"width: 200px;\">".$selectoptions."</select>"; }
+			foreach($coverarray AS $image) { echo "<br /><br /><img src=\"../wp-content/mytreasures/coverupload/".$image."\"><br /><select name=\"multipleimageupload[".$image."]\" style=\"width: 80%;\">".$selectoptions."</select>"; }
 			echo "<br /><br /><div class=\"submit\"><input type=\"submit\" value=\" ".__("Update media",$myTreasuresTextdomain)." \"></form></div></form>";
 
 		}
 
-		} else { 
+	} else { 
+
 			echo __("You can manage multiple covers, if you create a folder \"coverupload\" in \"wp-content/mytreasures/\" with writings rights!",$myTreasuresTextdomain);
-		}
+
+	}
 
 ?>
 
