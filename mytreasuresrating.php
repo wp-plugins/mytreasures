@@ -65,7 +65,7 @@
 <p><b>Titel / Name:</b>
 <br /><?php echo stripslashes($result01[field01]); ?>
 <br /><b><?php echo __("Rating (in stars)",$myTreasuresTextdomain); ?>:</b>
-<br /><?php echo __("bad",$myTreasuresTextdomain); for($i = 0.5; $i <= 5; $i += 0.5) { ?><input type="radio" name="rating[<?php echo $result01[id]; ?>]" value="<?php echo ($i*10); ?>"><?php echo number_format($i,1,",",""); ?>&nbsp;&nbsp;<?php } ?> <?php echo __("good",$myTreasuresTextdomain); ?><br /></p>
+<br /><?php echo __("bad",$myTreasuresTextdomain); ?>&nbsp;&nbsp;<?php for($i = 0.5; $i <= 5; $i += 0.5) { ?><input type="radio" name="rating[<?php echo $result01[id]; ?>]" value="<?php echo ($i*10); ?>"><?php echo number_format($i,1,",",""); ?>&nbsp;&nbsp;<?php } echo __("good",$myTreasuresTextdomain); ?><br /></p>
 <?php } ?>
 <div class="submit"><input type="submit" value=" <?php echo __("Save ratings",$myTreasuresTextdomain); ?> "></div>
 </form>

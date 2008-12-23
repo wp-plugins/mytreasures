@@ -151,7 +151,7 @@
 <br /><textarea name="comment" style="height: 150px; width: 90%;"><?php echo stripslashes($_POST[comment]); ?></textarea>
 <br />
 <br /><?php echo __("Rating (in stars)",$myTreasuresTextdomain); ?>
-<br /><?php echo __("bad",$myTreasuresTextdomain); ?> <?php for($i = 0.5; $i <= 5; $i += 0.5) { ?><input type="radio" name="rating" value="<?php echo ($i*10); ?>" <?php if($_POST[rating] == ($i*10)) { echo "checked"; } ?>><?php echo number_format($i,1,",",""); ?>&nbsp;&nbsp;<?php } ?> <?php echo __("good",$myTreasuresTextdomain); ?>
+<br /><?php echo __("bad",$myTreasuresTextdomain); ?>&nbsp;&nbsp;<?php for($i = 0.5; $i <= 5; $i += 0.5) { ?><input type="radio" name="rating" value="<?php echo ($i*10); ?>" <?php if($_POST[rating] == ($i*10)) { echo "checked"; } ?>><?php echo number_format($i,1,",",""); ?>&nbsp;&nbsp;<?php } echo __("good",$myTreasuresTextdomain); ?>
 <br />
 <br /><?php echo __("Image / Cover",$myTreasuresTextdomain); ?>
 <br /><input type="file" name="image" size="39" class="uploadform">

@@ -293,42 +293,62 @@
 
 <div class="wrap">
 <h2><?php echo __("Media types",$myTreasuresTextdomain); ?></h2>
-<p><?php echo __("Please click on the heading to sort the list!",$myTreasuresTextdomain); ?></p>
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td align="left"><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></td></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=tag" style="font-weight: bold; <?php if($order == 'tag') { echo "font-style:italic;"; } ?>">Tag</a></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel / Name</a></td>
-		<td align="left"><b>Optionen</b></td>
-	</tr>
 
 <?php
 
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY ".$orderquery."");
 			if(mysql_num_rows($query01)) {
 
-				while($result01 = mysql_fetch_array($query01)) {
+?>
+
+<p><?php echo __("Please click on the heading to sort the list!",$myTreasuresTextdomain); ?></p>
+<table class="widefat fixed" cellspacing="0">
+<thead>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-username" style=""><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel / Name</a></th>
+	<th scope="col"  class="manage-column column-name" style=""><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=tag" style="font-weight: bold; <?php if($order == 'tag') { echo "font-style:italic;"; } ?>">Tag</a></th>
+	<th scope="col"  class="manage-column column-posts num" style=""><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></th>
+</tr>
+</thead>
+
+<tfoot>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-username" style=""><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel / Name</a></th>
+	<th scope="col"  class="manage-column column-name" style=""><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=tag" style="font-weight: bold; <?php if($order == 'tag') { echo "font-style:italic;"; } ?>">Tag</a></th>
+	<th scope="col"  class="manage-column column-posts num" style=""><a href="?page=mytreasures/mytreasuresmediatype.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></th>
+</tr>
+</tfoot>
+
+<tbody id="users" class="list:user user-list">
+
+<?php
+
+		while($result01 = mysql_fetch_array($query01)) {
 
 ?>
 
-	<tr <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
-		<td align="left"><?php echo $result01[id]; ?></td>
-		<td align="left"><?php echo $result01[short]; ?></td>
-		<td align="left"><?php echo $result01[name]; ?></td>
-		<td align="left">[<a href="?page=mytreasures/mytreasuresmediatype.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a>] [<a href="?page=mytreasures/mytreasuresmediatype.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a>]</td>
+	<tr id='user-1' <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
+		<td class="username column-username"><?php echo $result01[name]; ?><br /><div class="row-actions"><span class='edit'><a href="?page=mytreasures/mytreasuresmediatype.php&action=edit&id=<?php echo $result01[id]; ?>"><?php echo __("Edit",$myTreasuresTextdomain); ?></a> | <a href="?page=mytreasures/mytreasuresmediatype.php&action=del&id=<?php echo $result01[id]; ?>"><?php echo __("Delete",$myTreasuresTextdomain); ?></a></span></div></td>
+		<td class="name column-name"><?php echo $result01[short]; ?></td>
+		<td class="posts column-posts num"><?php echo $result01[id]; ?></td>
 	</tr>	
 
 <?php
 
-				}
+		}
+
+?>
+
+</tbody>
+</table>
+
+<?php
 
 			} else {
 
 ?>
 
-<tr>
-	<td colspan="4" align="left">Noch keine Medien Typen eingetragen!</td>
-</tr>
+<p><?php echo __("No media in database!",$myTreasuresTextdomain); ?></p>
 
 <?php
 
@@ -336,7 +356,6 @@
 
 ?>
 
-</table>
 <br /><br />
 <h2><?php echo __("Add new media type",$myTreasuresTextdomain); ?></h2>
 <form action="" method="post" enctype="multipart/form-data">
