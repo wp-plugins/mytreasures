@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.7
+Version: 1.0.8RC1
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -15,7 +15,7 @@ Author URI: http://www.crazyiven.de/
 	
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion 		= "030";
-	$myTreasuresPluginVersion = "1.0.7";
+	$myTreasuresPluginVersion = "1.0.8RC1";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	register_activation_hook( __FILE__, 'myTreasuresInstall');
@@ -632,8 +632,8 @@ Author URI: http://www.crazyiven.de/
 			while($result01 = mysql_fetch_array($query01)) {
 
 				++$myTreasuresCountMedia;
-				if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
-				if($myTreasures_options[option30] == 'yes') { $imagebig = "<center><img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'></center><br />"; } else { $imagebig = false; }
+				if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
+				if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<center><img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'></center><br />"; } else { $imagebig = false; }
 				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\" onmouseover=\"return overlib('".$imagebig.$result01[field01]."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\"></a>";
 				if(preg_match("/^([0-9]+)$/",$myTreasures_options[option09]) && $myTreasures_options[option09] > 0) { if($myTreasuresCountMedia % $myTreasures_options[option09] == 0) { $content .= "<br />"; } }
 
@@ -662,8 +662,9 @@ Author URI: http://www.crazyiven.de/
 			while($result04 = mysql_fetch_array($query04)) { $morelinks .= "<a href=\"".$result04[link]."\" target=\"_blank\">".$result04[name]."</a><br />"; }
 
 			if($result01[image]) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; $imagelinkbig = get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
-			if($myTreasures_options[option30] == 'yes') { $imagebig = "<img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'>"; } else { $imagebig = false; }
-			if($myTreasures_options[option14] == 'yes') { $coverimage = "<a href=\"".$imagelinkbig."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\" onmouseover=\"return overlib('".$imagebig."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 10px;\"></a>"; } else { $coverimage = "<img src=\"".$imagelink."\" style=\"padding: 10px;\">"; }
+			if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
+			if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'>"; } else { $imagebig = false; }
+			if($myTreasures_options[option14] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $coverimage = "<a href=\"".$imagelinkbig."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\" onmouseover=\"return overlib('".$imagebig."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 10px;\"></a>"; } else { $coverimage = "<img src=\"".$imagelink."\" style=\"padding: 10px;\">"; }
 			if($result01[tracklist]) { $result01[description] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>"; $all_tracks = explode("#NT#",$result01[tracklist]); foreach($all_tracks AS $track) { list($name,$length) = explode("#L#",$track); if($name) { $result01[description] .= "<br />".sprintf('%02d',(++$i)).". ".$name; } if($name && $length) { $result01[description] .= " (".$length." Min)"; } } }
 			$content = "<p><h2>".$result01[field01]."</h2><table width=\"100%\"><tr><td>";
 			if($myTreasures_options[option13] != 'table') {
