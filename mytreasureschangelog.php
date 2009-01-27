@@ -11,16 +11,25 @@
 
 <form action="" method="post">
 <div class="wrap">
+<h2>Test</h2>
+<p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
+<p><b>Neues in 1.0.9 // New in 1.0.9</b>
+<ul>
+	<li>Problem beim MouseOver behoben // Fixed problem on mouseover</li>
+	<li>Problem bei der Coveranzeige behoben // Fixed problem with coverimages</li>
+	<li>Newsletter deaktiviert // Disabled newsletter</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>Neues in 1.0.8 // New in 1.0.8</b>
 <ul>
 	<li>L&auml;uft fehlerfrei mit WP 2.7 // Works with WP 2.7</li>
 	<li>Neues "Look & Feel" // New "look & feel"</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>Neues in 1.0.7 // New in 1.0.7</b>
 <ul>
 	<li>L&ouml;schung von mehreren Eintr&auml;gen zugleich // Added feature to delete multiple media at once</li>

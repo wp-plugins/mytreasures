@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.9RC1
+Version: 1.0.9
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -15,7 +15,7 @@ Author URI: http://www.crazyiven.de/
 	
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion 		= "030";
-	$myTreasuresPluginVersion = "1.0.9RC1";
+	$myTreasuresPluginVersion = "1.0.9";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	register_activation_hook( __FILE__, 'myTreasuresInstall');
@@ -634,7 +634,7 @@ Author URI: http://www.crazyiven.de/
 				++$myTreasuresCountMedia;
 				if($result01[image] && file_exists("wp-content/mytreasures/".$result01[image])) { $imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image]; } else { $imagelink = get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg"; }
 				if($myTreasures_options[option30] == 'yes' && file_exists("wp-content/mytreasures/big_".$result01[image])) { $imagebig = "<center><img src=\'".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\'></center><br />"; } else { $imagebig = false; }
-				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\" onmouseover=\"return overlib('".$imagebig.$result01[field01]."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\"></a>";
+				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\" onmouseover=\"return overlib('".$imagebig.str_replace("'","\'",$result01[field01])."', FGCOLOR, '#FFFFFF', BGCOLOR, '#000000', BORDER, 1);\" onmouseout=\"return nd();\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\"></a>";
 				if(preg_match("/^([0-9]+)$/",$myTreasures_options[option09]) && $myTreasures_options[option09] > 0) { if($myTreasuresCountMedia % $myTreasures_options[option09] == 0) { $content .= "<br />"; } }
 
 			}
