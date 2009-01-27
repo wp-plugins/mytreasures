@@ -1030,6 +1030,7 @@ Author URI: http://www.crazyiven.de/
 
 	function myTreasuresSupportEMail($problem) {
 
+		global $myTreasuresPluginVersion;
 		$sub 	= "myTreasures Support";
 		$msg 	= "Folgendes Problem wurde gemeldet:\n\nLink zum Blog:\n".get_bloginfo('wpurl')."\n\nServer Software:\n".$_SERVER["SERVER_SOFTWARE"]."\n\nClient Server:\n".$_SERVER["HTTP_USER_AGENT"]."\n\nMySQL Version:\n".mysql_get_client_info()."\n\nmyTreasures Version:".$myTreasuresPluginVersion."\n\nProblem:\n".$problem;
 		$to 	= "support@mytreasures.de";
