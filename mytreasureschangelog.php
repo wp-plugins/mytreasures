@@ -11,7 +11,7 @@
 
 <form action="" method="post">
 <div class="wrap">
-<h2>Test</h2>
+<h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
 <p><b>Neues in 1.0.9 // New in 1.0.9</b>
