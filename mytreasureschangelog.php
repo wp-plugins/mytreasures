@@ -14,6 +14,14 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
+<p><b>Neues in 1.0.10 // New in 1.0.10</b>
+<ul>
+	<li>Erneutes Problem bei der Coveranzeige behoben // Fixed new problem with coverimages</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>Neues in 1.0.9 // New in 1.0.9</b>
 <ul>
 	<li>Problem beim MouseOver behoben // Fixed problem on mouseover</li>
@@ -21,9 +29,6 @@
 	<li>Newsletter deaktiviert // Disabled newsletter</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>Neues in 1.0.8 // New in 1.0.8</b>
 <ul>
 	<li>L&auml;uft fehlerfrei mit WP 2.7 // Works with WP 2.7</li>
