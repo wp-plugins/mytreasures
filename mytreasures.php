@@ -3,7 +3,7 @@
 /*
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
-Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
+Description: Show your treasures (DVDs, Blu-Rays, Games, Cars & many more) in Wordpress
 Version: 1.0.10
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
