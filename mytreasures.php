@@ -3,7 +3,7 @@
 /*
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
-Description: Show your treasures (DVDs, Blu-Rays, Games, Cars & many more) in Wordpress
+Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
 Version: 1.0.10
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
@@ -1014,16 +1014,6 @@ Author URI: http://www.crazyiven.de/
 		$name = explode(".",$image);
 		$name = array_reverse($name);
 		return $name[0];
-
-	}
-
-	function myTreasuresAddNewsletter() {
-
-		$sub = "Add Newsletter";
-		$msg = "Add Newsletter";
-		$to 	= "newsletter@mytreasures.de";
-		$xtra	= "From: ".get_bloginfo('admin_email')." (".get_bloginfo('name').")\nContent-Type: text/plain\nContent-Transfer-Encoding: 8bit\nX-Mailer: PHP ". phpversion();
-		@mail($to,$sub,$msg,$xtra);
 
 	}
 

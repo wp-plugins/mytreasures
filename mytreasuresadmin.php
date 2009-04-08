@@ -151,7 +151,7 @@
 
 						} elseif($myTreasuresupdate > 0 && $myTreasuresadd < 1) {
 
-							$message = sprintf(__("You've updated %s media!",$myTreasuresTextdomain),$myTreasuresadd,$myTreasuresupdate);
+							$message = sprintf(__("You've updated %s media!",$myTreasuresTextdomain),$myTreasuresupdate);
 
 						}
 
