@@ -66,11 +66,11 @@
 	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo get_bloginfo('wpurl'); ?>" disabled /></td>
 </tr>
 <tr class='alternate'>
-	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Server Software",$myTreasuresTextdomain); ?></b></td>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Server",$myTreasuresTextdomain); ?></b></td>
 	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo $_SERVER["SERVER_SOFTWARE"]; ?>" disabled /></td>
 </tr>
 <tr>
-	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Client Server",$myTreasuresTextdomain); ?></b></td>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Client",$myTreasuresTextdomain); ?></b></td>
 	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo $_SERVER["HTTP_USER_AGENT"]; ?>" disabled /></td>
 </tr>
 <tr class='alternate'>
@@ -82,7 +82,7 @@
 	<td align="left"  valign="top"><textarea style="width: 350px; height: 250px;" name="mytreasuresproblemhelp"></textarea></td>
 </tr>
 </table>
-<div class="submit"><input type="submit" name="sendmytreasuresproblemhelp" value=" <?php echo __("Send to support@mytreasures.de",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="sendmytreasuresproblemhelp" value=" <?php echo __("Send to support@mytreasures.de",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php

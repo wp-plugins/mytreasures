@@ -4,18 +4,20 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 1.0.10f1
+Version: 2.0
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
 			**************************************************************************
 			* Code starts here - NO TOUCHING! (If you don't know what you're doing!) *
 			**************************************************************************
+
 */
-	
+
+
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion 		= "030";
-	$myTreasuresPluginVersion = "1.0.10f1";
+	$myTreasuresPluginVersion = "2.0";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	register_activation_hook( __FILE__, 'myTreasuresInstall');
@@ -443,21 +445,20 @@ Author URI: http://www.crazyiven.de/
 
 		/* Header generieren */
 	
-			$returncode = "";	
-			if($myTreasuresShowHeader) {
+		$returncode = "";	
+		if($myTreasuresShowHeader) {
 
-				$returncode .= showmyTreasuresHeader($myTreasuredID,$myTreasureType, $myTreasuredSort);
+			$returncode .= showmyTreasuresHeader($myTreasuredID,$myTreasureType, $myTreasuredSort);
 
-			}
+		}
 
 		/* Content generieren */
 		
-			$returncode .= showmyTreasuresContent($myTreasuredID, $myTreasuredSort, $myTreasureType, $myTreasureGlossar);
+		$returncode .= showmyTreasuresContent($myTreasuredID, $myTreasuredSort, $myTreasureType, $myTreasureGlossar);
 
 		/* Footer generieren */
 
-			$returncode .= $myTreasuresCopyRight;
-
+		$returncode .= $myTreasuresCopyRight;
 		return $returncode;
 
 	}
@@ -658,7 +659,7 @@ Author URI: http://www.crazyiven.de/
 			if($myTreasures_options[option17] == 'thickbox')  { $imagesystems = "class=\"thickbox\" rel=\"gallery\""; }
 			$query03 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$result01[id]' ORDER BY `orderid`");
 			while($result03 = mysql_fetch_array($query03)) { $moreimages .= "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/big/".$result03[name]."\" target=\"_target\" ".$imagesystems." title=\"".$result03[comment]."\"><img src=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/small/".$result03[name]."\" border=\"0\"></a> "; }
-			$query04 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$result01[id]'");
+			$query04 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$result01[id]' ORDER BY `name`");
 			while($result04 = mysql_fetch_array($query04)) { $morelinks .= "<a href=\"".$result04[link]."\" target=\"_blank\">".$result04[name]."</a><br />"; }
 
 	
@@ -1022,7 +1023,7 @@ Author URI: http://www.crazyiven.de/
 
 		global $myTreasuresPluginVersion;
 		$sub 	= "myTreasures Support";
-		$msg 	= "Folgendes Problem wurde gemeldet:\n\nLink zum Blog:\n".get_bloginfo('wpurl')."\n\nServer Software:\n".$_SERVER["SERVER_SOFTWARE"]."\n\nClient Server:\n".$_SERVER["HTTP_USER_AGENT"]."\n\nMySQL Version:\n".mysql_get_client_info()."\n\nmyTreasures Version:\n".$myTreasuresPluginVersion."\n\nProblem:\n".$problem;
+		$msg 	= "Folgendes Problem wurde gemeldet:\n\nLink zum Blog:\n".get_bloginfo('wpurl')."\n\nServer:\n".$_SERVER["SERVER_SOFTWARE"]."\n\nClient:\n".$_SERVER["HTTP_USER_AGENT"]."\n\nMySQL Version:\n".mysql_get_client_info()."\n\nmyTreasures Version:\n".$myTreasuresPluginVersion."\n\nProblem:\n".$problem;
 		$to 	= "support@mytreasures.de";
 		$xtra	= "From: ".get_bloginfo('admin_email')." (".get_bloginfo('name').")\nContent-Type: text/plain\nContent-Transfer-Encoding: 8bit\nX-Mailer: PHP ". phpversion();
 		@mail($to,$sub,$msg,$xtra);
@@ -1114,6 +1115,94 @@ Author URI: http://www.crazyiven.de/
 
 	}
 
+	function myTreasuresCheckOrder($table,$where = false) {
+
+		$query01 = mysql_query("SELECT * FROM `$table` $where ORDER BY `orderid`");
+		while($result01 = mysql_fetch_array($query01)) {
+
+			mysql_query("UPDATE `$table` SET `orderid` = '".(++$i)."' WHERE `id` = '$result01[id]'");
+
+		}
+
+	}
+
+	function myTreasuresXML2Array($url) {
+
+    $xml_values = array();
+    $contents = file_get_contents($url);
+    $parser = xml_parser_create('');
+    if(!$parser) {
+
+			return false;
+
+		}
+
+    #xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, 'UTF-8');
+    xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+    xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+    xml_parse_into_struct($parser, trim($contents), $xml_values);
+    xml_parser_free($parser);
+
+    if(!$xml_values) {
+
+			return array();
+
+		}
+   
+    $xml_array = array();
+    $last_tag_ar =& $xml_array;
+    $parents = array();
+    $last_counter_in_tag = array(1=>0);
+    foreach($xml_values as $data) {
+
+			switch($data['type']) {
+
+				case 'open':
+					$last_counter_in_tag[$data['level']+1] = 0;
+					$new_tag = array('name' => $data['tag']);
+					if(isset($data['attributes'])) { $new_tag['attributes'] = $data['attributes']; }
+					if(isset($data['value']) && trim($data['value'])) { $new_tag['value'] = trim($data['value']); }
+					$last_tag_ar[$last_counter_in_tag[$data['level']]] = $new_tag;
+					$parents[$data['level']] =& $last_tag_ar;
+					$last_tag_ar =& $last_tag_ar[$last_counter_in_tag[$data['level']]++];
+      		break;
+				case 'complete':
+					$new_tag = array('name' => $data['tag']);
+					if(isset($data['attributes'])) { $new_tag['attributes'] = $data['attributes']; }
+					if(isset($data['value']) && trim($data['value'])) { $new_tag['value'] = trim($data['value']); }
+					$last_count = count($last_tag_ar)-1;
+					$last_tag_ar[$last_counter_in_tag[$data['level']]++] = $new_tag;
+					break;
+				case 'close':
+					$last_tag_ar =& $parents[$data['level']];
+					break;
+				default:
+				 break;
+
+        }
+
+    }
+
+    return $xml_array;
+
+	}
+
+
+	function myTreasuresOFDBWidget() {
+
+		global $myTreasuresTextdomain;
+		echo "<form action=\"?page=mytreasures/mytreasuresofdb.php\" method=\"post\"><input type=\"text\" name=\"search\" tabindex=\"1\" autocomplete=\"on\" value=\"\" style=\"width: 100%;\" /><p class=\"submit\"><input type=\"submit\" tabindex=\"2\" class=\"button-primary\" value=\"".__("Search...",$myTreasuresTextdomain)."\" /></p><p class=\"textright\"><a href=\"?page=mytreasures/mytreasuresoverview.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasuresoptions.php\" class=\"button\">".__("Options",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasureshelp.php\" class=\"button\">".__("Help / Support",$myTreasuresTextdomain)."</a> </p></form>";
+
+	}
+
+	function myTreasuresOFDBWidgetAdd2Dashboard() {
+
+		global $myTreasuresTextdomain;
+		wp_add_dashboard_widget('mytreasuresofdbwidget', 'myTreasures - '.__("Search for movie in ofdb",$myTreasuresTextdomain), 'myTreasuresOFDBWidget');
+
+	} 
+
+
 /*
 * Add myTreasures to Wordpress
 */
@@ -1131,6 +1220,7 @@ Author URI: http://www.crazyiven.de/
 
 			$waiting_rating = mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '' OR `rating` = '0'"));
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuressingle.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("OFDB Gateway",$myTreasuresTextdomain), 'myTreasures'), __(__("OFDB Gateway",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresofdb.php');
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Overview",$myTreasuresTextdomain), 'myTreasures'), __(__("Overview",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresoverview.php');	
 			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresmediatype.php');
 
@@ -1163,6 +1253,7 @@ Author URI: http://www.crazyiven.de/
 	add_action('update_option', 'myTreasuresResetRewriteRules');
 	add_action('add_option', 'myTreasuresResetRewriteRules');
 	add_action('delete_option', 'myTreasuresResetRewriteRules');
+	if(ini_get('allow_url_fopen')) { add_action('wp_dashboard_setup', 'myTreasuresOFDBWidgetAdd2Dashboard'); }
 	load_plugin_textdomain($myTreasuresTextdomain,'wp-content/plugins/mytreasures/language');
 
 	if(get_lastpostdate() > $myTreasures_options[option24] || get_lastpostmodified() > $myTreasures_options[option24] || $myTreasures_options[option26] == 'yes') {

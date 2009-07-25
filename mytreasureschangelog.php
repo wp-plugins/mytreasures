@@ -14,12 +14,15 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
-<p><b>Neues in 1.0.11 // New in 1.0.11</b>
+<p><b>Neues in 2.0 // New in 2.0</b>
 <ul>
-	<li>Pfadprobleme in bestimmter Optionskonstellation // Some pathproblems in a specific optionscombination</li>
+	<li>Updated all pages to WP 2.8 Theme // Alle Seiten an den WP 2.8 Theme angepasst</li>
+	<li>ofdb Gateway (german movies only) // OFDB Schnittstelle (F&uuml;r deutsche Filme)</li>
+	<li>ofdb dashboard widget with quick search // OFDB Dashboard Widget mit Schnellsuche</li>
+	<li>code cleanup // Quellcode aufger&auml;umt</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
 </form>
 <br /><br />
 <p><b>Neues in 1.0.10 // New in 1.0.10</b>

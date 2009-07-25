@@ -18,7 +18,7 @@
 
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
-		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
+		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
 
 	} else {
 
@@ -37,9 +37,50 @@
 			
 			if($_GET[id]) {
 
-				$imagearray = false;
 				$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$_GET[id]'");
 				$result01 = mysql_fetch_array($query01);
+
+				if($_POST[deletemarked] && $_POST[deletemedia]) {
+
+					if($_POST[del] || $_POST[dontdel]) {
+
+						if($_POST[del]) {
+
+							$deleteditems = 0;
+							foreach($_POST[deletemedia] AS $id => $name) {
+
+								$deleteditems++;
+								$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `id` = '$id'");
+								$result02 = mysql_fetch_array($query02);
+								mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_images` WHERE `id` = '$result02[id]'");
+								@unlink($path1.$result02[name]);
+								@unlink($path2.$result02[name]);
+
+							}
+
+							myTreasuresCheckOrder($wpdb->prefix."mytreasures_images","WHERE `treasureid` = '$result01[id]'");
+							echo '<div id="message" class="updated fade"><p><strong>'.sprintf(__("%s image(s) deleted successfully!",$myTreasuresTextdomain),$deleteditems).'</strong></p></div>';
+
+						}
+
+					} else {
+
+?>
+
+<div class="wrap"><h2><?php echo __("Delete media",$myTreasuresTextdomain); ?> (<?php echo $result01[field01]; ?>)</h2>
+<form action="" method="post">
+<input type="hidden" name="deletemarked" value="1" />
+<p><?php echo __("Do you want to delete the following images?",$myTreasuresTextdomain)."<br />"; foreach($_POST[deletemedia] AS $id => $name) { echo "<input type=\"hidden\" name=\"deletemedia[".$id."]\" value=\"".$name."\" /><img src=\"../wp-content/mytreasuresimages/small/".$name."\"> "; } ?></p>
+<div class="submit"><input type="submit" class="button-primary" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
+</form>
+</div>
+<br /><br />
+
+<?php
+
+					}
+
+				}
 
 				if($_FILES['image']['type'] == "image/pjpeg" || $_FILES['image']['type'] == "image/jpeg") {
 
@@ -63,118 +104,104 @@
 
 					@copy($_FILES['image']['tmp_name'],$path2.$imagename);
 					chmod($path2.$imagename, 0666);
-					mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_images` (`treasureid`, `name`, `comment`) VALUES ('$result01[id]', '$imagename', '".$_POST[title]."')");
+					mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_images` (`treasureid`, `name`, `comment`, `orderid`) VALUES ('$result01[id]', '$imagename', '".$_POST[title]."', '999999')");
+					myTreasuresCheckOrder($wpdb->prefix."mytreasures_images","WHERE `treasureid` = '$result01[id]'");
 
 				}
-
-				$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$_GET[id]'");
-				while($result02 = mysql_fetch_array($query02)) { $imagearray[] = $result02; }
 				
-?>
+				if($_POST[saveorder] && $_POST[orderid]) {
 
-<div class="wrap">
-<h2><?php echo $result01[field01]; ?></h2>
-<form action="" method="post" enctype="multipart/form-data"><p><h3><?php echo __("Add new image:",$myTreasuresTextdomain); ?></h3><b><?php echo __("Image",$myTreasuresTextdomain); ?>:</b><br /><input type="file" name="image" size="39" class="uploadform"><br /><br /><b><?php echo __("Name / subtitle for image (optional)",$myTreasuresTextdomain); ?></b><br /><textarea style="height: 16px; width: 250px;" name="title"></textarea></p><div class="submit"><input type="submit" name="doit" value=" <?php echo __("Upload new image",$myTreasuresTextdomain); ?> "></div></form></div>
+					foreach($_POST[orderid] AS $id => $orderid) {
 
-<?php
-
-				if($_POST[changepics] && $imagearray) {
-
-					foreach($imagearray AS $image) {
-
-						if($_POST[deletepic][$image[id]]) {
-
-							mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_images` WHERE `id` = '$image[id]'");
-							@unlink($path1.$image[name]);
-							@unlink($path2.$image[name]);
-
-						} else {
-
-							mysql_query("UPDATE `".$wpdb->prefix."mytreasures_images` SET `orderid` = '".$_POST[orderid][$image[id]]."', `comment` = '".$_POST[comment][$image[id]]."' WHERE `id` = '$image[id]'");
-
-						}
+						mysql_query("UPDATE `".$wpdb->prefix."mytreasures_images` SET `orderid` = '$orderid', `comment` = '".$_POST[comment][$id]."' WHERE `id` = '$id'");
 
 					}
 
-					$imagearray = false;
-					$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$_GET[id]' ORDER BY `orderid`");
-					while($result02 = mysql_fetch_array($query02)) { $imagearray[] = $result02; }
+					myTreasuresCheckOrder($wpdb->prefix."mytreasures_images","WHERE `treasureid` = '$result01[id]'");
 
 				}
 
-				if($imagearray) {
-
 ?>
 
-<br /><br />
+<script type="text/javascript">
+<!-- 
+function markallmedia() {
+
+	for(var i = 0; i < document.myform.elements.length; i++) {
+    if(document.myform.elements[i].type == 'checkbox'){
+      document.myform.elements[i].checked = !(document.myform.elements[i].checked);
+    }
+  }
+	document.myform.elements[0].checked = !(document.myform.elements[0].checked);
+
+}
+//-->
+</script>
 <div class="wrap">
-<h2><?php echo __("Activ images",$myTreasuresTextdomain); ?></h2>
-<form action="" method="post"><p><?php foreach($imagearray AS $image) { echo "<p style=\"float: left; margin-right: 10px; text-align: center;\"><img src=\"../wp-content/mytreasuresimages/small/".$image[name]."\"><br /><textarea style=\"height: 16px; width: 100px;\" name=\"comment[".$image[id]."]\">".stripslashes($image[comment])."</textarea><br />".__("Order:",$myTreasuresTextdomain)." <input type=\"text\" style=\"height: 16px; width: 20px; text-align: center;\" name=\"orderid[".$image[id]."]\" value=\"".$image[orderid]."\"><br /><input type=\"checkbox\" name=\"deletepic[".$image[id]."]\" value=\"1\"> ".__("Delete image",$myTreasuresTextdomain)."</p> "; } ?></p><p style="clear: both;"></p><div class="submit"><input type="submit" name="changepics" value=" <?php echo __("Save changings",$myTreasuresTextdomain); ?> "></div></div></form>
+<h2><?php echo __("Activ images",$myTreasuresTextdomain); ?> (<?php echo $result01[field01]; ?>)</h2>
+<form action="" method="post" enctype="multipart/form-data"><p><h3><?php echo __("Add new image:",$myTreasuresTextdomain); ?></h3><b><?php echo __("Image",$myTreasuresTextdomain); ?>:</b><br /><input type="file" name="image" size="39" class="uploadform"><br /><br /><b><?php echo __("Name / subtitle for image (optional)",$myTreasuresTextdomain); ?></b><br /><input type="text" name="title" style="width: 75%;"></p><div class="submit"><input type="submit" class="button-primary" name="doit" value=" <?php echo __("Upload new image",$myTreasuresTextdomain); ?> "></div></form>
 
 <?php
 
-				}
-
-			} else {
-
-			switch($_GET[sortlist]) {
-				case 'id': $order = "id"; $orderquery = "`".$wpdb->prefix."mytreasures`.`id`"; break;
-				case 'title': $order = "title"; $orderquery = "`".$wpdb->prefix."mytreasures`.`field01`"; break;
-				case 'type': $order = "type"; $orderquery = "`".$wpdb->prefix."mytreasures_type`.`name`"; break;
-				default: $order = "title"; $orderquery = "`".$wpdb->prefix."mytreasures`.`field01`"; break;
-			}
+			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$result01[id]' ORDER BY `orderid`");
+			if(mysql_num_rows($query02)) {
 
 ?>
 
-<div class="wrap">
-<h2><?php echo __("Image overview",$myTreasuresTextdomain); ?></h2>
-<p><?php echo __("Please click on the heading to sort the list!",$myTreasuresTextdomain); ?></p>
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td align="left"><a href="?page=mytreasures/mytreasuresimages.php&sortlist=id" style="font-weight: bold; <?php if($order == 'id') { echo "font-style:italic;"; } ?>">ID</a></td></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresimages.php&sortlist=title" style="font-weight: bold; <?php if($order == 'title') { echo "font-style:italic;"; } ?>">Titel / Name</a></td>
-		<td align="left"><a href="?page=mytreasures/mytreasuresimages.php&sortlist=type" style="font-weight: bold; <?php if($order == 'type') { echo "font-style:italic;"; } ?>"><?php echo __("Type",$myTreasuresTextdomain); ?></a></td>
-		<td align="center"><b><?php echo __("Options",$myTreasuresTextdomain); ?></b></td>
-	</tr>
+<form name="myform" action="" method="post">
+<table class="widefat fixed" cellspacing="0">
+<thead>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-cb check-column" style=""><input type="checkbox" /></th>
+	<th scope="col"  class="manage-column column-name" style="">&nbsp;</th>
+</tr>
+</thead>
+
+<tfoot>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-cb check-column" style=""><input type="checkbox" /></th>
+	<th scope="col"  class="manage-column column-name" style="">&nbsp;</th>
+</tr>
+</tfoot>
+
+<tbody id="users" class="list:user user-list">
 
 <?php
 
-			$query01 = mysql_query("SELECT `".$wpdb->prefix."mytreasures`.*, `".$wpdb->prefix."mytreasures_type`.`name` FROM `".$wpdb->prefix."mytreasures` LEFT JOIN `".$wpdb->prefix."mytreasures_type` ON `".$wpdb->prefix."mytreasures`.`type` = `".$wpdb->prefix."mytreasures_type`.`id` ORDER BY ".$orderquery."");
-			if(mysql_num_rows($query01)) {
-
-				while($result01 = mysql_fetch_array($query01)) {
+		while($result02 = mysql_fetch_array($query02)) {
 
 ?>
 
-	<tr <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
-		<td align="left"><?php echo $result01[id]; ?></td>
-		<td align="left"><?php echo $result01[field01]; ?></td>
-		<td align="left"><?php echo $result01[name]; ?></td>
-		<td align="center">[<a href="?page=mytreasures/mytreasuresimages.php&id=<?php echo $result01[id]; ?>"><?php echo __("Administrate images",$myTreasuresTextdomain); ?></a>]</td>
-	</tr>	
-
-<?php
-
-				}
-
-			} else {
-
-?>
-
-<tr>
-	<td colspan="5" align="left"><?php echo __("No media in database!",$myTreasuresTextdomain); ?></td>
+<tr id='user-1' <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
+	<th scope='row' class='check-column'><input type='checkbox' name='deletemedia[<?php echo $result02[id]; ?>]' id='user_1' value='<?php echo $result02[name]; ?>' /></th>
+	<td class="username column-username"><img src="../wp-content/mytreasuresimages/small/<?php echo $result02[name]; ?>"> <input type="text" name="orderid[<?php echo $result02[id]; ?>]" value="<?php echo $result02[orderid]; ?>" style="width: 30px; text-align: center;"><br /><input type="text" name="comment[<?php echo $result02[id]; ?>]" value="<?php echo $result02[comment]; ?>" style="width: 75%;"></td>
 </tr>
 
+
+<?php
+
+				}
+
+?>
+
+</tbody>
+</table>
+<div class="submit"><input type="submit" class="button-primary" name="deletemarked" value=" <?php echo __("Delete marked images",$myTreasuresTextdomain); ?> "> <input type="submit" name="saveorder" value=" <?php echo __("Save new order & comments",$myTreasuresTextdomain); ?> "></div>
+</form>
+
 <?php
 
 			}
 
 ?>
 
-</table>
 </div>
 
 <?php
+
+			} else {
+
+				include("mytreasuresoverview.php");
 
 			}
 

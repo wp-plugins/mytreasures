@@ -18,7 +18,7 @@
 
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
-		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
+		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
 
 	} else {
 
@@ -203,7 +203,7 @@
 <br /><input type="radio" name="view" value="sort4" <?php if($_POST[view] == 'sort4') { echo "checked=\"checked\""; } ?>> <?php echo __("Media type view definition #4 (If available!)",$myTreasuresTextdomain); ?>
 <br /><input type="radio" name="view" value="sort5" <?php if($_POST[view] == 'sort5') { echo "checked=\"checked\""; } ?>> <?php echo __("Media type view definition #5 (If available!)",$myTreasuresTextdomain); ?>
 <br /><input type="radio" name="view" value="covers" <?php if($_POST[view] == 'covers') { echo "checked=\"checked\""; } ?>> <?php echo __("Covers",$myTreasuresTextdomain); ?></p>
-<div class="submit"><input type="submit" name="edit" value=" <?php echo __("Edit media type",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" name="edit" class="button-primary" value=" <?php echo __("Edit media type",$myTreasuresTextdomain); ?> "></div>
 <p><b><?php echo __("Switch fields",$myTreasuresTextdomain); ?></b>
 <br /><?php echo __("You can switch fields for details if you have to!",$myTreasuresTextdomain); ?>
 <br />
@@ -212,7 +212,7 @@
 <br />
 <br /><?php echo __("Field",$myTreasuresTextdomain); ?> #2
 <br /><select name="change_feature2" style="width: 380px;"><?php echo $selectinput6; ?></select></p>
-<div class="submit"><input type="submit" name="changefields" value=" <?php echo __("Switch fields",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="changefields" value=" <?php echo __("Switch fields",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php
@@ -264,7 +264,7 @@
 <p><?php echo sprintf(__("Do you want to delete media type <i>%s</i>?",$myTreasuresTextdomain),$result01[name]); ?></p>
 <form action="" method="post">
 <?php if($all_to_delete_treasures_of_this_type) { echo sprintf(__("The're still %s media in database with this type. Please delete them first!",$myTreasuresTextdomain),$all_to_delete_treasures_of_this_type);  } else { ?>
-<div class="submit"><input type="submit" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
 <?php } ?>
 </form>
 
@@ -422,7 +422,7 @@
 <br /><input type="radio" name="view" value="sort4" <?php if($_POST[view] == 'sort4') { echo "checked=\"checked\""; } ?>> <?php echo __("Media type view definition #4 (If available!)",$myTreasuresTextdomain); ?>
 <br /><input type="radio" name="view" value="sort5" <?php if($_POST[view] == 'sort5') { echo "checked=\"checked\""; } ?>> <?php echo __("Media type view definition #5 (If available!)",$myTreasuresTextdomain); ?>
 <br /><input type="radio" name="view" value="covers" <?php if($_POST[view] == 'covers') { echo "checked=\"checked\""; } ?>> <?php echo __("Covers",$myTreasuresTextdomain); ?></p>
-<div class="submit"><input type="submit" name="doit" value=" <?php echo __("Add new media type",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="doit" value=" <?php echo __("Add new media type",$myTreasuresTextdomain); ?> "></div>
 </form>
 </div>
 

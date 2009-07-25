@@ -18,7 +18,7 @@
 
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
-		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
+		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
 
 	} else {
 
@@ -204,7 +204,7 @@
 <br /><?php echo __("Choose media type",$myTreasuresTextdomain); ?>
 <br /><?php echo __("Please just change the media type if both types have similar / identical values for each field!",$myTreasuresTextdomain); ?>
 <br /><select name="type" style="width: 200px;"><?php foreach($myTreasuresMediaTypeArray AS $id => $name) { ?><option value="<?php echo $id; ?>" <?php if($result01[type] == $id) { echo "selected"; } ?>><?php echo $name; ?></option><?php } ?></select></p>
-<div class="submit"><input type="submit" value=" <?php echo __("Edit media",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" value=" <?php echo __("Edit media",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php
@@ -240,6 +240,12 @@
 
 					if($_POST[del]) {
 
+						$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$result01[id]'");
+						while($result02 = mysql_fetch_array($query02)) {
+							mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_images` WHERE `id` = '$result02[id]'");
+							@unlink($path1.$result02[name]);
+							@unlink($path2.$result02[name]);
+						}
 						mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$result01[id]'");
 						@unlink($path.$result01[image]);
 						@unlink($path."big_".$result01[image]);
@@ -259,7 +265,7 @@
 
 <p><?php echo sprintf(__("Do you want to delete <i>%s</i>?",$myTreasuresTextdomain),$result01[field01]); ?></p>
 <form action="" method="post">
-<div class="submit"><input type="submit" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" name="del" class="button-primary" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php
@@ -295,6 +301,12 @@
 
 							$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$id'");
 							$result01 = mysql_fetch_array($query01);
+							$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$result01[id]'");
+							while($result02 = mysql_fetch_array($query02)) {
+								mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_images` WHERE `id` = '$result02[id]'");
+								@unlink($path1.$result02[name]);
+								@unlink($path2.$result02[name]);
+							}
 							mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$result01[id]'");
 							@unlink($path.$result01[image]);
 							@unlink($path."big_".$result01[image]);
@@ -326,7 +338,7 @@
 <form action="" method="post">
 <input type="hidden" name="deletemarked" value="1" />
 <p><?php echo __("Do you want to delete the following media?",$myTreasuresTextdomain); foreach($_POST[deletemedia] AS $id => $name) { echo "<input type=\"hidden\" name=\"deletemedia[".$id."]\" value=\"".$name."\" /><br />- ".$name; } ?></p>
-<div class="submit"><input type="submit" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" name="del" class="button-primary" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php
@@ -421,7 +433,7 @@ function markallmedia() {
 
 </tbody>
 </table>
-<div class="submit"><input type="submit" name="deletemarked" value=" <?php echo __("Delete marked media",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="deletemarked" value=" <?php echo __("Delete marked media",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php

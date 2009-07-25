@@ -18,7 +18,7 @@
 
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
-		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
+		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
 
 	} else {
 
@@ -82,7 +82,7 @@
 						chmod($path."big_".$imagename, 0666);
 
 					}
-						
+
 				}
 
 				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (`type`, `rating`, `description`, `comment`, `tracklist`, `image`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`) VALUES ('$_POST[treasuretype]', '$_POST[rating]',  '".$_POST[description]."', '".$_POST[comment]."', '$tracks', '$imagename', '".$_POST[field01]."', '".$_POST[field02]."', '".$_POST[field03]."', '".$_POST[field04]."', '".$_POST[field05]."', '".$_POST[field06]."', '".$_POST[field07]."', '".$_POST[field08]."', '".$_POST[field09]."', '".$_POST[field10]."', '".$_POST[field11]."', '".$_POST[field12]."', '".$_POST[field13]."', '".$_POST[field14]."', '".$_POST[field15]."', '".$_POST[field16]."', '".$_POST[field17]."', '".$_POST[field18]."', '".$_POST[field19]."', '".$_POST[field20]."')");
@@ -91,11 +91,11 @@
 ?>
 
 <div class="wrap">
-<div class="submit"><form action="" method="post" style="display: inline;"><input type="submit" name="doit2" value=" <?php echo __("Add media of a different media type",$myTreasuresTextdomain); ?> "></form> <form action="" method="post" style="display: inline;"><input type="hidden" name="treasuretype" value="<?php echo $_POST[treasuretype]; ?>"><input type="submit" name="doit2" value=" <?php echo __("Add media of the same media type",$myTreasuresTextdomain); ?> "></form></div>
+<div class="submit"><form action="" method="post" style="display: inline;"><input type="submit" class="button-primary" name="doit2" value=" <?php echo __("Add media of a different media type",$myTreasuresTextdomain); ?> "></form> <form action="" method="post" style="display: inline;"><input type="hidden" name="treasuretype" value="<?php echo $_POST[treasuretype]; ?>"><input type="submit" name="doit2" value=" <?php echo __("Add media of the same media type",$myTreasuresTextdomain); ?> "></form></div>
 </div>
 
 <?php
-				
+
 			} else {
 
 				$query_type = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '$_POST[treasuretype]'");
@@ -157,7 +157,7 @@
 <br /><input type="file" name="image" size="39" class="uploadform">
 <br />
 <br /><?php echo __("System will take default image if no other is set",$myTreasuresTextdomain); ?> (default.jpg in wp-content/mytreasures/)</p>
-<div class="submit"><input type="submit" name="doit" value=" <?php echo __("Add media",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" name="doit" class="button-primary" value=" <?php echo __("Add media",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php
@@ -180,7 +180,7 @@
 <p><?php echo __("Please choose which media type you want to add:",$myTreasuresTextdomain); ?></p>
 <form action="" method="post">
 <?php $query99 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`"); while($result99 = mysql_fetch_array($query99)) { echo "<br /><input type=\"radio\" name=\"treasuretype\" value=\"".$result99[id]."\"> ".$result99[name]; } ?>
-<div class="submit"><input type="submit" name="gotodata" value=" <?php echo __("Continue to details",$myTreasuresTextdomain); ?> "></div>
+<div class="submit"><input type="submit" class="button-primary" name="gotodata" value=" <?php echo __("Continue to details",$myTreasuresTextdomain); ?> "></div>
 </form>
 </div>
 

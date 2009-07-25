@@ -775,6 +775,10 @@ msgid "Now that you have successfully created a media type you can start to list
 msgstr "Da nun erfolgreich ein Medientyp angelegt wurde, k&ouml;nnen nun Medien dieses Typs angelegt werden. Auf die Erkl&auml;rung dieses Vorgangs habe ich verzichtet, das System noch einfacher ist und sich selbst erkl&auml;rt. Aber ich m&ouml;chte nun hier nochmal kurz darauf hinweisen wie man nun die Listen in den Blog einbaut."
 
 #
+msgid "<b>OFDB Gateway & Dashboard Widget</b><br />With myTreasures you can search the ofdb for movie information (german only) and use the dashboard widget for quick search!"
+msgstr "<b>OFDB Schnittstelle & Dashboard Widget</b><br />Mit myTreasures kann man die Datenbank von OFDB ansprechen und die Daten der Filme beziehen. Im Dashboard gibt es sogar ein Widget f&uuml;r eine Schnellsuche!"
+
+#
 msgid "<b>List of all media of a given type</b><br />To display all media of a given type insert [my'media tag'treasures] on your page. Replace 'media tag' with the name of the tag you have created."
 msgstr "<b>Liste aller Medien eines Typs</b><br />Um eine Liste aller Medien eines Typs zu zeigen, schreibt man an der Stelle wo es stehen soll, einfach [my'Medien Tag'treasures]. Wobei 'Medien Tag' nat&uuml;rlich durch den Tag ersetzt werden muss, den Ihr angelegt habt!."
 
@@ -919,6 +923,10 @@ msgid "Please choose:"
 msgstr "Bitte w&auml;hlen:"
 
 #
+msgid "Please choose"
+msgstr "Bitte w&auml;hlen"
+
+#
 msgid "Following media already have cover:"
 msgstr "Folgende Medien haben schon ein Cover:"
 
@@ -1009,4 +1017,76 @@ msgstr "L&ouml;sche aktuelles Cover"
 #
 msgid "Current Image / Cover"
 msgstr "Aktuelles Cover"
+
+#
+msgid "Delete marked images"
+msgstr "Markierte Bilder l&ouml;schen"
+
+#
+msgid "Save new order & comments"
+msgstr "Sortierung & Kommentare speichern"
+
+#
+msgid "Do you want to delete the following images?"
+msgstr "M&ouml;chten sie wirklich die folgenden Bilder l&ouml;schen?"
+
+#
+msgid "%s image(s) deleted successfully!"
+msgstr "%s Bild(er) wurden erfolgreich gel&ouml;scht!"
+
+#
+msgid "Save new target & name"
+msgstr "Linkziele & Linknamen speichern"
+
+#
+msgid "%s link(s) deleted successfully!"
+msgstr "%s Link(s) wurden erfolgreich gel&ouml;scht!"
+
+#
+msgid "Do you want to delete the following links?"
+msgstr "M&ouml;chten sie wirklich die folgenden Links l&ouml;schen?"
+
+#
+msgid "OFDB Gateway"
+msgstr "OFDB Schnittstelle"
+
+#
+msgid "In order to use the OFDB Gateway your php.ini must allow external file inclusion. (PHP Setting allow_url_fopen has to be on)"
+msgstr "Um die OFDB Schnittstelle zu nutzen, muss die php.ini externe Dateiöffnungen zulassen (PHP Einstellung allow_url_fopen muss aktiv sein)"
+
+#
+msgid "Please choose the OFDB Data you want to use. All mandatory fields are marked with a <font style=\"color: #FF0000;\">*</font>"
+msgstr "Bitte w&auml;hlen Sie die Daten aus der OFDB, die Sie nutzen m&ouml;chten. Alle Pflichtfelder sind mit <font style=\"color: #FF0000;\">*</font> markiert."
+
+#
+msgid "Search for movie in ofdb"
+msgstr "Film in der OFDB suchen"
+
+#
+msgid "New search for movie in ofdb"
+msgstr "Weiteren Film in der OFDB suchen"
+
+#
+msgid "There is no movie with this name in ofdb"
+msgstr "Mit diesem Namen gibt es keinen Eintrag in der OFDB"
+
+#
+msgid "Searchresult"
+msgstr "Suchergebnis"
+
+#
+msgid "Titel"
+msgstr "Titel"
+
+#
+msgid "Original titel"
+msgstr "Original Titel"
+
+#
+msgid "Year"
+msgstr "Jahr"
+
+#
+msgid "Add this movie to the database"
+msgstr "Gew&auml;hlten Film in die Datenbank &uuml;bernehmen"
 

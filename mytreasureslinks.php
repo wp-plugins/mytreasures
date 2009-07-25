@@ -18,15 +18,54 @@
 
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
-		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
+		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
 
 	} else {
 
 		if($_GET[id]) {
 
-			$linkarray = false;
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$_GET[id]'");
 			$result01 = mysql_fetch_array($query01);
+
+			if($_POST[deletemarked] && $_POST[deletemedia]) {
+
+				if($_POST[del] || $_POST[dontdel]) {
+
+					if($_POST[del]) {
+
+						$deleteditems = 0;
+						foreach($_POST[deletemedia] AS $id => $name) {
+
+							$deleteditems++;
+							$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `id` = '$id'");
+							$result02 = mysql_fetch_array($query02);
+							mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_links` WHERE `id` = '$result02[id]'");
+
+						}
+
+						echo '<div id="message" class="updated fade"><p><strong>'.sprintf(__("%s link(s) deleted successfully!",$myTreasuresTextdomain),$deleteditems).'</strong></p></div>';
+
+					}
+
+				} else {
+
+?>
+
+<div class="wrap"><h2><?php echo __("Delete media",$myTreasuresTextdomain); ?> (<?php echo $result01[field01]; ?>)</h2>
+<form action="" method="post">
+<input type="hidden" name="deletemarked" value="1" />
+<p><?php echo __("Do you want to delete the following links?",$myTreasuresTextdomain)."<br />"; foreach($_POST[deletemedia] AS $id => $name) { echo "<input type=\"hidden\" name=\"deletemedia[".$id."]\" value=\"".$name."\" /><br />- ".$name; } ?></p>
+<div class="submit"><input type="submit" class="button-primary" name="del" value=" <?php echo __("Yes",$myTreasuresTextdomain); ?> "> <input type="submit" name="dontdel" value=" <?php echo __("No",$myTreasuresTextdomain); ?> "></div>
+</form>
+</div>
+<br /><br />
+
+<?php
+
+				}
+
+			}
+
 			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$_GET[id]'");
 			while($result02 = mysql_fetch_array($query02)) { $linkarray[] = $result02; }
 
@@ -36,52 +75,91 @@
 
 			}
 			
-			if($_POST[changelinks] && $linkarray) {
+			if($_POST[saveorder] && $_POST[name]) {
 
-				foreach($linkarray AS $value) {
+				foreach($_POST[name] AS $id => $dummy) {
 
-					if($_POST[deletelink][$value[id]]) {
-
-						mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_links` WHERE `id` = '$value[id]'");
-
-					}
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures_links` SET `link` = '".$_POST['link'][$id]."', `name` = '".$_POST[name][$id]."' WHERE `id` = '$id'");
 
 				}
 
-				$linkarray = false;
-
 			}
 
-			$linkarray = false;
-			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$_GET[id]'");	
-			while($result02 = mysql_fetch_array($query02)) { $linkarray[] = $result02; }
-			
 ?>
 
+<script type="text/javascript">
+<!-- 
+function markallmedia() {
+
+	for(var i = 0; i < document.myform.elements.length; i++) {
+    if(document.myform.elements[i].type == 'checkbox'){
+      document.myform.elements[i].checked = !(document.myform.elements[i].checked);
+    }
+  }
+	document.myform.elements[0].checked = !(document.myform.elements[0].checked);
+
+}
+//-->
+</script>
 <div class="wrap">
-<h2><?php echo $result01[field01]; ?></h2>
-<form action="" method="post"><p><h3><?php echo __("Add new link:",$myTreasuresTextdomain); ?></h3><b><?php echo __("Link target",$myTreasuresTextdomain); ?>:</b><br /><input type="text" style="height: 16px; width: 250px;" name="target" value="http://"><br /><br /><b><?php echo __("Link name",$myTreasuresTextdomain); ?></b><br /><input type="text" style="height: 16px; width: 250px;" name="name"></p><div class="submit"><input type="submit" name="doit" value=" <?php echo __("Create new link",$myTreasuresTextdomain); ?> "></div></form></div>
+<h2><?php echo __("Activ links",$myTreasuresTextdomain); ?> (<?php echo $result01[field01]; ?>)</h2>
+<form action="" method="post"><p><h3><?php echo __("Add new link:",$myTreasuresTextdomain); ?></h3><b><?php echo __("Link target",$myTreasuresTextdomain); ?>:</b><br /><input type="text" style="width: 75%;" name="target" value="http://"><br /><br /><b><?php echo __("Link name",$myTreasuresTextdomain); ?></b><br /><input type="text" style="width: 75%;" name="name"></p><div class="submit"><input type="submit" name="doit" class="button-primary" value=" <?php echo __("Create new link",$myTreasuresTextdomain); ?> "></div></form></div>
 
 <?php
 
-			if($linkarray) {
+			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$result01[id]' ORDER BY `name`");
+			if(mysql_num_rows($query02)) {
 
 ?>
 
-<br /><br />
-<div class="wrap">
-<h2><?php echo __("Activ links",$myTreasuresTextdomain); ?></h2>
-<form action="" method="post"><p><?php foreach($linkarray AS $value) { echo "<br /><input type=\"checkbox\" name=\"deletelink[".$value[id]."]\" value=\"1\"> <b>".$value[name]."</b> (".$value[link].")"; } ?></p>
-<div class="submit">
-<input type="submit" name="changelinks" value=" <?php echo __("Delete marked links",$myTreasuresTextdomain); ?> ">
-</div>
-</div>
+<form name="myform" action="" method="post">
+<table class="widefat fixed" cellspacing="0">
+<thead>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-cb check-column" style=""><input type="checkbox" /></th>
+	<th scope="col"  class="manage-column column-name" style=""><?php echo __("Link target",$myTreasuresTextdomain); ?></th>
+	<th scope="col"  class="manage-column column-name" style=""><?php echo __("Link name",$myTreasuresTextdomain); ?></th>
+</tr>
+</thead>
+
+<tfoot>
+<tr class="thead">
+	<th scope="col"  class="manage-column column-cb check-column" style=""><input type="checkbox" /></th>
+	<th scope="col"  class="manage-column column-name" style=""><?php echo __("Link target",$myTreasuresTextdomain); ?></th>
+	<th scope="col"  class="manage-column column-name" style=""><?php echo __("Link name",$myTreasuresTextdomain); ?></th>
+</tr>
+</tfoot>
+
+<tbody id="users" class="list:user user-list">
+
+<?php
+
+		while($result02 = mysql_fetch_array($query02)) {
+
+?>
+
+<tr id='user-1' <?php if(++$i%2 == 0) { echo "class='alternate'"; } ?>>
+	<th scope='row' class='check-column'><input type='checkbox' name='deletemedia[<?php echo $result02[id]; ?>]' id='user_1' value='<?php echo $result02[name]; ?>' /></th>
+	<td class="username column-username"><input type="text" name="link[<?php echo $result02[id]; ?>]" value="<?php echo $result02['link']; ?>" style="width: 100%;"></td>
+	<td class="username column-username"><input type="text" name="name[<?php echo $result02[id]; ?>]" value="<?php echo $result02[name]; ?>" style="width: 100%;"></td>
+</tr>
+
+
+<?php
+
+				}
+
+?>
+
+</tbody>
+</table>
+<div class="submit"><input type="submit" class="button-primary" name="deletemarked" value=" <?php echo __("Delete marked links",$myTreasuresTextdomain); ?> "> <input type="submit" name="saveorder" value=" <?php echo __("Save new target & name",$myTreasuresTextdomain); ?> "></div>
 </form>
 
 <?php
 
 			}
-
+		
 		}
 
 	}

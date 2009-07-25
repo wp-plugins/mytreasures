@@ -18,7 +18,7 @@
 
 	} elseif($myTreasures_options[option20] != 'no' && $myTreasures_options[option20] != 'yes') {
 
-		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
+		echo "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>";
 
 	} else {
 
@@ -184,7 +184,7 @@
 <br /><br /><?php echo __("Your local csv file:",$myTreasuresTextdomain); ?> (<u><?php echo __("field delimiter:",$myTreasuresTextdomain); ?></u> <b><?php echo $myTreasures_options[option15]; ?></b> <?php if($myTreasures_options[option21]) { echo "<u>".__("text block delimiter",$myTreasuresTextdomain)."</u> <b>".$myTreasures_options[option21]."</b>"; } ?>)<br /><input type="file" name="csvfile" size="35" class="uploadform">
 <br /><br /><b><?php echo __("Media type of csv file",$myTreasuresTextdomain); ?></b>
 <?php $query99 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`"); while($result99 = mysql_fetch_array($query99)) { $csv = false; for($i2 = 1; $i2 <= 20; $i2++) { if($i2 < 10) { $i2 = "0".$i2; } if($result99["field".$i2]) { if($myTreasures_options[option21]) { $description = $myTreasures_options[option21].__("Description",$myTreasuresTextdomain).$myTreasures_options[option21]; $csv .= $myTreasures_options[option15].$myTreasures_options[option21].$result99["field".$i2].$myTreasures_options[option21]; } else{ $description = __("Description",$myTreasuresTextdomain); $csv .= $myTreasures_options[option15].$result99["field".$i2]; } } } echo "<br /><input type=\"radio\" name=\"treasuretype\" value=\"".$result99[id]."\"> ".$result99[name]." (".__("csv format:",$myTreasuresTextdomain)." <i>".$description.$csv."</i>)"; } ?>
-<div class="submit"><input type="submit" value=" <?php echo __("Upload csv file",$myTreasuresTextdomain); ?> "></form></div>
+<div class="submit"><input type="submit" class="button-primary" value=" <?php echo __("Upload csv file",$myTreasuresTextdomain); ?> "></form></div>
 </p>
 <br />
 <p><h3>Cover Upload</h3>
@@ -207,7 +207,7 @@
 			while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01[id]."\">".$result01[field01]."</option>"; }
 			echo "<form method=\"post\" action=\"\">";
 			foreach($coverarray AS $image) { echo "<br /><br /><img src=\"../wp-content/mytreasures/coverupload/".$image."\"><br /><select name=\"multipleimageupload[".$image."]\" style=\"width: 80%;\">".$selectoptions."</select>"; }
-			echo "<br /><br /><div class=\"submit\"><input type=\"submit\" value=\" ".__("Update media",$myTreasuresTextdomain)." \"></form></div></form>";
+			echo "<br /><br /><div class=\"submit\"><input type=\"submit\"  class=\"button-primary\" value=\" ".__("Update media",$myTreasuresTextdomain)." \"></form></div></form>";
 
 		}
 
