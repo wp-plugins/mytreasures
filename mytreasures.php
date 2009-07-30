@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.0
+Version: 2.1
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -16,8 +16,8 @@ Author URI: http://www.crazyiven.de/
 
 
 	$myTreasutesRewriteDebug	= false;
-	$myTreasuresDBVersion 		= "030";
-	$myTreasuresPluginVersion = "2.0";
+	$myTreasuresDBVersion 		= "031";
+	$myTreasuresPluginVersion = "2.1";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	register_activation_hook( __FILE__, 'myTreasuresInstall');
@@ -64,7 +64,7 @@ Author URI: http://www.crazyiven.de/
 
 		if(!mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_options`"))) {
 
-			mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"')");
+			mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`, `option33`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"', '25')");
 
 		}
 
@@ -332,29 +332,38 @@ Author URI: http://www.crazyiven.de/
 
 		}
 
+		if($myTreasuresVersionRightNow == '030' && $myTreasuresDBVersion >= '031') {
+
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option33` = '25', `version` = '031' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "031";
+
+		}
+
 	}
 
 	function myTreasures($content) {
 
 		global $myTreasuresCodeSearch, $wp_query;
 
-		if(preg_match($myTreasuresCodeSearch[singlemedia],$content,$return)) {
+		while(preg_match($myTreasuresCodeSearch[singlemedia],$content,$return)) {
 
-				return preg_replace($myTreasuresCodeSearch[singlemedia],showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
-
-		} elseif(preg_match($myTreasuresCodeSearch[medialist],$content,$return)) {
-
-				return preg_replace($myTreasuresCodeSearch[medialist],showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
-
-		} elseif(preg_match($myTreasuresCodeSearch[standalone],$content,$return)) {
-
-				return preg_replace($myTreasuresCodeSearch[standalone],showmyTreasuresContainer($return[1],$wp_query->query_vars['mytreasuresort'],"single"),$content);
-
-		} else {
-
-			return $content;
+				$content = preg_replace("/\[my".$return[1]."treasures\]/",showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
 
 		}
+
+		while(preg_match($myTreasuresCodeSearch[medialist],$content,$return)) {
+
+				$content = preg_replace("/\[mytreasurelist=".$return[1]."\]/",showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
+
+		}
+
+		while(preg_match($myTreasuresCodeSearch[standalone],$content,$return)) {
+
+				$content = preg_replace("/\[mytreasure=".$return[1]."\]/",showmyTreasuresContainer($return[1],$wp_query->query_vars['mytreasuresort'],"single"),$content);
+
+		}
+
+		return $content;
 
 	}
 
@@ -714,32 +723,36 @@ Author URI: http://www.crazyiven.de/
 
 			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
 			$result02 = mysql_fetch_array($query02);
+
 			$content = "<p>";
-			if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
-			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$result02["feature_".$myTreasuredSort]."`, `field01`");
-			$myTreasuresCountMedia = mysql_num_rows($query01);
-			while($result01 = mysql_fetch_array($query01)) {
+			if($result02["feature_".$myTreasuredSort]) {
 
-				$showdetails = false;
-				if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
-				if($result01[$result02["feature_".$myTreasuredSort]] == "") { $result01[$result02["feature_".$myTreasuredSort]] = __("Unknown",$myTreasuresTextdomain); $searchsort = ""; } else { $result01[$result02["feature_".$myTreasuredSort]] = $result01[$result02["feature_".$myTreasuredSort]]; $searchsort = $result01[$result02["feature_".$myTreasuredSort]]; }
-				if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `".$result02["feature_".$myTreasuredSort]."` = '$searchsort' $myTreasuresTypesQueryCount")).")"; }
-				if($sorttype != $result01[$result02["feature_".$myTreasuredSort]]) {
+				if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
+				$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$result02["feature_".$myTreasuredSort]."`, `field01`");
+				$myTreasuresCountMedia = mysql_num_rows($query01);
+				while($result01 = mysql_fetch_array($query01)) {
 
-					$content .= "<h2>".$result01[$result02["feature_".$myTreasuredSort]].$showdetails."</h2>";
+					$showdetails = false;
+					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
+					if($result01[$result02["feature_".$myTreasuredSort]] == "") { $result01[$result02["feature_".$myTreasuredSort]] = __("Unknown",$myTreasuresTextdomain); $searchsort = ""; } else { $result01[$result02["feature_".$myTreasuredSort]] = $result01[$result02["feature_".$myTreasuredSort]]; $searchsort = $result01[$result02["feature_".$myTreasuredSort]]; }
+					if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `".$result02["feature_".$myTreasuredSort]."` = '$searchsort' $myTreasuresTypesQueryCount")).")"; }
+					if($sorttype != $result01[$result02["feature_".$myTreasuredSort]]) { $content .= "<h2>".$result01[$result02["feature_".$myTreasuredSort]].$showdetails."</h2>"; }
+					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid")."\">".$result01[field01]."</a> ".$rating."<br />";
+					$sorttype = $result01[$result02["feature_".$myTreasuredSort]];
 
 				}
-				$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid")."\">".$result01[field01]."</a> ".$rating."<br />";
-				$sorttype = $result01[$result02["feature_".$myTreasuredSort]];
+
+				if($myTreasures_options[option16] == 'yes') {
+
+					$content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />";
+
+				}
+
+			} else {
+
+				$content .= "<br /><b>".__("Please check your config, because you choose a default view which this mediatype can't use or didn't have!",$myTreasuresTextdomain);
 
 			}
-
-			if($myTreasures_options[option16] == 'yes') {
-
-				$content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />";
-
-			}
-
 			$content .= "</p>";
 
 		}

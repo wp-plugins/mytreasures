@@ -1090,3 +1090,11 @@ msgstr "Jahr"
 msgid "Add this movie to the database"
 msgstr "Gew&auml;hlten Film in die Datenbank &uuml;bernehmen"
 
+#
+msgid "Please check your config, because you choose a default view which this mediatype can't use or didn't have!"
+msgstr "Bitte pr&uuml;fen Sie Ihre Einstellungen, denn Sie haben eine Standardansicht gew&auml;hlt, die dieser Medientyp nicht besitzt!"
+
+#
+msgid "Maximum tracks for media with tracklist (min. 1 and max. 100)"
+msgstr "Maximale Anzahl von Tracks bei einem Medium mit Trackliste (Min. 1 und Max. 100)"
+

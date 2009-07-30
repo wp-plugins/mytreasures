@@ -14,6 +14,15 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
+<p><b>Neues in 2.1 // New in 2.1</b>
+<ul>
+	<li>Fixed bug with multiple myTreasure codes on the same page // Probleme bei der mehrfachen Nutzung von myTreasures auf einer einzigen Seite behoben</li>
+	<li>Option for max. tracks per media instead of hardcoded 25 // Man kann nun einstellen wieviele Tracks eine CD hat, statt der festen max. 25</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>Neues in 2.0 // New in 2.0</b>
 <ul>
 	<li>Updated all pages to WP 2.8 Theme // Alle Seiten an den WP 2.8 Theme angepasst</li>
@@ -22,9 +31,6 @@
 	<li>code cleanup // Quellcode aufger&auml;umt</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>Neues in 1.0.10 // New in 1.0.10</b>
 <ul>
 	<li>Erneutes Problem bei der Coveranzeige behoben // Fixed new problem with coverimages</li>

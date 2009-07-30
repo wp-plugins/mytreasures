@@ -41,7 +41,7 @@
 
 			if(count($_POST[trackname]) > 0) {
 
-				for($tracklist = 1; $tracklist <= 25; $tracklist++) {
+				for($tracklist = 1; $tracklist <= $myTreasures_options[option33]; $tracklist++) {
 
 					if($_POST[trackname][$tracklist]) {
 
@@ -131,7 +131,7 @@
 
 	}
 
-	if($result_type[feature_tracklist]) { for($tracklist = 1; $tracklist <= 25; $tracklist++) {
+	if($result_type[feature_tracklist]) { for($tracklist = 1; $tracklist <= $myTreasures_options[option33]; $tracklist++) {
 
 ?>
 
