@@ -353,7 +353,7 @@ Author URI: http://www.crazyiven.de/
 
 		if($myTreasuresVersionRightNow == '032' && $myTreasuresDBVersion >= '033') {
 
-			mysql_query("ALTER TABLE `test_mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '033' WHERE `id` = '1'");
 			$myTreasuresVersionRightNow = "033";
 
@@ -555,7 +555,7 @@ Author URI: http://www.crazyiven.de/
 			$tmp_mediatype = explode(",",$myTreasureType);
 			foreach($tmp_mediatype AS $value) {
 
-				$query01 = mysql_query("SELECT `id`, `listview_field02`, `listview_field03` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$value'");
+				$query01 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$value'");
 				$result01 = mysql_fetch_array($query01);
 
 				if($result01[id]) {
@@ -572,7 +572,7 @@ Author URI: http://www.crazyiven.de/
 
 		} else {
 
-			$query01 = mysql_query("SELECT `id`, `listview_field02`, `listview_field03` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
+			$query01 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
 			$result01 = mysql_fetch_array($query01);
 
 			if($result01[id]) {
