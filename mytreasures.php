@@ -15,7 +15,7 @@ Author URI: http://www.crazyiven.de/
 */
 
 	$myTreasutesRewriteDebug	= false;
-	$myTreasuresDBVersion			= "033";
+	$myTreasuresDBVersion			= "034";
 	$myTreasuresPluginVersion	= "2.2";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
@@ -356,6 +356,14 @@ Author URI: http://www.crazyiven.de/
 			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '033' WHERE `id` = '1'");
 			$myTreasuresVersionRightNow = "033";
+
+		}
+
+		if($myTreasuresVersionRightNow == '033' && $myTreasuresDBVersion >= '034') {
+
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '034' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "034";
 
 		}
 
