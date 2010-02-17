@@ -95,7 +95,7 @@
 		21 - Fielddelimiter für CSV Import
 		22 - Bewertungen in Mischlisten
 		23 - Coveransicht in Mischlisten
-		24 - FREI
+		24 - Welche User dürfen "User haben auch" Liste nutzen
 		25 - Check ob es eine Installationsanleitung gab
 		26 - Dauerhaftes Update der Rewrite Regeln (nein / JA)
 		27 - Zeige bei Gruppierung die Anzahl (JA / nein)
@@ -105,7 +105,7 @@
 		31 - Suche aktiviert (nein / JA)
 		32 - Branding Text
 		33 - Anzahl von Tracks (min. 1 // max 100)
-		34 - FREI
+		34 - Zeitstempel Letzte Aktion / Änderung
 		35 - FREI
 		36 - FREI
 		37 - FREI
