@@ -14,7 +14,7 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
-<p><b>New in 2.2 // Neues in 2.2</b>
+<p><b>New in 2.2 (.1) // Neues in 2.2 (.1)</b>
 <ul>
 	<li>Some Updates on Adminarea (Filters) // Updates f&uuml;r den Adminbereich (z.B. Filter in der &Uuml;bersicht)</li>
 	<li>User with this Media Option for every media // Liste in den Medien, welche Nutzer des Blogs dieses auch haben</li>
@@ -23,6 +23,7 @@
 	<li>Show/Hide media attributes on details view // Bestimmte Attribute in der Detailansicht Ein/Ausblenden</li>
 	<li>New filesystem for plugin & jquery gallerysystems // Neue Datenstruktur des Plugins und neue jquery Galeriesysteme</li>
 	<li>Code cleanup // Code aufger&auml;umt</li>
+	<li>2.2.1 is just a small fix // 2.2.1 ist nur keiner fix</li>
 	<li>More i just forgot ;) // Vieles kleines was ich vergessen habe ;)</li>
 </ul>
 </p>
