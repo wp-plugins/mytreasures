@@ -366,8 +366,15 @@ Author URI: http://www.crazyiven.de/
 			$myTreasuresVersionRightNow = "034";
 
 		}
+/*
+		if($myTreasuresVersionRightNow == '034' && $myTreasuresDBVersion >= '035') {
 
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_type` SET `listview_field01` = '1'");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '035' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "035";
 
+		}
+*/
 	}
 
 	function myTreasures($content) {
@@ -884,7 +891,7 @@ Author URI: http://www.crazyiven.de/
 			if($myTreasures_options[option20] == 'no')								{ $content .= "<a type=amzn search=\"".str_replace("\"","",$result01[field01])."\">Amazon.de</a><SCRIPT charset=\"utf-8\" type=\"text/javascript\" src=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822/DE/crazyivende-21/8005/fa48ef75-2c02-4e40-a251-4ac49ca85046\"></SCRIPT><NOSCRIPT><A HREF=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822%2FDE%2Fcrazyivende-21%2F8005%2Ffa48ef75-2c02-4e40-a251-4ac49ca85046&Operation=NoScript\">Amazon.de Widgets</A></NOSCRIPT>"; }
 			if($myTreasures_options[option20] == 'no' || $morelinks)	{ $content .= "</td></tr>"; }
 			if($result01[rating]) 																		{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Rating",$myTreasuresTextdomain).":<br /><font style=\"font-size: 10px; font-weight: normal;\">".__("max. 5 stars",$myTreasuresTextdomain)."</font></td><td align=\"left\" valign=\"top\">".myTreasuresRating($result01[rating])."</td></tr>"; }
-			if(current_user_can('edit_plugins')) 											{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Options",$myTreasuresTextdomain)."</td><td align=\"left\" valign=\"top\"><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresoverview.php&action=edit&id=".$result01[id]."\" target=\"_blank\">".__("Edit this entry",$myTreasuresTextdomain)."</a></td></tr>"; } 
+			if(current_user_can('edit_plugins')) 											{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Options",$myTreasuresTextdomain)."</td><td align=\"left\" valign=\"top\"><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresedit.php&type=mediatype&id=".$result01[id]."\" target=\"_blank\">".__("Edit this entry",$myTreasuresTextdomain)."</a></td></tr>"; } 
 			if($moreimages) 																					{ $content .= "<tr><td align=\"left\" height=\"10\" colspan=\"2\">&nbsp;</tr><tr><td align=\"left\" colspan=\"2\"><b>".__("Images",$myTreasuresTextdomain).":</b><br />".$moreimages."</td>"; }
 			$content .= "</table></p>";
 			if(get_post_type() == 'post' && $myTreasureGlossar != 'single') { $content .= "<p><a href=\"".get_permalink()."\">".__("Back",$myTreasuresTextdomain)."</a></p>"; }
@@ -1458,7 +1465,7 @@ Author URI: http://www.crazyiven.de/
 	function myTreasuresOFDBWidget() {
 
 		global $myTreasuresTextdomain;
-		echo "<form action=\"?page=mytreasures/mytreasuresofdb.php\" method=\"post\"><input type=\"text\" name=\"search\" tabindex=\"1\" autocomplete=\"on\" value=\"\" style=\"width: 100%;\" /><p class=\"submit\"><input type=\"submit\" tabindex=\"2\" class=\"button-primary\" value=\"".__("Search...",$myTreasuresTextdomain)."\" /></p><p class=\"textright\"><a href=\"?page=mytreasures/mytreasuresoverview.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasuresoptions.php\" class=\"button\">".__("Options",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasureshelp.php\" class=\"button\">".__("Help / Support",$myTreasuresTextdomain)."</a> </p></form>";
+		echo "<form action=\"?page=mytreasures/mytreasuresofdb.php\" method=\"post\"><input type=\"text\" name=\"search\" tabindex=\"1\" autocomplete=\"on\" value=\"\" style=\"width: 100%;\" /><p class=\"submit\"><input type=\"submit\" tabindex=\"2\" class=\"button-primary\" value=\"".__("Search...",$myTreasuresTextdomain)."\" /></p><p class=\"textright\"><a href=\"?page=mytreasures/mytreasuresadmin.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasuresoptions.php\" class=\"button\">".__("Options",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasureshelp.php\" class=\"button\">".__("Help / Support",$myTreasuresTextdomain)."</a> </p></form>";
 
 	}
 
