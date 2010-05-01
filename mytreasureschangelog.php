@@ -14,6 +14,14 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
+<p><b>New in 2.2 (.2) // Neues in 2.2 (.2)</b>
+<ul>
+	<li>2.2.2 is just a small bugfix release (mysql problems) // 2.2.2 ist nur kleiner Bugfix Release (MySQL Probleme)</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<br /><br />
 <p><b>New in 2.2 (.1) // Neues in 2.2 (.1)</b>
 <ul>
 	<li>Some Updates on Adminarea (Filters) // Updates f&uuml;r den Adminbereich (z.B. Filter in der &Uuml;bersicht)</li>
@@ -23,13 +31,10 @@
 	<li>Show/Hide media attributes on details view // Bestimmte Attribute in der Detailansicht Ein/Ausblenden</li>
 	<li>New filesystem for plugin & jquery gallerysystems // Neue Datenstruktur des Plugins und neue jquery Galeriesysteme</li>
 	<li>Code cleanup // Code aufger&auml;umt</li>
-	<li>2.2.1 is just a small fix // 2.2.1 ist nur keiner fix</li>
+	<li>2.2.1 is just a small bugfix release // 2.2.1 ist nur kleiner Bugfix Release</li>
 	<li>More i just forgot ;) // Vieles kleines was ich vergessen habe ;)</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>New in 2.1 // Neues in 2.1</b>
 <ul>
 	<li>Fixed bug with multiple myTreasure codes on the same page // Probleme bei der mehrfachen Nutzung von myTreasures auf einer einzigen Seite behoben</li>

@@ -1,10 +1,11 @@
 <?php
 
 /*
+
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.2.1
+Version: 2.2.2
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -14,33 +15,32 @@ Author URI: http://www.crazyiven.de/
 
 */
 
+	register_activation_hook( __FILE__, 'myTreasuresInstall');
+
 	$myTreasutesRewriteDebug	= false;
-	$myTreasuresDBVersion			= "034";
+	$myTreasuresDBVersion			= "035";
 	$myTreasuresPluginVersion	= "2.2.1";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	$myTreasuresPathArray			= Array("cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
-	register_activation_hook( __FILE__, 'myTreasuresInstall');
 
 	$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
 	$myTreasures_options = mysql_fetch_array($myTreasures_query);
 
-	if(!$myTreasures_options[id]) { 
+	if(!$myTreasures_options[id]) {
 
-		mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"')");
+		mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`, `option33`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"', '25')");
 		$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
 		$myTreasures_options = mysql_fetch_array($myTreasures_query);
 		
-	}
-
-	if($myTreasuresDBVersion != $myTreasures_options[version]) {
+	} elseif($myTreasuresDBVersion != $myTreasures_options[version]) {
 
 		myTreasuresUpdate($myTreasures_options[version]);
 
 	}
 
 	$myTreasures_query = mysql_query("SELECT `id`, `short`, `name`, `listview_field02`, `listview_field03` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
-	while($result = mysql_fetch_array($myTreasures_query)) { 
+	while($result = mysql_fetch_array($myTreasures_query)) {
 
 		$myTreasuresMediaTypeArray[$result[id]] = $result[name];
 		$myTreasures_tags .= $result[short]."|";
@@ -59,17 +59,11 @@ Author URI: http://www.crazyiven.de/
 
 		global $wpdb;
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures` (`id` int(10) unsigned NOT NULL auto_increment, `type` int(5) unsigned NOT NULL default '0', `rating` int(5) unsigned NOT NULL default '0', `description` longtext NOT NULL, `comment` longtext NOT NULL, `tracklist` longtext NOT NULL, `image` varchar(255) NOT NULL default '', `rentto` varchar(255) NOT NULL default '', `field01` longtext NOT NULL, `field02` longtext NOT NULL, `field03` longtext NOT NULL, `field04` longtext NOT NULL, `field05` longtext NOT NULL, `field06` longtext NOT NULL, `field07` longtext NOT NULL, `field08` longtext NOT NULL, `field09` longtext NOT NULL, `field10` longtext NOT NULL, `field11` longtext NOT NULL, `field12` longtext NOT NULL, `field13` longtext NOT NULL, `field14` longtext NOT NULL, `field15` longtext NOT NULL, `field16` longtext NOT NULL, `field17` longtext NOT NULL, `field18` longtext NOT NULL, `field19` longtext NOT NULL, `field20` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM");
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_options` (`id` char(1) NOT NULL default '', `version` varchar(10) NOT NULL default '', `changelog` varchar(20) NOT NULL default '', `option01` longtext NOT NULL, `option02` longtext NOT NULL, `option03` longtext NOT NULL, `option04` longtext NOT NULL, `option05` longtext NOT NULL, `option06` longtext NOT NULL, `option07` longtext NOT NULL, `option08` longtext NOT NULL, `option09` longtext NOT NULL, `option10` longtext NOT NULL, `option11` longtext NOT NULL, `option12` longtext NOT NULL, `option13` longtext NOT NULL, `option14` longtext NOT NULL, `option15` longtext NOT NULL, `option16` longtext NOT NULL, `option17` longtext NOT NULL, `option18` longtext NOT NULL, `option19` longtext NOT NULL, `option20` longtext NOT NULL, `option21` longtext NOT NULL, `option22` longtext NOT NULL, `option23` longtext NOT NULL, `option24` longtext NOT NULL, `option25` longtext NOT NULL, `option26` longtext NOT NULL, `option27` longtext NOT NULL, `option28` longtext NOT NULL, `option29` longtext NOT NULL, `option30` longtext NOT NULL, `option31` longtext NOT NULL, `option32` longtext NOT NULL, `option33` longtext NOT NULL, `option34` longtext NOT NULL, `option35` longtext NOT NULL, `option36` longtext NOT NULL, `option37` longtext NOT NULL, `option38` longtext NOT NULL, `option39` longtext NOT NULL, `option40` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM");
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_type` ( `id` int(10) unsigned NOT NULL auto_increment, `short` varchar(10) NOT NULL default '', `view` varchar(255) NOT NULL default '', `name` varchar(255) NOT NULL default '', `feature_tracklist` enum('0','1') NOT NULL default '0', `feature_sort1` varchar(10) NOT NULL default '', `feature_sort2` varchar(10) NOT NULL default '', `feature_sort3` varchar(10) NOT NULL default '', `feature_sort4` varchar(10) NOT NULL default '', `feature_sort5` varchar(10) NOT NULL default '', `field01` varchar(255) NOT NULL default '', `field02` varchar(255) NOT NULL default '', `field03` varchar(255) NOT NULL default '', `field04` varchar(255) NOT NULL default '', `field05` varchar(255) NOT NULL default '', `field06` varchar(255) NOT NULL default '', `field07` varchar(255) NOT NULL default '', `field08` varchar(255) NOT NULL default '', `field09` varchar(255) NOT NULL default '', `field10` varchar(255) NOT NULL default '', `field11` varchar(255) NOT NULL default '', `field12` varchar(255) NOT NULL default '', `field13` varchar(255) NOT NULL default '', `field14` varchar(255) NOT NULL default '', `field15` varchar(255) NOT NULL default '', `field16` varchar(255) NOT NULL default '', `field17` varchar(255) NOT NULL default '', `field18` varchar(255) NOT NULL default '', `field19` varchar(255) NOT NULL default '', `field20` varchar(255) NOT NULL default '', `public_field01` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field02` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field03` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field04` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field05` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field06` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field07` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field08` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field09` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field10` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field11` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field12` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field13` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field14` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field15` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field16` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field17` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field18` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field19` ENUM('0', '1') NOT NULL DEFAULT '1', `public_field20` ENUM('0', '1') NOT NULL DEFAULT '1', PRIMARY KEY  (`id`)) TYPE=MyISAM");
 		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_images` ( `id` int(10) unsigned NOT NULL auto_increment, `orderid` int(5) unsigned NOT NULL default '0', `treasureid` int(10) unsigned NOT NULL default '0', `name` varchar(255) NOT NULL default '', `comment` mediumtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM");
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_links` (`id` int( 10 ) unsigned NOT NULL auto_increment, `treasureid` int( 10 ) unsigned NOT NULL, `link` varchar( 255 ) NOT NULL, `name` varchar( 255 ) NOT NULL, PRIMARY KEY ( `id` )) ENGINE = MYISAM");
-		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_users` (`id` int( 10 ) unsigned NOT NULL auto_increment, `treasureid` int( 10 ) unsigned NOT NULL, `userid` int( 10 ) unsigned NOT NULL, `username` varchar( 255 ) NOT NULL, PRIMARY KEY ( `id` )) ENGINE = MYISAM");
-
-		if(!mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_options`"))) {
-
-			mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`, `option33`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"', '25')");
-
-		}
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_links` ( `id` int(10) unsigned NOT NULL auto_increment, `treasureid` int(10) unsigned NOT NULL, `link` varchar(255) NOT NULL, `name` varchar(255) NOT NULL, PRIMARY KEY  (`id`)) ENGINE = MYISAM");
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_options` ( `id` char(1) NOT NULL default '', `version` varchar(10) NOT NULL default '', `changelog` char(20) NOT NULL, `option01` longtext NOT NULL, `option02` longtext NOT NULL, `option03` longtext NOT NULL, `option04` longtext NOT NULL, `option05` longtext NOT NULL, `option06` longtext NOT NULL, `option07` longtext NOT NULL, `option08` longtext NOT NULL, `option09` longtext NOT NULL, `option10` longtext NOT NULL, `option11` longtext NOT NULL, `option12` longtext NOT NULL, `option13` longtext NOT NULL, `option14` longtext NOT NULL, `option15` longtext NOT NULL, `option16` longtext NOT NULL, `option17` longtext NOT NULL, `option18` longtext NOT NULL, `option19` longtext NOT NULL, `option20` longtext NOT NULL, `option21` longtext NOT NULL, `option22` longtext NOT NULL, `option23` longtext NOT NULL, `option24` longtext NOT NULL, `option25` longtext NOT NULL, `option26` longtext NOT NULL, `option27` longtext NOT NULL, `option28` longtext NOT NULL, `option29` longtext NOT NULL, `option30` longtext NOT NULL, `option31` longtext NOT NULL, `option32` longtext NOT NULL, `option33` longtext NOT NULL, `option34` longtext NOT NULL, `option35` longtext NOT NULL, `option36` longtext NOT NULL, `option37` longtext NOT NULL, `option38` longtext NOT NULL, `option39` longtext NOT NULL, `option40` longtext NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM");
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_type` (`id` int(10) unsigned NOT NULL auto_increment, `short` varchar(10) NOT NULL default '', `view` varchar(255) NOT NULL default '', `name` varchar(255) NOT NULL default '', `feature_tracklist` enum('0','1') NOT NULL default '0', `feature_sort1` varchar(10) NOT NULL default '', `feature_sort2` varchar(10) NOT NULL default '', `feature_sort3` varchar(10) NOT NULL default '', `feature_sort4` varchar(10) NOT NULL default '', `feature_sort5` varchar(10) NOT NULL default '', `field01` varchar(255) NOT NULL default '', `field02` varchar(255) NOT NULL default '', `field03` varchar(255) NOT NULL default '', `field04` varchar(255) NOT NULL default '', `field05` varchar(255) NOT NULL default '', `field06` varchar(255) NOT NULL default '', `field07` varchar(255) NOT NULL default '', `field08` varchar(255) NOT NULL default '', `field09` varchar(255) NOT NULL default '', `field10` varchar(255) NOT NULL default '', `field11` varchar(255) NOT NULL default '', `field12` varchar(255) NOT NULL default '', `field13` varchar(255) NOT NULL default '', `field14` varchar(255) NOT NULL default '', `field15` varchar(255) NOT NULL default '', `field16` varchar(255) NOT NULL default '', `field17` varchar(255) NOT NULL default '', `field18` varchar(255) NOT NULL default '', `field19` varchar(255) NOT NULL default '', `field20` varchar(255) NOT NULL default '', `public_field01` enum('0','1') NOT NULL default '1', `public_field02` enum('0','1') NOT NULL default '1', `public_field03` enum('0','1') NOT NULL default '1', `public_field04` enum('0','1') NOT NULL default '1', `public_field05` enum('0','1') NOT NULL default '1', `public_field06` enum('0','1') NOT NULL default '1', `public_field07` enum('0','1') NOT NULL default '1', `public_field08` enum('0','1') NOT NULL default '1', `public_field09` enum('0','1') NOT NULL default '1', `public_field10` enum('0','1') NOT NULL default '1', `public_field11` enum('0','1') NOT NULL default '1', `public_field12` enum('0','1') NOT NULL default '1', `public_field13` enum('0','1') NOT NULL default '1', `public_field14` enum('0','1') NOT NULL default '1', `public_field15` enum('0','1') NOT NULL default '1', `public_field16` enum('0','1') NOT NULL default '1', `public_field17` enum('0','1') NOT NULL default '1', `public_field18` enum('0','1') NOT NULL default '1', `public_field19` enum('0','1') NOT NULL default '1', `public_field20` enum('0','1') NOT NULL default '1', `listview_field01` enum('0','1') NOT NULL, `listview_field02` enum('0','1') NOT NULL, `listview_field03` enum('0','1') NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM");
+		mysql_query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."mytreasures_users` ( `id` int(10) unsigned NOT NULL auto_increment, `treasureid` int(10) unsigned NOT NULL, `userid` int(10) unsigned NOT NULL, `username` varchar(255) NOT NULL, PRIMARY KEY  (`id`)) ENGINE = MYISAM");
 
 	}
 
@@ -331,7 +325,7 @@ Author URI: http://www.crazyiven.de/
 
 			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_options` CHANGE `changelog` `changelog` CHAR( 20 ) NOT NULL");
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '030' WHERE `id` = '1'");
-			$myTreasuresVersionRightNow = "029";
+			$myTreasuresVersionRightNow = "030";
 
 		}
 
@@ -353,7 +347,6 @@ Author URI: http://www.crazyiven.de/
 
 		if($myTreasuresVersionRightNow == '032' && $myTreasuresDBVersion >= '033') {
 
-			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '033' WHERE `id` = '1'");
 			$myTreasuresVersionRightNow = "033";
 
@@ -361,20 +354,19 @@ Author URI: http://www.crazyiven.de/
 
 		if($myTreasuresVersionRightNow == '033' && $myTreasuresDBVersion >= '034') {
 
-			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '034' WHERE `id` = '1'");
 			$myTreasuresVersionRightNow = "034";
 
 		}
-/*
+
 		if($myTreasuresVersionRightNow == '034' && $myTreasuresDBVersion >= '035') {
 
-			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_type` SET `listview_field01` = '1'");
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_type` ADD `listview_field01` ENUM( '0', '1' ) NOT NULL, ADD `listview_field02` ENUM( '0', '1' ) NOT NULL, ADD `listview_field03` ENUM( '0', '1' ) NOT NULL");
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '035' WHERE `id` = '1'");
 			$myTreasuresVersionRightNow = "035";
 
 		}
-*/
+
 	}
 
 	function myTreasures($content) {
