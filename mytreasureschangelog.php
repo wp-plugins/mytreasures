@@ -16,7 +16,7 @@
 <h2>Changelog</h2>
 <p><b>New in 2.2 (.2) // Neues in 2.2 (.2)</b>
 <ul>
-	<li>2.2.2 is just a small bugfix release (mysql problems) // 2.2.2 ist nur kleiner Bugfix Release (MySQL Probleme)</li>
+	<li>2.2.2 is just a small fix // 2.2.2 ist nur kleiner Fix</li>
 </ul>
 </p>
 <div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
@@ -31,7 +31,7 @@
 	<li>Show/Hide media attributes on details view // Bestimmte Attribute in der Detailansicht Ein/Ausblenden</li>
 	<li>New filesystem for plugin & jquery gallerysystems // Neue Datenstruktur des Plugins und neue jquery Galeriesysteme</li>
 	<li>Code cleanup // Code aufger&auml;umt</li>
-	<li>2.2.1 is just a small bugfix release // 2.2.1 ist nur kleiner Bugfix Release</li>
+	<li>2.2.1 is just a small fix // 2.2.1 ist nur kleiner Fix</li>
 	<li>More i just forgot ;) // Vieles kleines was ich vergessen habe ;)</li>
 </ul>
 </p>
