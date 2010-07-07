@@ -1170,3 +1170,11 @@ msgstr "Registrierter Leser"
 msgid "No user allowed"
 msgstr "Keinem Benutzer erlaubt"
 
+#
+msgid "Do not link to detailspage"
+msgstr "Link auf die Detailseite deaktivieren / nicht nutzen"
+
+#
+msgid "Link to detailslink"
+msgstr "Link auf die Detailseite aktivieren / nutzen"
+
