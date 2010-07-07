@@ -1460,7 +1460,7 @@ Author URI: http://www.crazyiven.de/
 	function myTreasuresOFDBWidget() {
 
 		global $myTreasuresTextdomain;
-		echo "<form action=\"?page=mytreasures/mytreasuresofdb.php\" method=\"post\"><input type=\"text\" name=\"search\" tabindex=\"1\" autocomplete=\"on\" value=\"\" style=\"width: 100%;\" /><p class=\"submit\"><input type=\"submit\" tabindex=\"2\" class=\"button-primary\" value=\"".__("Search...",$myTreasuresTextdomain)."\" /></p><p class=\"textright\"><a href=\"?page=mytreasures/mytreasuresadmin.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasuresoptions.php\" class=\"button\">".__("Options",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasureshelp.php\" class=\"button\">".__("Help / Support",$myTreasuresTextdomain)."</a> </p></form>";
+		echo "<form action=\"admin.php?page=mytreasures/mytreasuresofdb.php\" method=\"post\"><input type=\"text\" name=\"search\" tabindex=\"1\" autocomplete=\"on\" value=\"\" style=\"width: 100%;\" /><p class=\"submit\"><input type=\"submit\" tabindex=\"2\" class=\"button-primary\" value=\"".__("Search...",$myTreasuresTextdomain)."\" /></p><p class=\"textright\"><a href=\"?page=mytreasures/mytreasuresadmin.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasuresoptions.php\" class=\"button\">".__("Options",$myTreasuresTextdomain)."</a> <a href=\"?page=mytreasures/mytreasureshelp.php\" class=\"button\">".__("Help / Support",$myTreasuresTextdomain)."</a> </p></form>";
 
 	}
 
