@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.2.3
+Version: 2.2.4
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -18,7 +18,7 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion			= "035";
-	$myTreasuresPluginVersion	= "2.2.3";
+	$myTreasuresPluginVersion	= "2.2.4";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	$myTreasuresPathArray			= Array("cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
@@ -610,7 +610,11 @@ Author URI: http://www.crazyiven.de/
 					if($myTreasuresTypInfos[$result01[type]][listview_field03]) { $moreinfos .= $result01[field03].", "; }
 					if($moreinfos) { $moreinfos = "[".substr($moreinfos,0,-2)."] "; }
 					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
-					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
+					if($myTreasures_options[option35] == 'yes') {
+						$content .= $myTreasures_options[option02].$result01[field01]." ".$moreinfos.$rating."<br />";
+					} else {
+						$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
+					}
 
 				}
 

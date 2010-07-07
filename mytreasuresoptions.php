@@ -82,7 +82,7 @@
 		08 - Breite ist fest
 		09 - Umbruch für Cover
 		10 - Coveransicht der Bereiche
-		11 - FREI
+		11 - Haben dieses Medium auch
 		12 - Bewertungen in der Listenansicht anzeigen (yes / NO)
 		13 - Soll der Text in der Einzelansicht um das Bild rumlaufen oder nicht (DIV / table)
 		14 - Cover Großansicht (yes / NO)
@@ -106,7 +106,7 @@
 		32 - Branding Text
 		33 - Anzahl von Tracks (min. 1 // max 100)
 		34 - Zeitstempel Letzte Aktion / Änderung
-		35 - FREI
+		35 - Deaktivierung der Detailseite
 		36 - FREI
 		37 - FREI
 		38 - FREI
@@ -167,6 +167,8 @@
 <br /><input name="option16" type="radio" value="yes" <?php if($result01[option16] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show media count",$myTreasuresTextdomain); ?>
 <br /><input name="option28" type="radio" value="list" <?php if($result01[option28] == '' || $result01[option28] == 'list') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show list view",$myTreasuresTextdomain); ?>
 <br /><input name="option28" type="radio" value="glossar" <?php if($result01[option28] == 'glossar') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show glossar view",$myTreasuresTextdomain); ?>
+<br /><input name="option27" type="radio" value="yes" <?php if($result01[option35] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not link to detailspage",$myTreasuresTextdomain); ?>
+<br /><input name="option27" type="radio" value="no" <?php if($result01[option35] == '' || $result01[option35] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Link to detailslink",$myTreasuresTextdomain); ?>
 </p>
 <p>
 <b><?php echo __("Options for single view ([mytreasure=&#36;Number])",$myTreasuresTextdomain); ?></b>

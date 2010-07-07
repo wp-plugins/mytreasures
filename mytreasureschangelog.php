@@ -14,15 +14,21 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
+<p><b>New in 2.2 (.4) // Neues in 2.2 (.4)</b>
+<ul>
+	<li>Fixed CSV Import problem with activ field & text delimiter // CSV Import Probleme bei der Nutzung von Text- & Feldtrennzeichen behoben</li>
+	<li>Extend list view with option to show just the list, no detailspage link for media // In der Listenansicht kann man den Link zur Detailseite abschalten und nur eine reine Liste anzeigen lassen</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<p>&nbsp;</p><p>&nbsp;</p>
 <p><b>New in 2.2 (.2/.3) // Neues in 2.2 (.2/.3)</b>
 <ul>
 	<li>2.2.2 is just a small fix // 2.2.2 ist nur kleiner Fix</li>
 	<li>2.2.3 fixes the broken "Edit this entry" link in media details // 2.2.3 fixt den kaputten "Eintrag bearbeiten" Link in der Detailansicht des Eintrages</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<br /><br />
 <p><b>New in 2.2 (.1) // Neues in 2.2 (.1)</b>
 <ul>
 	<li>Some Updates on Adminarea (Filters) // Updates f&uuml;r den Adminbereich (z.B. Filter in der &Uuml;bersicht)</li>
