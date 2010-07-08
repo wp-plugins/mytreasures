@@ -631,7 +631,11 @@ Author URI: http://www.crazyiven.de/
 					if($myTreasuresTypInfos[$result01[type]][listview_field03]) { $moreinfos .= $result01[field03].", "; }
 					if($moreinfos) { $moreinfos = "[".substr($moreinfos,0,-2)."] "; }
 					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
-					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
+					if($myTreasures_options[option35] == 'yes') {
+						$content .= $myTreasures_options[option02].$result01[field01]." ".$moreinfos.$rating."<br />";
+					} else {
+						$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
+					}
 
 				}
 
