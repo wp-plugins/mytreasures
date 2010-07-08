@@ -167,8 +167,8 @@
 <br /><input name="option16" type="radio" value="yes" <?php if($result01[option16] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show media count",$myTreasuresTextdomain); ?>
 <br /><input name="option28" type="radio" value="list" <?php if($result01[option28] == '' || $result01[option28] == 'list') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show list view",$myTreasuresTextdomain); ?>
 <br /><input name="option28" type="radio" value="glossar" <?php if($result01[option28] == 'glossar') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show glossar view",$myTreasuresTextdomain); ?>
-<br /><input name="option27" type="radio" value="yes" <?php if($result01[option35] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not link to detailspage",$myTreasuresTextdomain); ?>
-<br /><input name="option27" type="radio" value="no" <?php if($result01[option35] == '' || $result01[option35] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Link to detailslink",$myTreasuresTextdomain); ?>
+<br /><input name="option35" type="radio" value="yes" <?php if($result01[option35] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not link to detailspage",$myTreasuresTextdomain); ?>
+<br /><input name="option35" type="radio" value="no" <?php if($result01[option35] == '' || $result01[option35] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Link to detailslink",$myTreasuresTextdomain); ?>
 </p>
 <p>
 <b><?php echo __("Options for single view ([mytreasure=&#36;Number])",$myTreasuresTextdomain); ?></b>
