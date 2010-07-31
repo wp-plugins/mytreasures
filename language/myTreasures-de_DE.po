@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Marcus Jäntsch <contact@crazyiven.de>\n"
 "Language-Team: Marcus Jaentsch <contact@crazyiven.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1177,4 +1177,12 @@ msgstr "Link auf die Detailseite deaktivieren / nicht nutzen"
 #
 msgid "Link to detailslink"
 msgstr "Link auf die Detailseite aktivieren / nutzen"
+
+#
+msgid "Do show header list with view options & search field"
+msgstr "Zeige die Kopfzeile mit den Ansichten & dem Suchfeld"
+
+#
+msgid "Do not show header list with view options & search field"
+msgstr "Zeige nicht die Kopfzeile mit den Ansichten & dem Suchfeld"
 
