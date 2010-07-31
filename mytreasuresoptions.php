@@ -196,6 +196,8 @@
 <br /><input name="option27" type="radio" value="yes" <?php if($result01[option27] == '' || $result01[option27] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show mediacount in rating / custom view",$myTreasuresTextdomain); ?>
 <br /><input name="option29" type="radio" value="no" <?php if($result01[option29] == '' || $result01[option29] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not use the rent to system, to show rented media",$myTreasuresTextdomain); ?>
 <br /><input name="option29" type="radio" value="yes" <?php if($result01[option29] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do use the rent to system, to show rented media",$myTreasuresTextdomain); ?>
+<br /><input name="option36" type="radio" value="no" <?php if($result01['option36'] == '' || $result01['option36'] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do show header list with view options & search field",$myTreasuresTextdomain); ?>
+<br /><input name="option36" type="radio" value="yes" <?php if($result01['option36'] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not show header list with view options & search field",$myTreasuresTextdomain); ?>
 <br /><input name="option20" type="radio" value="no" <?php if($result01[option20] == '' || $result01[option20] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Link to amazon.de",$myTreasuresTextdomain); ?>
 <br /><input name="option20" type="radio" value="yes" <?php if($result01[option20] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not link to amazon.de",$myTreasuresTextdomain); ?>
 <br />

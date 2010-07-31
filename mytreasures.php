@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.2.5
+Version: 2.2.6
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -18,10 +18,10 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion			= "035";
-	$myTreasuresPluginVersion	= "2.2.5";
+	$myTreasuresPluginVersion	= "2.2.6";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
-	$myTreasuresPathArray			= Array("cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
+	$myTreasuresPathArray			= Array("coverupload" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/coverupload/"), "cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
 
 	$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
 	$myTreasures_options = mysql_fetch_array($myTreasures_query);
@@ -469,7 +469,7 @@ Author URI: http://www.crazyiven.de/
 
 		}
 		
-		if(get_post_type() == 'page') {
+		if(get_post_type() == 'page' && $myTreasures_options['option36'] != 'yes') {
 
 			$myTreasuresShowHeader = true;
 

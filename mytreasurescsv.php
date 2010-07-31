@@ -11,45 +11,45 @@
 
 	} else {
 
-		if($_POST[multipleimageupload]) {
+		if($_POST['multipleimageupload']) {
 
 			$uploadedimagescount = "0";
-			foreach($_POST[multipleimageupload] AS $uploadedimage => $id) {
+			foreach($_POST['multipleimageupload'] AS $uploadedimage => $id) {
 
 				if($id) {
 
 					$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$id'");
 					$result01 = mysql_fetch_array($query01);
 					
-					@unlink($path.$result01[image]);
+					@unlink($myTreasuresPathArray['cover'].$result01['image']);
 					$imagename = "ownupload_".time().".".myTreasuresGetImageType($uploadedimage);
-					while(file_exists($path.$imagename)) {
+					while(file_exists($myTreasuresPathArray['cover'].$imagename)) {
 						$imagename = "ownupload_".time().".".myTreasuresGetImageType($uploadedimage);
 					}
 					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `image` = '$imagename' WHERE `id` = '$result01[id]'");
-					if($myTreasures_options[option03] == 'yes') {
+					if($myTreasures_options['option03'] == 'yes') {
 
-						if($myTreasures_options[option04] == 'fixedheight') { $height = $myTreasures_options[option05]; $width = "0"; $resizeby = "height"; $cutimage = false; }
-						if($myTreasures_options[option04] == 'fixedwidth') { $height = "0"; $width = $myTreasures_options[option06]; $resizeby = "width"; $cutimage = false; }
-						if($myTreasures_options[option04] == 'fixedboth') { $height = $myTreasures_options[option07]; $width = $myTreasures_options[option08]; $resizeby = "width"; $cutimage = true; }
-						myTreasuresImageResize($coverpath.$uploadedimage,$path.$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options[option32]);
+						if($myTreasures_options['option04'] == 'fixedheight') { $height = $myTreasures_options['option05']; $width = "0"; $resizeby = "height"; $cutimage = false; }
+						if($myTreasures_options['option04'] == 'fixedwidth') { $height = "0"; $width = $myTreasures_options['option06']; $resizeby = "width"; $cutimage = false; }
+						if($myTreasures_options['option04'] == 'fixedboth') { $height = $myTreasures_options['option07']; $width = $myTreasures_options['option08']; $resizeby = "width"; $cutimage = true; }
+						myTreasuresImageResize($myTreasuresPathArray['coverupload'].$uploadedimage,$myTreasuresPathArray['cover'].$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options['option32']);
 
 					} else {
 
-						myTreasuresImageResize($coverpath.$uploadedimage,$path.$imagename,"","","","",$myTreasures_options[option32]);
-						chmod($path.$imagename, 0666);
+						myTreasuresImageResize($myTreasuresPathArray['coverupload'].$uploadedimage,$myTreasuresPathArray['cover'].$imagename,"","","","",$myTreasures_options['option32']);
+						chmod($myTreasuresPathArray['cover'].$imagename, 0666);
 
 					}
 
 					if($myTreasures_options[option14] == 'yes') {
 
-						myTreasuresImageResize($coverpath.$uploadedimage,$path."big_".$imagename,"","","","",$myTreasures_options[option32]);
-						chmod($path."big_".$imagename, 0666);
+						myTreasuresImageResize($myTreasuresPathArray['coverupload'].$uploadedimage,$myTreasuresPathArray['cover']."big_".$imagename,"","","","",$myTreasures_options['option32']);
+						chmod($myTreasuresPathArray['cover']."big_".$imagename, 0666);
 
 					}
 
 					++$uploadedimagescount;
-					@unlink($coverpath.$uploadedimage);
+					@unlink($myTreasuresPathArray['coverupload'].$uploadedimage);
 
 				}
 
@@ -124,14 +124,14 @@
 
 						}
 
-						if(mysql_num_rows(mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `type` = '$_POST[treasuretype]' AND `field01` = '".addslashes((substr($csvarray[1],$cutfromstart)))."'"))) {
+						if(mysql_num_rows(mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `type` = '".$_POST['treasuretype']."' AND `field01` = '".addslashes((substr($csvarray[1],$cutfromstart)))."'"))) {
 
-							mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET ".substr($extend_query, 0, -2)." WHERE `type` = '$_POST[treasuretype]' AND `field01` = '".addslashes((substr($csvarray[1],$cutfromstart)))."'");
+							mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET ".substr($extend_query, 0, -2)." WHERE `type` = '".$_POST['treasuretype']."' AND `field01` = '".addslashes((substr($csvarray[1],$cutfromstart)))."'");
 							++$myTreasuresupdate;
 
 						} else {
 
-							mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (".$insert_fields."`type`) VALUES (".$insert_values."'".$_POST[treasuretype]."')");
+							mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (".$insert_fields."`type`) VALUES (".$insert_values."'".$_POST['treasuretype']."')");
 							++$myTreasuresadd;
 
 						}
@@ -188,12 +188,12 @@
 
 <?php
 
-		if(is_writeable($coverpath)) {
+		if(is_writeable($myTreasuresPathArray['coverupload'])) {
 
 			echo __("Just upload your covers to \"wp-content/mytreasures/coverupload/\" and you can manager multiple covers in this area!",$myTreasuresTextdomain); 
 			
 			$coverarray = false;
-			if($directoryhandler = opendir($coverpath)) { while (($file = readdir($directoryhandler)) !== false) { $filetype = myTreasuresGetImageType($file); if($filetype == 'jpeg' || $filetype == 'jpg' || $filetype == 'gif' || $filetype == 'png') { $coverarray[] = $file; } } } closedir($directoryhandler);
+			if($directoryhandler = opendir($myTreasuresPathArray['coverupload'])) { while (($file = readdir($directoryhandler)) !== false) { $filetype = myTreasuresGetImageType($file); if($filetype == 'jpeg' || $filetype == 'jpg' || $filetype == 'gif' || $filetype == 'png') { $coverarray[] = $file; } } } closedir($directoryhandler);
 			if($coverarray) {
 
 				$selectoptions = "<option value=\"0\">".__("Please choose:",$myTreasuresTextdomain)."</option>";

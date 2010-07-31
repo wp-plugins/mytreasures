@@ -14,11 +14,13 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
-<p><b>New in 2.2 (.4/.5) // Neues in 2.2 (.4/.5)</b>
+<p><b>New in 2.2 (.4/.5/.6) // Neues in 2.2 (.4/.5/.6)</b>
 <ul>
 	<li>Fixed CSV Import problem with activ field & text delimiter // CSV Import Probleme bei der Nutzung von Text- & Feldtrennzeichen behoben</li>
 	<li>Extend list view with option to show just the list, no detailspage link for media // In der Listenansicht kann man den Link zur Detailseite abschalten und nur eine reine Liste anzeigen lassen</li>
 	<li>Fixed two broken files for WP 3.0 // Zwei defekte Dateien an WP 3.0 angepasst</li>
+	<li>Fixed problems with multiple cover upload // Problem beim Massenupload von Covern gefixt</li>
+	<li>Added option to shutdown header (view list & search field) // Option zum Abschalten der Kopfzeie (Ansichtenwahl & Suchfeld) eingebaut</li>
 </ul>
 </p>
 <div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
