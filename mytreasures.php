@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.2.6
+Version: 2.3
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -18,7 +18,7 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion			= "035";
-	$myTreasuresPluginVersion	= "2.2.6";
+	$myTreasuresPluginVersion	= "2.3";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	$myTreasuresPathArray			= Array("coverupload" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/coverupload/"), "cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
@@ -503,7 +503,7 @@ Author URI: http://www.crazyiven.de/
 
 		global $myTreasures_options, $myTreasuresTextdomain, $wpdb;
 
-		$header = "<p><b>".__("Choose view",$myTreasuresTextdomain).":</b><br /><a href=\"".myTresuresBuildLink("list","mytreasuresort")."\">".__("Name",$myTreasuresTextdomain)."</a>";
+		$header = "<p><b>".__("Choose view",$myTreasuresTextdomain).":</b><br /><a href=\"".myTresuresBuildLink("list","mytreasuresort")."\">".__("List",$myTreasuresTextdomain)."</a>";
 
 		if(preg_match("/,/",$myTreasureType)) {
 
@@ -593,8 +593,8 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "list") {
 
 			$content = "<p>";
-			if($_POST[mytreasuressearch] && $myTreasures_options[option28] != 'glossar') { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
-			
+			if($_POST['mytreasuressearch'] && $myTreasures_options[option28] != 'glossar') { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
+
 			if($myTreasures_options[option28] == 'glossar') {
 
 				$content .= "<a href=\"".myTresuresBuildLink("0","glossarview")."\">#</a> <a href=\"".myTresuresBuildLink("a","glossarview")."\">A</a> <a href=\"".myTresuresBuildLink("b","glossarview")."\">B</a> <a href=\"".myTresuresBuildLink("c","glossarview")."\">C</a> <a href=\"".myTresuresBuildLink("d","glossarview")."\">D</a> <a href=\"".myTresuresBuildLink("e","glossarview")."\">E</a> <a href=\"".myTresuresBuildLink("f","glossarview")."\">F</a> <a href=\"".myTresuresBuildLink("g","glossarview")."\">G</a> <a href=\"".myTresuresBuildLink("h","glossarview")."\">H</a> <a href=\"".myTresuresBuildLink("i","glossarview")."\">I</a> <a href=\"".myTresuresBuildLink("j","glossarview")."\">J</a> <a href=\"".myTresuresBuildLink("k","glossarview")."\">K</a> <a href=\"".myTresuresBuildLink("l","glossarview")."\">L</a> <a href=\"".myTresuresBuildLink("m","glossarview")."\">M</a> <a href=\"".myTresuresBuildLink("n","glossarview")."\">N</a> <a href=\"".myTresuresBuildLink("o","glossarview")."\">O</a> <a href=\"".myTresuresBuildLink("p","glossarview")."\">P</a> <a href=\"".myTresuresBuildLink("q","glossarview")."\">Q</a> <a href=\"".myTresuresBuildLink("r","glossarview")."\">R</a> <a href=\"".myTresuresBuildLink("s","glossarview")."\">S</a> <a href=\"".myTresuresBuildLink("t","glossarview")."\">T</a> <a href=\"".myTresuresBuildLink("u","glossarview")."\">U</a> <a href=\"".myTresuresBuildLink("v","glossarview")."\">V</a> <a href=\"".myTresuresBuildLink("w","glossarview")."\">W</a> <a href=\"".myTresuresBuildLink("x","glossarview")."\">X</a> <a href=\"".myTresuresBuildLink("y","glossarview")."\">Y</a> <a href=\"".myTresuresBuildLink("z","glossarview")."\">Z</a><br /><br />";
@@ -622,7 +622,23 @@ Author URI: http://www.crazyiven.de/
 
 			} else {
 
-				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
+				if($myTreasures_options['option38'] == 'id') {
+
+					$orderby = "id";
+
+				} else {
+
+					$orderby = "field01";
+
+				}
+				
+				if($myTreasures_options['option37'] == 'desc') {
+
+					$ordertype = " DESC";
+
+				}
+
+				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$orderby."`".$ordertype);
 				$myTreasuresCountMedia = mysql_num_rows($query01);
 				while($result01 = mysql_fetch_array($query01)) {
 
@@ -650,7 +666,7 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "rating") {
 
 			$content = "<p>";
-			if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
+			if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
 			$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `rating` DESC, `field01` ASC");
 			$myTreasuresCountMedia = mysql_num_rows($query01);
 			while($result01 = mysql_fetch_array($query01)) {
@@ -686,7 +702,7 @@ Author URI: http://www.crazyiven.de/
 		if($myTreasuredSort == "covers") {
 
 			$content = "<p>";
-			if($_POST[mytreasuressearch]) { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
+			if($_POST[mytreasuressearch]) { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
 			$query01 = mysql_query("SELECT `id`, `image`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
 			while($result01 = mysql_fetch_array($query01)) {
 
@@ -906,7 +922,7 @@ Author URI: http://www.crazyiven.de/
 			$content = "<p>";
 			if($result02["feature_".$myTreasuredSort]) {
 
-				if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%$_POST[mytreasuressearch]%'"; } }
+				if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
 				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$result02["feature_".$myTreasuredSort]."`, `field01`");
 				$myTreasuresCountMedia = mysql_num_rows($query01);
 				while($result01 = mysql_fetch_array($query01)) {

@@ -107,8 +107,8 @@
 		33 - Anzahl von Tracks (min. 1 // max 100)
 		34 - Zeitstempel Letzte Aktion / Änderung
 		35 - Deaktivierung der Detailseite
-		36 - FREI
-		37 - FREI
+		36 - Header (Sortierung & Suche) anzeigen
+		37 - Sortierungsreihenfolge
 		38 - FREI
 		39 - FREI
 		40 - FREI
@@ -123,7 +123,7 @@
 <input type="hidden" name="option25" value="<?php echo $result01[option25]; ?>">
 <p>
 <b><?php echo __("Default view",$myTreasuresTextdomain); ?></b>
-<br /><input name="option01" type="radio" value="list" <?php if($result01[option01] == '' || $result01[option01] == 'list') { echo "checked=\"checked\""; } ?>/> <?php echo __("Name",$myTreasuresTextdomain); ?>
+<br /><input name="option01" type="radio" value="list" <?php if($result01[option01] == '' || $result01[option01] == 'list') { echo "checked=\"checked\""; } ?>/> <?php echo __("List",$myTreasuresTextdomain); ?>
 <br /><input name="option01" type="radio" value="rating" <?php if($result01[option01] == 'rating') { echo "checked=\"checked\""; } ?>/> <?php echo __("Ratings",$myTreasuresTextdomain); ?>
 <br /><input name="option01" type="radio" value="sort1" <?php if($result01[option01] == 'sort1') { echo "checked=\"checked\""; } ?>/> <?php echo __("Media type view definition #1 (If available!)",$myTreasuresTextdomain); ?>
 <br /><input name="option01" type="radio" value="sort2" <?php if($result01[option01] == 'sort2') { echo "checked=\"checked\""; } ?>/> <?php echo __("Media type view definition #2 (If available!)",$myTreasuresTextdomain); ?>
@@ -169,6 +169,10 @@
 <br /><input name="option28" type="radio" value="glossar" <?php if($result01[option28] == 'glossar') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show glossar view",$myTreasuresTextdomain); ?>
 <br /><input name="option35" type="radio" value="yes" <?php if($result01[option35] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not link to detailspage",$myTreasuresTextdomain); ?>
 <br /><input name="option35" type="radio" value="no" <?php if($result01[option35] == '' || $result01[option35] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Link to detailslink",$myTreasuresTextdomain); ?>
+<br /><input name="option38" type="radio" value="name" <?php if($result01[option38] == '' || $result01[option38] == 'name') { echo "checked=\"checked\""; } ?>/> <?php echo __("Order by name",$myTreasuresTextdomain); ?>
+<br /><input name="option38" type="radio" value="id" <?php if($result01[option38] == 'id') { echo "checked=\"checked\""; } ?>/> <?php echo __("Order by ID",$myTreasuresTextdomain); ?>
+<br /><input name="option37" type="radio" value="asc" <?php if($result01[option37] == '' || $result01[option37] == 'asc') { echo "checked=\"checked\""; } ?>/> <?php echo __("Ascending order",$myTreasuresTextdomain); ?>
+<br /><input name="option37" type="radio" value="desc" <?php if($result01[option37] == 'desc') { echo "checked=\"checked\""; } ?>/> <?php echo __("Descending order",$myTreasuresTextdomain); ?>
 </p>
 <p>
 <b><?php echo __("Options for single view ([mytreasure=&#36;Number])",$myTreasuresTextdomain); ?></b>
