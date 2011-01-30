@@ -271,10 +271,6 @@ msgid "Newest information can be found here: <a href=\"http://www.mytreasures.de
 msgstr "Die jeweils neusten News gibt es hier: <a href=\"http://www.mytreasures.de\" target=\"_blank\">myTreasures.de</a>"
 
 #
-msgid "Thanks for helping to improve this plugin:"
-msgstr "Ein Dank geht an folgende Tester:"
-
-#
 msgid "Import backup"
 msgstr "BackUp einspielen"
 
@@ -1205,4 +1201,36 @@ msgstr "Zeige die Kopfzeile mit den Ansichten & dem Suchfeld"
 #
 msgid "Do not show header list with view options & search field"
 msgstr "Zeige nicht die Kopfzeile mit den Ansichten & dem Suchfeld"
+
+#
+msgid "Small cover"
+msgstr "Kleines Cover"
+
+#
+msgid "Medium cover"
+msgstr "Mittleres Cover"
+
+#
+msgid "Show small cover on details page"
+msgstr "Zeige das kleine Cover auf der Detailseite"
+
+#
+msgid "Show medium cover on details page"
+msgstr "Zeige das mittlere Cover auf der Detailseite"
+
+#
+msgid "Show article style view #1 (Picure & Name)"
+msgstr "Eintr&auml;ge anzeigen als Artikel Version #1 (Bild & Name)"
+
+#
+msgid "Show article style view #2 (Picure, Name & Description)"
+msgstr "Eintr&auml;ge anzeigen als Artikel Version #2 (Bild, Name & Beschreibung)"
+
+#
+msgid "Deactivate rating system"
+msgstr "Das Bewertungssystem komplett deaktivieren"
+
+#
+msgid "Activate rating system"
+msgstr "Das Bewertungssystem aktivieren"
 
