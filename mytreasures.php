@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.3
+Version: 2.4
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -17,42 +17,89 @@ Author URI: http://www.crazyiven.de/
 	register_activation_hook( __FILE__, 'myTreasuresInstall');
 
 	$myTreasutesRewriteDebug	= false;
-	$myTreasuresDBVersion			= "035";
-	$myTreasuresPluginVersion	= "2.3";
+	$myTreasuresDBVersion			= "036";
+	$myTreasuresPluginVersion	= "2.4";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	$myTreasuresPathArray			= Array("coverupload" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/coverupload/"), "cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
+	$myTreasuresDBPrefix			= myTreasuresFunctionsCollector('get_dbprefix');
 
-	$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
+	$myTreasures_query = mysql_query("SELECT * FROM `".$myTreasuresDBPrefix."mytreasures_options` WHERE `id` = '1'");
 	$myTreasures_options = mysql_fetch_array($myTreasures_query);
 
-	if(!$myTreasures_options[id]) {
+	if(!$myTreasures_options['id']) {
 
-		mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`, `option33`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"', '25')");
-		$myTreasures_query = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_options` WHERE `id` = '1'");
+		mysql_query("INSERT INTO `".$myTreasuresDBPrefix."mytreasures_options` (`id`, `version`, `option01`, `option15`, `option21`, `option33`) VALUES ('1', '".$myTreasuresDBVersion."', 'list', ';', '\"', '25')");
+		$myTreasures_query = mysql_query("SELECT * FROM `".$myTreasuresDBPrefix."mytreasures_options` WHERE `id` = '1'");
 		$myTreasures_options = mysql_fetch_array($myTreasures_query);
 		
-	} elseif($myTreasuresDBVersion != $myTreasures_options[version]) {
+	} elseif($myTreasuresDBVersion != $myTreasures_options['version']) {
 
-		myTreasuresUpdate($myTreasures_options[version]);
+		myTreasuresUpdate($myTreasures_options['version']);
 
 	}
 
-	$myTreasures_query = mysql_query("SELECT `id`, `short`, `name`, `listview_field02`, `listview_field03` FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
+	$myTreasures_tags = false;
+	$myTreasuresTypInfos = false;
+	$myTreasuresMediaTypeArray = false;
+
+	$myTreasures_query = mysql_query("SELECT `id`, `short`, `name`, `listview_field02`, `listview_field03` FROM `".$myTreasuresDBPrefix."mytreasures_type` ORDER BY `name`");
 	while($result = mysql_fetch_array($myTreasures_query)) {
 
-		$myTreasuresMediaTypeArray[$result[id]] = $result[name];
-		$myTreasures_tags .= $result[short]."|";
-		$myTreasuresTypInfos[$result[id]][listview_field02] = $result[listview_field02];
-		$myTreasuresTypInfos[$result[id]][listview_field03] = $result[listview_field03];
+		$myTreasuresMediaTypeArray[$result['id']] = $result['name'];
+		$myTreasures_tags .= $result['short']."|";
+		$myTreasuresTypInfos[$result['id']]['listview_field02'] = $result['listview_field02'];
+		$myTreasuresTypInfos[$result['id']]['listview_field03'] = $result['listview_field03'];
 	
 	}
 
-	$myTreasures_tags 									= substr($myTreasures_tags,0,-1);
-	$myTreasuresCodeSearch[medialist]		= "/\[mytreasurelist=([,(".str_replace("-","\-",$myTreasures_tags).")]+)\]/";
-	$myTreasuresCodeSearch[standalone]	= "/\[mytreasure=([0-9]+)\]/";
-	$myTreasuresCodeSearch[singlemedia]	= "/\[my((".str_replace("-","\-",$myTreasures_tags).")?)treasures\]/";
-	$myTreasuresSortTypes 							= "/(list|rating|covers|sort1|sort2|sort3|sort4|sort5)/";
+	$myTreasures_tags 										= substr($myTreasures_tags,0,-1);
+	$myTreasuresCodeSearch['medialist']		= "/\[mytreasurelist=([,(".str_replace("-","\-",$myTreasures_tags).")]+)\]/";
+	$myTreasuresCodeSearch['standalone']	= "/\[mytreasure=([0-9]+)\]/";
+	$myTreasuresCodeSearch['singlemedia']	= "/\[my((".str_replace("-","\-",$myTreasures_tags).")?)treasures\]/";
+	$myTreasuresSortTypes 								= "/(list|rating|covers|sort1|sort2|sort3|sort4|sort5)/";
+
+	if(isset($_POST['amazonok'])) {
+
+		mysql_query("UPDATE `".$myTreasuresDBPrefix."mytreasures_options` SET `option20` = 'no' WHERE `id` = '1'");
+		$myTreasures_options['option20'] = "no";
+
+	}
+
+	if(isset($_POST['amazonnok'])) {
+
+		mysql_query("UPDATE `".$myTreasuresDBPrefix."mytreasures_options` SET `option20` = 'yes' WHERE `id` = '1'");
+		$myTreasures_options['option20'] = "yes";
+
+	}
+
+	function myTreasuresFunctionsCollector($action = false,$value1 = false,$value2 = false) {
+
+		global $wpdb;	
+
+		if($action == 'get_dbprefix') {
+
+			return $wpdb->prefix;
+
+		}
+
+		if($action == 'check_glossarlink') {
+
+			if(!$value2) {
+
+				$value2 = "0";
+
+			}
+
+			if(strtolower($value1) == strtolower($value2)) {
+
+				return " class=\"activ\"";
+
+			}
+
+		}
+	
+	}
 
 	function myTreasuresInstall() {
 
@@ -164,27 +211,27 @@ Author URI: http://www.crazyiven.de/
 			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` ORDER BY `id`");
 			while($result01 = mysql_fetch_array($query01)) {
 
-				if($result01[type] == '1') {
+				if($result01['type'] == '1') {
 
-					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes($result01[title])."', `field02` = '".addslashes($result01[cast])."', `field03` = '".addslashes($result01[director])."', `field04` = '".addslashes($result01[producer])."', `field05` = '".addslashes($result01[genre])."', `field06` = '".addslashes($result01[fsk])."', `field07` = '".addslashes($result01[year])."', `field08` = '".addslashes($result01[lenght])."' WHERE `id` = '$result01[id]'");
-
-				}
-
-				if($result01[type] > '1' && $result01[type] < '17') {
-
-					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes($result01[title])."', `field02` = '".addslashes($result01[genre])."', `field03` = '".addslashes($result01[year])."', `field04` = '".addslashes($result01[fsk])."', `field05` = '".addslashes($result01[publisher])."' WHERE `id` = '$result01[id]'");
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes($result01['title'])."', `field02` = '".addslashes($result01['cast'])."', `field03` = '".addslashes($result01['director'])."', `field04` = '".addslashes($result01['producer'])."', `field05` = '".addslashes($result01['genre'])."', `field06` = '".addslashes($result01['fsk'])."', `field07` = '".addslashes($result01['year'])."', `field08` = '".addslashes($result01['lenght'])."' WHERE `id` = '".$result01['id']."'");
 
 				}
 
-				if($result01[type] == '17') {
+				if($result01['type'] > '1' && $result01['type'] < '17') {
 
-					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes(trim($result01[actor]." - ".$result01[title]))."', `field02` = '".addslashes($result01[genre])."', `field03` = '".addslashes($result01[year])."', `field04` = '".addslashes($result01[fsk])."' WHERE `id` = '$result01[id]'");
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes($result01['title'])."', `field02` = '".addslashes($result01['genre'])."', `field03` = '".addslashes($result01['year'])."', `field04` = '".addslashes($result01['fsk'])."', `field05` = '".addslashes($result01['publisher'])."' WHERE `id` = '".$result01['id']."'");
 
 				}
 
-				if($result01[type] == '18') {
+				if($result01['type'] == '17') {
 
-					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes($result01[title])."' WHERE `id` = '$result01[id]'");
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes(trim($result01['actor']." - ".$result01['title']))."', `field02` = '".addslashes($result01[genre])."', `field03` = '".addslashes($result01['year'])."', `field04` = '".addslashes($result01['fsk'])."' WHERE `id` = '".$result01['id']."'");
+
+				}
+
+				if($result01['type'] == '18') {
+
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `field01` = '".addslashes($result01['title'])."' WHERE `id` = '".$result01['id']."'");
 
 				}
 	
@@ -366,25 +413,51 @@ Author URI: http://www.crazyiven.de/
 
 		}
 
+		if($myTreasuresVersionRightNow == '035' && $myTreasuresDBVersion >= '036') {
+
+			mysql_query("ALTER TABLE `".$wpdb->prefix."mytreasures_options` ADD `option41` LONGTEXT NOT NULL AFTER `option40`, ADD `option42` LONGTEXT NOT NULL AFTER `option41`, ADD `option43` LONGTEXT NOT NULL AFTER `option42`, ADD `option44` LONGTEXT NOT NULL AFTER `option43`, ADD `option45` LONGTEXT NOT NULL AFTER `option44`, ADD `option46` LONGTEXT NOT NULL AFTER `option45`, ADD `option47` LONGTEXT NOT NULL AFTER `option46`, ADD `option48` LONGTEXT NOT NULL AFTER `option47`, ADD `option49` LONGTEXT NOT NULL AFTER `option48`, ADD `option50` LONGTEXT NOT NULL AFTER `option49`, ADD `option51` LONGTEXT NOT NULL AFTER `option50`, ADD `option52` LONGTEXT NOT NULL AFTER `option51`, ADD `option53` LONGTEXT NOT NULL AFTER `option52`, ADD `option54` LONGTEXT NOT NULL AFTER `option53`, ADD `option55` LONGTEXT NOT NULL AFTER `option54`, ADD `option56` LONGTEXT NOT NULL AFTER `option55`, ADD `option57` LONGTEXT NOT NULL AFTER `option56`, ADD `option58` LONGTEXT NOT NULL AFTER `option57`, ADD `option59` LONGTEXT NOT NULL AFTER `option58`, ADD `option60` LONGTEXT NOT NULL AFTER `option59`");
+			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `version` = '036' WHERE `id` = '1'");
+			$myTreasuresVersionRightNow = "036";
+
+		}
+
 	}
 
 	function myTreasures($content) {
 
 		global $myTreasuresCodeSearch, $wp_query;
 
-		while(preg_match($myTreasuresCodeSearch[singlemedia],$content,$return)) {
+		if(!isset($wp_query->query_vars['mytreasureid'])) {
+
+			$wp_query->query_vars['mytreasureid'] = false;
+
+		}
+
+		if(!isset($wp_query->query_vars['mytreasuresort'])) {
+
+			$wp_query->query_vars['mytreasuresort'] = false;
+
+		}
+
+		if(!isset($wp_query->query_vars['mytreasureglossar'])) {
+
+			$wp_query->query_vars['mytreasureglossar'] = false;
+
+		}
+
+		while(preg_match($myTreasuresCodeSearch['singlemedia'],$content,$return)) {
 
 				$content = preg_replace("/\[my".$return[1]."treasures\]/",showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
 
 		}
 
-		while(preg_match($myTreasuresCodeSearch[medialist],$content,$return)) {
+		while(preg_match($myTreasuresCodeSearch['medialist'],$content,$return)) {
 
 				$content = preg_replace("/\[mytreasurelist=".$return[1]."\]/",showmyTreasuresContainer($wp_query->query_vars['mytreasureid'],$wp_query->query_vars['mytreasuresort'],$wp_query->query_vars['mytreasureglossar'],$return[1]),$content);
 
 		}
 
-		while(preg_match($myTreasuresCodeSearch[standalone],$content,$return)) {
+		while(preg_match($myTreasuresCodeSearch['standalone'],$content,$return)) {
 
 				$content = preg_replace("/\[mytreasure=".$return[1]."\]/",showmyTreasuresContainer($return[1],$wp_query->query_vars['mytreasuresort'],"single"),$content);
 
@@ -503,15 +576,24 @@ Author URI: http://www.crazyiven.de/
 
 		global $myTreasures_options, $myTreasuresTextdomain, $wpdb;
 
-		$header = "<p><b>".__("Choose view",$myTreasuresTextdomain).":</b><br /><a href=\"".myTresuresBuildLink("list","mytreasuresort")."\">".__("List",$myTreasuresTextdomain)."</a>";
+		$header = "<div class=\"mytreasures_header_container\"><div class=\"mytreasures_header_heading\">".__("Choose view",$myTreasuresTextdomain).":</div><div class=\"mytreasures_header_links\"><a href=\"".myTresuresBuildLink("list","mytreasuresort")."\">".__("List",$myTreasuresTextdomain)."</a>";
 
 		if(preg_match("/,/",$myTreasureType)) {
 
 			$tmp_mediatype = explode(",",$myTreasureType);
 			foreach($tmp_mediatype AS $value) {
 
-				if($myTreasures_options[option22]) { $cover 	= " - <a href=\"".myTresuresBuildLink("covers","mytreasuresort")."\">".__("Covers",$myTreasuresTextdomain)."</a>"; }
-				if($myTreasures_options[option23]) { $rating 	= " - <a href=\"".myTresuresBuildLink("rating","mytreasuresort")."\">".__("Ratings",$myTreasuresTextdomain)."</a>"; }
+				if($myTreasures_options['option22']) {
+
+					$header .= " - <a href=\"".myTresuresBuildLink("covers","mytreasuresort")."\">".__("Covers",$myTreasuresTextdomain)."</a>";
+
+				}
+
+				if($myTreasures_options['option23']) {
+
+					$header .= " - <a href=\"".myTresuresBuildLink("rating","mytreasuresort")."\">".__("Ratings",$myTreasuresTextdomain)."</a>";
+
+				}
 
 			}
 
@@ -519,32 +601,73 @@ Author URI: http://www.crazyiven.de/
 
 			if($myTreasuredID) {
 
-				$query01 = mysql_query("SELECT `type` FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$myTreasuredID'");
+				$query01 = mysql_query("SELECT `type` FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '".$myTreasuredID."'");
 				$result01 = mysql_fetch_array($query01);
 
-				$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '$result01[type]'");
+				$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '".$result01['type']."'");
 				
 			} else {
 
-				$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
+				$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '".$myTreasureType."'");
 
 			}
 		
 			$result02 = mysql_fetch_array($query02);
 
-			if((!preg_match("/;".$result02[id].";/",$myTreasures_options[option10]) && $result02[id]) || (!preg_match("/;allmedia;/",$myTreasures_options[option10]) && !$result02[id])) { $cover = " - <a href=\"".myTresuresBuildLink("covers","mytreasuresort")."\">".__("Covers",$myTreasuresTextdomain)."</a>"; }
-			if((!preg_match("/;".$result02[id].";/",$myTreasures_options[option19]) && $result02[id]) || (!preg_match("/;allmedia;/",$myTreasures_options[option19]) && !$result02[id])) { $rating = " - <a href=\"".myTresuresBuildLink("rating","mytreasuresort")."\">".__("Ratings",$myTreasuresTextdomain)."</a>"; }
-			if($result02[feature_sort1] && $result02[$result02[feature_sort1]]) { $sort1 = " - <a href=\"".myTresuresBuildLink("sort1","mytreasuresort")."\">".$result02[$result02[feature_sort1]]."</a>"; }
-			if($result02[feature_sort2] && $result02[$result02[feature_sort2]]) { $sort2 = " - <a href=\"".myTresuresBuildLink("sort2","mytreasuresort")."\">".$result02[$result02[feature_sort2]]."</a>"; }
-			if($result02[feature_sort3] && $result02[$result02[feature_sort3]]) { $sort3 = " - <a href=\"".myTresuresBuildLink("sort3","mytreasuresort")."\">".$result02[$result02[feature_sort3]]."</a>"; }
-			if($result02[feature_sort4] && $result02[$result02[feature_sort4]]) { $sort4 = " - <a href=\"".myTresuresBuildLink("sort4","mytreasuresort")."\">".$result02[$result02[feature_sort4]]."</a>"; }
-			if($result02[feature_sort5] && $result02[$result02[feature_sort5]]) { $sort5 = " - <a href=\"".myTresuresBuildLink("sort5","mytreasuresort")."\">".$result02[$result02[feature_sort5]]."</a>"; }
+			if((!preg_match("/;".$result02['id'].";/",$myTreasures_options['option10']) && $result02['id']) || (!preg_match("/;allmedia;/",$myTreasures_options['option10']) && !$result02['id'])) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("covers","mytreasuresort")."\">".__("Covers",$myTreasuresTextdomain)."</a>";
+
+			}
+
+			if($myTreasures_options['option39'] != 'yes' && ((!preg_match("/;".$result02['id'].";/",$myTreasures_options['option19']) && $result02['id']) || (!preg_match("/;allmedia;/",$myTreasures_options['option19']) && !$result02['id']))) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("rating","mytreasuresort")."\">".__("Ratings",$myTreasuresTextdomain)."</a>";
+
+			}
+
+			if($result02['feature_sort1'] && $result02[$result02['feature_sort1']]) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("sort1","mytreasuresort")."\">".$result02[$result02['feature_sort1']]."</a>";
+
+			}
+
+			if($result02['feature_sort2'] && $result02[$result02['feature_sort2']]) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("sort2","mytreasuresort")."\">".$result02[$result02['feature_sort2']]."</a>";
+
+			}
+
+			if($result02['feature_sort3'] && $result02[$result02['feature_sort3']]) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("sort3","mytreasuresort")."\">".$result02[$result02['feature_sort3']]."</a>";
+
+			}
+
+			if($result02['feature_sort4'] && $result02[$result02['feature_sort4']]) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("sort4","mytreasuresort")."\">".$result02[$result02['feature_sort4']]."</a>";
+
+			}
+
+			if($result02['feature_sort5'] && $result02[$result02['feature_sort5']]) {
+
+				$header .= " - <a href=\"".myTresuresBuildLink("sort5","mytreasuresort")."\">".$result02[$result02['feature_sort5']]."</a>";
+
+			}
 
 		}
 
-		if($myTreasures_options[option31] == 'yes' && ($myTreasuredSort != 'list' || ($myTreasuredSort == 'list' && $myTreasures_options[option28] != 'glossar'))) { $search = "<br /><br /><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"text\" name=\"mytreasuressearch\" value=\" ".__("Search...",$myTreasuresTextdomain)." \" onFocus=\"if(this.value==this.defaultValue) this.value='';\" onBlur=\"if(this.value=='') this.value=this.defaultValue;\" style=\"width: 50%\"></form>"; }
+		$header .= "</div>";
 
-		$header .= $sort1.$sort2.$sort3.$sort4.$sort5.$rating.$cover.$search."</p>";
+		if($myTreasures_options['option31'] == 'yes' && !$myTreasuredID && ($myTreasuredSort != 'list' || ($myTreasuredSort == 'list' && $myTreasures_options['option28'] != 'glossar'))) {
+
+			$header .= "<div class=\"mytreasures_header_searchform\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"text\" name=\"mytreasuressearch\" value=\" ".__("Search...",$myTreasuresTextdomain)." \" onfocus=\"if(this.value==this.defaultValue) this.value='';\" onblur=\"if(this.value=='') this.value=this.defaultValue;\"></form></div>";
+
+		}
+
+		$header .= "</div>";
+
 		return $header;
 		
 	}
@@ -554,6 +677,28 @@ Author URI: http://www.crazyiven.de/
 		global $myTreasuresSortTypes, $myTreasures_options, $userdata, $myTreasuresTextdomain, $wpdb, $current_user, $myTreasuresTypInfos;
 	  get_currentuserinfo();
 
+		if(!isset($_POST['mytreasuressearch'])) {
+
+			$_POST['mytreasuressearch'] = false;
+
+		}
+
+		if(!isset($_POST['addtomedia'])) {
+
+			$_POST['addtomedia'] = false;
+
+		}
+
+		if(!isset($_POST['removefrommedia'])) {
+
+			$_POST['removefrommedia'] = false;
+
+		}
+
+		$sorttype = false;
+		$myTreasuresTypesQuery = false;
+		$myTreasuresTypesQueryCount = false;
+
 		if(preg_match("/,/",$myTreasureType)) {
 
 			$myTreasuresTypesQuery = "WHERE (";
@@ -561,13 +706,13 @@ Author URI: http://www.crazyiven.de/
 			$tmp_mediatype = explode(",",$myTreasureType);
 			foreach($tmp_mediatype AS $value) {
 
-				$query01 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$value'");
+				$query01 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '".$value."'");
 				$result01 = mysql_fetch_array($query01);
 
-				if($result01[id]) {
+				if($result01['id']) {
 	
-					$myTreasuresTypesQuery .= "`type` = '".$result01[id]."' OR";
-					$myTreasuresTypesQueryCount .= "`type` = '".$result01[id]."' OR";
+					$myTreasuresTypesQuery .= "`type` = '".$result01['id']."' OR";
+					$myTreasuresTypesQueryCount .= "`type` = '".$result01['id']."' OR";
 		
 				}
 
@@ -578,13 +723,13 @@ Author URI: http://www.crazyiven.de/
 
 		} else {
 
-			$query01 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
+			$query01 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '".$myTreasureType."'");
 			$result01 = mysql_fetch_array($query01);
 
-			if($result01[id]) {
+			if($result01['id']) {
 
-				$myTreasuresTypesQuery = "WHERE `type` = '".$result01[id]."'";
-				$myTreasuresTypesQueryCount = "AND `type` = '".$result01[id]."'";
+				$myTreasuresTypesQuery = "WHERE `type` = '".$result01['id']."'";
+				$myTreasuresTypesQueryCount = "AND `type` = '".$result01['id']."'";
 
 			}
 
@@ -592,35 +737,112 @@ Author URI: http://www.crazyiven.de/
 
 		if($myTreasuredSort == "list") {
 
-			$content = "<p>";
-			if($_POST['mytreasuressearch'] && $myTreasures_options[option28] != 'glossar') { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
+			if($_POST['mytreasuressearch'] && $myTreasures_options['option28'] != 'glossar') {
 
-			if($myTreasures_options[option28] == 'glossar') {
+				if($myTreasuresTypesQuery) {
 
-				$content .= "<a href=\"".myTresuresBuildLink("0","glossarview")."\">#</a> <a href=\"".myTresuresBuildLink("a","glossarview")."\">A</a> <a href=\"".myTresuresBuildLink("b","glossarview")."\">B</a> <a href=\"".myTresuresBuildLink("c","glossarview")."\">C</a> <a href=\"".myTresuresBuildLink("d","glossarview")."\">D</a> <a href=\"".myTresuresBuildLink("e","glossarview")."\">E</a> <a href=\"".myTresuresBuildLink("f","glossarview")."\">F</a> <a href=\"".myTresuresBuildLink("g","glossarview")."\">G</a> <a href=\"".myTresuresBuildLink("h","glossarview")."\">H</a> <a href=\"".myTresuresBuildLink("i","glossarview")."\">I</a> <a href=\"".myTresuresBuildLink("j","glossarview")."\">J</a> <a href=\"".myTresuresBuildLink("k","glossarview")."\">K</a> <a href=\"".myTresuresBuildLink("l","glossarview")."\">L</a> <a href=\"".myTresuresBuildLink("m","glossarview")."\">M</a> <a href=\"".myTresuresBuildLink("n","glossarview")."\">N</a> <a href=\"".myTresuresBuildLink("o","glossarview")."\">O</a> <a href=\"".myTresuresBuildLink("p","glossarview")."\">P</a> <a href=\"".myTresuresBuildLink("q","glossarview")."\">Q</a> <a href=\"".myTresuresBuildLink("r","glossarview")."\">R</a> <a href=\"".myTresuresBuildLink("s","glossarview")."\">S</a> <a href=\"".myTresuresBuildLink("t","glossarview")."\">T</a> <a href=\"".myTresuresBuildLink("u","glossarview")."\">U</a> <a href=\"".myTresuresBuildLink("v","glossarview")."\">V</a> <a href=\"".myTresuresBuildLink("w","glossarview")."\">W</a> <a href=\"".myTresuresBuildLink("x","glossarview")."\">X</a> <a href=\"".myTresuresBuildLink("y","glossarview")."\">Y</a> <a href=\"".myTresuresBuildLink("z","glossarview")."\">Z</a><br /><br />";
-				if($myTreasuresTypesQuery) { $regexp = "AND `field01` NOT REGEXP '^[a-z]'"; } else { $regexp = "WHERE `field01` NOT REGEXP '^[a-z]'"; }
-				if($myTreasureGlossar) { if($myTreasuresTypesQuery) { $regexp = "AND `field01` REGEXP '^[".$myTreasureGlossar."]'"; } else { $regexp = "WHERE `field01` REGEXP '^[".$myTreasureGlossar."]'"; } }
-				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery $regexp ORDER BY `field01`");
-				$myTreasuresCountMedia = mysql_num_rows($query01);
-				if(!$myTreasuresCountMedia) { $content .= __("No media",$myTreasuresTextdomain); }
-				while($result01 = mysql_fetch_array($query01)) {
+					$myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')";
 
-					$moreinfos = false;
-					if($myTreasuresTypInfos[$result01[type]][listview_field02]) { $moreinfos .= $result01[field02].", "; }
-					if($myTreasuresTypInfos[$result01[type]][listview_field03]) { $moreinfos .= $result01[field03].", "; }
-					if($moreinfos) { $moreinfos = "[".substr($moreinfos,0,-2)."] "; }
-					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
-					if($myTreasures_options[option35] == 'yes') {
-						$content .= $myTreasures_options[option02].$result01[field01]." ".$moreinfos.$rating."<br />";
+				} else {
+
+					$myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; 
+
+				}
+
+			}
+
+			if($myTreasures_options['option28'] == 'glossar') {
+
+				$content = "<div class=\"mytreasures_glossarview_container\"><div class=\"mytreasures_glossarview_navigation\"><a href=\"".myTresuresBuildLink('0','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','0',$myTreasureGlossar).">#</a> <a href=\"".myTresuresBuildLink('a','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','a',$myTreasureGlossar).">A</a> <a href=\"".myTresuresBuildLink('b','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','b',$myTreasureGlossar).">B</a> <a href=\"".myTresuresBuildLink('c','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','c',$myTreasureGlossar).">C</a> <a href=\"".myTresuresBuildLink('d','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','d',$myTreasureGlossar).">D</a> <a href=\"".myTresuresBuildLink('e','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','e',$myTreasureGlossar).">E</a> <a href=\"".myTresuresBuildLink('f','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','f',$myTreasureGlossar).">F</a> <a href=\"".myTresuresBuildLink('g','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','g',$myTreasureGlossar).">G</a> <a href=\"".myTresuresBuildLink('h','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','h',$myTreasureGlossar).">H</a> <a href=\"".myTresuresBuildLink('i','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','i',$myTreasureGlossar).">I</a> <a href=\"".myTresuresBuildLink('j','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','j',$myTreasureGlossar).">J</a> <a href=\"".myTresuresBuildLink('k','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','k',$myTreasureGlossar).">K</a> <a href=\"".myTresuresBuildLink('l','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','l',$myTreasureGlossar).">L</a> <a href=\"".myTresuresBuildLink('m','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','m',$myTreasureGlossar).">M</a> <a href=\"".myTresuresBuildLink('n','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','n',$myTreasureGlossar).">N</a> <a href=\"".myTresuresBuildLink('o','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','o',$myTreasureGlossar).">O</a> <a href=\"".myTresuresBuildLink('p','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','p',$myTreasureGlossar).">P</a> <a href=\"".myTresuresBuildLink('q','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','q',$myTreasureGlossar).">Q</a> <a href=\"".myTresuresBuildLink('r','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','r',$myTreasureGlossar).">R</a> <a href=\"".myTresuresBuildLink('s','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','s',$myTreasureGlossar).">S</a> <a href=\"".myTresuresBuildLink('t','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','t',$myTreasureGlossar).">T</a> <a href=\"".myTresuresBuildLink('u','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','u',$myTreasureGlossar).">U</a> <a href=\"".myTresuresBuildLink('v','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','v',$myTreasureGlossar).">V</a> <a href=\"".myTresuresBuildLink('w','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','w',$myTreasureGlossar).">W</a> <a href=\"".myTresuresBuildLink('x','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','x',$myTreasureGlossar).">X</a> <a href=\"".myTresuresBuildLink('y','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','y',$myTreasureGlossar).">Y</a> <a href=\"".myTresuresBuildLink('z','glossarview')."\"".myTreasuresFunctionsCollector('check_glossarlink','z',$myTreasureGlossar).">Z</a></div><div class=\"mytreasures_glossarview_entries\">";
+
+				if($myTreasureGlossar) {
+
+					if($myTreasuresTypesQuery) {
+
+						$regexp = "AND `field01` REGEXP '^[".$myTreasureGlossar."]'";
+
 					} else {
-						$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
+
+						$regexp = "WHERE `field01` REGEXP '^[".$myTreasureGlossar."]'";
+
+					}
+
+				} else {
+
+					if($myTreasuresTypesQuery) {
+
+						$regexp = "AND `field01` NOT REGEXP '^[a-z]'";
+
+					} else {
+
+						$regexp = "WHERE `field01` NOT REGEXP '^[a-z]'";
+
 					}
 
 				}
 
-				if($myTreasures_options[option16] == 'yes') { $content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />"; }
+				$myTreasureArrayCount = "0";
+				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ".$regexp." ORDER BY `field01`");
+				while($result01 = mysql_fetch_array($query01)) {
 
-			} else {
+					$rating = false;
+					$moreinfos = false;
+					$myTreasureArrayCount++;
+
+					if($myTreasuresTypInfos[$result01['type']]['listview_field02']) {
+
+						$moreinfos .= $result01['field02'].", ";
+
+					}
+
+					if($myTreasuresTypInfos[$result01['type']]['listview_field03']) {
+
+						$moreinfos .= $result01['field03'].", ";
+
+					}
+
+					if($moreinfos) {
+
+						$moreinfos = " [".substr($moreinfos,0,-2)."]";
+
+					}
+
+					if($myTreasures_options['option12'] == 'yes' && $myTreasures_options['option39'] != 'yes' && $result01['rating']) {
+
+						$rating = " ".myTreasuresRating($result01['rating']);
+
+					}
+
+					if($myTreasures_options['option35'] == 'yes') {
+
+						$content .= $myTreasures_options['option02'].$result01['field01'].$moreinfos.$rating."<br />";
+
+					} else {
+
+						$content .= $myTreasures_options['option02']."<a href=\"".myTresuresBuildLink($result01['id'],"mytreasureid",$result01['field01'])."\">".$result01['field01']."</a>".$moreinfos.$rating."<br />";
+
+					}
+
+				}
+
+				if(!$myTreasureArrayCount) {
+
+					$content .= __("No media",$myTreasuresTextdomain)."<br />";
+
+				}
+
+				if($myTreasures_options['option16'] == 'yes') {
+
+					$content .= "<div class=\"mytreasures_glossarview_entriecount\"><span class=\"mytreasures_glossarview_entriecount_heading\">".__("Overall",$myTreasuresTextdomain).":</span> <span class=\"mytreasures_glossarview_entriecount_count\">".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ORDER BY `field01`"))."</span></div>";
+
+				}
+
+				$content .= "</div></div>";
+
+			} elseif($myTreasures_options['option28'] == 'article1' || $myTreasures_options['option28'] == 'article2') {
+
+				$jquery = false;
+				$content = false;
 
 				if($myTreasures_options['option38'] == 'id') {
 
@@ -636,80 +858,434 @@ Author URI: http://www.crazyiven.de/
 
 					$ordertype = " DESC";
 
+				} else {
+
+					$ordertype = " ASC";
+
 				}
 
-				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$orderby."`".$ordertype);
-				$myTreasuresCountMedia = mysql_num_rows($query01);
+				$myTreasureArrayCount = "0";
+				$query01 = mysql_query("SELECT `id`, `type`, `image`, `rating`, `field01`, `field02`, `field03`, `description` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ORDER BY `".$orderby."`".$ordertype);
 				while($result01 = mysql_fetch_array($query01)) {
 
+					$rating = false;
 					$moreinfos = false;
-					if($myTreasuresTypInfos[$result01[type]][listview_field02]) { $moreinfos .= $result01[field02].", "; }
-					if($myTreasuresTypInfos[$result01[type]][listview_field03]) { $moreinfos .= $result01[field03].", "; }
-					if($moreinfos) { $moreinfos = "[".substr($moreinfos,0,-2)."] "; }
-					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
-					if($myTreasures_options[option35] == 'yes') {
-						$content .= $myTreasures_options[option02].$result01[field01]." ".$moreinfos.$rating."<br />";
+					$myTreasureArrayCount++;
+
+					if($myTreasuresTypInfos[$result01['type']]['listview_field02']) {
+
+						$moreinfos .= $result01['field02'].", ";
+
+					}
+
+					if($myTreasuresTypInfos[$result01['type']]['listview_field03']) {
+
+						$moreinfos .= $result01['field03'].", ";
+
+					}
+
+					if($moreinfos) {
+
+						$moreinfos = " [".substr($moreinfos,0,-2)."]";
+
+					}
+
+					if($myTreasures_options['option12'] == 'yes' && $myTreasures_options['option39'] != 'yes' && $result01['rating']) {
+
+						$rating = " ".myTreasuresRating($result01['rating']);
+
+					}
+
+					if($myTreasures_options['option35'] == 'yes') {
+
+						$name = $myTreasures_options['option02'].$result01['field01'].$moreinfos.$rating."<br />";
+
 					} else {
-						$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
+
+						$name = "<a href=\"".myTresuresBuildLink($result01['id'],"mytreasureid",$result01['field01'])."\">".$result01['field01']."</a>".$moreinfos.$rating."<br />";
+
+					}
+
+					if($result01['image'] && file_exists(ABSPATH."wp-content/mytreasures/".$result01['image'])) {
+
+						$imagelink = "<img src=\"".get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01['image']."\" alt=\"".htmlentities($result01['field01'])."\" title=\"".htmlentities($result01['field01'])."\" />";
+
+					} else {
+
+						$imagelink = "<img src=\"".get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/default.jpg\" alt=\"".htmlentities($result01['field01'])."\" title=\"".htmlentities($result01['field01'])."\" />";
+
+					}
+
+					if($result01['image'] && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01['image']) && $myTreasures_options['option14'] == 'yes') {
+
+						if($myTreasures_options['option17'] == 'fancybox') {
+
+							$imagesystems = "class=\"fancybox\" rel=\"gallery\"";
+							$jquery = "jQuery('a.fancybox').fancybox();";
+
+						}
+
+						if($myTreasures_options['option17'] == 'colorbox') {
+
+							$imagesystems = "rel=\"colorbox\"";
+							$jquery = "jQuery('a[rel^=\"colorbox\"]').colorbox();";
+
+						}
+
+						if($myTreasures_options['option17'] == 'thickbox') {
+
+							$imagesystems = "class=\"thickbox\" rel=\"gallery\"";
+
+						}
+
+						if($myTreasures_options['option17'] == 'prettyphoto') {
+
+							$imagesystems = "rel=\"prettyPhoto[gallery]\"";
+							$jquery = "jQuery('a[rel^=\"prettyPhoto\"]').prettyPhoto();";
+
+						}
+
+						if($myTreasures_options['option17'] == 'myown' && $myTreasures_options['option18']) {
+
+							$imagesystems = $myTreasures_options['option18'];
+
+						}
+
+						$imagelink = "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01['image']."\" target=\"_blank\" title=\"".htmlentities($result01['field01'])."\" ".$imagesystems.">".$imagelink."</a>";
+
+					}
+					
+					if($myTreasures_options['option28'] == 'article2' && $result01['description']) {
+
+						$description = "<div class=\"mytreasures_articleview_data_description\">".$result01['description']."</div>";
+
+					} else {
+
+						$description = false;
+
+					}
+					
+					$content .= "<div class=\"mytreasures_articleview_container\"><div class=\"mytreasures_articleview_cell mytreasures_articleview_image\">".$imagelink."</div><div class=\"mytreasures_articleview_cell mytreasures_articleview_data\"><div class=\"mytreasures_articleview_data_header\">".$name."</div>".$description."</div></div>";
+
+				}
+
+				if($myTreasures_options['option16'] == 'yes') {
+
+					$content .= "<div class=\"mytreasures_articleview_entriecount\"><span class=\"mytreasures_articleview_entriecount_heading\">".__("Overall",$myTreasuresTextdomain).":</span> <span class=\"mytreasures_articleview_entriecount_count\">".$myTreasureArrayCount."</span></div>";
+
+				}
+
+				if($jquery) {
+
+					$content .= "<script type=\"text/javascript\"> jQuery(document).ready(function(){ ".$jquery." }); </script>";
+
+				}
+
+			} else {
+
+				$content = "<div class=\"mytreasures_listview_container\"><div class=\"mytreasures_listview_entries\">";
+				if($myTreasures_options['option38'] == 'id') {
+
+					$orderby = "id";
+
+				} else {
+
+					$orderby = "field01";
+
+				}
+				
+				if($myTreasures_options['option37'] == 'desc') {
+
+					$ordertype = " DESC";
+
+				} else {
+
+					$ordertype = " ASC";
+
+				}
+
+				$myTreasureArrayCount = "0";
+				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ORDER BY `".$orderby."`".$ordertype);
+				while($result01 = mysql_fetch_array($query01)) {
+
+					$rating = false;
+					$moreinfos = false;
+					$myTreasureArrayCount++;
+
+					if($myTreasuresTypInfos[$result01['type']]['listview_field02']) {
+
+						$moreinfos .= $result01['field02'].", ";
+
+					}
+
+					if($myTreasuresTypInfos[$result01['type']]['listview_field03']) {
+
+						$moreinfos .= $result01['field03'].", ";
+
+					}
+
+					if($moreinfos) {
+
+						$moreinfos = " [".substr($moreinfos,0,-2)."]";
+
+					}
+
+					if($myTreasures_options['option12'] == 'yes' && $myTreasures_options['option39'] != 'yes' && $result01['rating']) {
+
+						$rating = " ".myTreasuresRating($result01['rating']);
+
+					}
+
+					if($myTreasures_options['option35'] == 'yes') {
+
+						$content .= $myTreasures_options['option02'].$result01['field01'].$moreinfos.$rating."<br />";
+
+					} else {
+
+						$content .= $myTreasures_options['option02']."<a href=\"".myTresuresBuildLink($result01['id'],"mytreasureid",$result01['field01'])."\">".$result01['field01']."</a>".$moreinfos.$rating."<br />";
+
 					}
 
 				}
 
-				if($myTreasures_options[option16] == 'yes') { $content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />"; }
+				if($myTreasures_options['option16'] == 'yes') {
+
+					$content .= "<div class=\"mytreasures_listview_entriecount\"><span class=\"mytreasures_listview_entriecount_heading\">".__("Overall",$myTreasuresTextdomain).":</span> <span class=\"mytreasures_listview_entriecount_count\">".$myTreasureArrayCount."</span></div>";
+
+				}
+
+				$content .= "</div></div>";
 
 			}
-
-			$content .= "</p>";
 
 		}
 
 		if($myTreasuredSort == "rating") {
 
-			$content = "<p>";
-			if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
-			$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `rating` DESC, `field01` ASC");
-			$myTreasuresCountMedia = mysql_num_rows($query01);
-			while($result01 = mysql_fetch_array($query01)) {
+			$content = "<div class=\"mytreasures_ratingview_container\"><div class=\"mytreasures_ratingview_entries\">";
+			if($_POST['mytreasuressearch']) {
 
-				$showdetails = false;
-				$rating = myTreasuresRating($result01[rating]);
-				if($result01[rating] < 1) { $result01[rating] = "NOTSET"; $searchrating = ""; } else { $result01[rating] = $result01[rating]; $searchrating = $result01[rating]; }
-				if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '$searchrating' $myTreasuresTypesQueryCount")).")"; }
-				if($sorttype != $rating && $result01[rating] != "NOTSET") {
+				if($myTreasuresTypesQuery) {
 
-					$content .= "<h2>".number_format(($result01[rating]/10),1,",","").$showdetails."</h2>";
+					$myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')";
 
-				} elseif($sorttype != $rating) {
+				} else {
 
-					$content .= "<h2>".__("Unknown",$myTreasuresTextdomain).$showdetails."</h2>";
+					$myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'";
 
 				}
 
-				$moreinfos = false;
-				if($myTreasuresTypInfos[$result01[type]][listview_field02]) { $moreinfos .= $result01[field02].", "; }
-				if($myTreasuresTypInfos[$result01[type]][listview_field03]) { $moreinfos .= $result01[field03].", "; }
-				if($moreinfos) { $moreinfos = "[".substr($moreinfos,0,-2)."] "; }
-				$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
-				$sorttype = $rating;
+			}
+
+			$myTreasureArray = false;
+			$myTreasureArrayCount = "0";
+			$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ORDER BY `rating` DESC, `field01` ASC");
+			while($result01 = mysql_fetch_array($query01)) {
+
+				if(!$result01['rating']) {
+
+					$result01['rating'] = __("Unknown",$myTreasuresTextdomain);
+
+				} else {
+
+					$result01['rating'] = number_format(($result01['rating']/10),1,",","");
+
+				}
+
+				$myTreasureArrayCount++;
+				$myTreasureArray[$result01['rating']][] = $result01;
 
 			}
 
-			if($myTreasures_options[option16] == 'yes') { $content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />"; }
-			$content .= "</p>";
+			if($myTreasureArray) {
+
+				foreach($myTreasureArray AS $type => $tmparray) {
+
+					if($myTreasures_options['option27'] != 'no') {
+
+						$type .= " (".count($tmparray).")";
+
+					}
+
+					$content .= "<div class=\"mytreasures_ratingview_groupheading\">".$type."</div>";
+					foreach($tmparray AS $result01) {
+
+						$rating = false;
+						$moreinfos = false;
+
+						if($myTreasuresTypInfos[$result01['type']]['listview_field02']) {
+
+							$moreinfos .= $result01['field02'].", ";
+
+						}
+
+						if($myTreasuresTypInfos[$result01['type']]['listview_field03']) {
+
+							$moreinfos .= $result01['field03'].", ";
+
+						}
+
+						if($moreinfos) {
+
+							$moreinfos = " [".substr($moreinfos,0,-2)."]";
+
+						}
+
+						if($myTreasures_options['option12'] == 'yes' && $myTreasures_options['option39'] != 'yes' && $result01['rating']) {
+
+							$rating = " ".myTreasuresRating($result01['rating']);
+
+						}
+
+						$content .= $myTreasures_options['option02']."<a href=\"".myTresuresBuildLink($result01['id'],"mytreasureid")."\">".$result01['field01']."</a>".$moreinfos.$rating."<br />";
+
+					}
+
+					$content .= "<div class=\"mytreasures_ratingview_groupspacer\"></div>";
+
+				}
+
+			}
+
+			if($myTreasures_options['option16'] == 'yes') {
+
+				$content .= "<div class=\"mytreasures_ratingview_entriecount\"><span class=\"mytreasures_ratingview_entriecount_heading\">".__("Overall",$myTreasuresTextdomain).":</span> <span class=\"mytreasures_ratingview_entriecount_count\">".$myTreasureArrayCount."</span></div>";
+
+			}
+
+			$content .= "</div></div>";
+
+		}
+
+		if($myTreasuredSort == "sort1" || $myTreasuredSort == "sort2" || $myTreasuredSort == "sort3" || $myTreasuredSort == "sort4" || $myTreasuredSort == "sort5") {
+
+			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '".$myTreasureType."'");
+			$result02 = mysql_fetch_array($query02);
+
+			$content = "<div class=\"mytreasures_ownsortview_container\"><div class=\"mytreasures_ownsortview_entries\">";
+			if($result02['feature_'.$myTreasuredSort]) {
+
+				if($_POST['mytreasuressearch']) {
+
+					if($myTreasuresTypesQuery) {
+
+						$myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')";
+
+					} else {
+
+						$myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'";
+
+					}
+
+				}
+
+				$myTreasureArray = false;
+				$myTreasureArrayCount = "0";
+				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03`, `".$result02['feature_'.$myTreasuredSort]."` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ORDER BY `".$result02['feature_'.$myTreasuredSort]."`, `field01`");
+				while($result01 = mysql_fetch_array($query01)) {
+
+					if(!isset($result01[$result02['feature_'.$myTreasuredSort]]) || !$result01[$result02['feature_'.$myTreasuredSort]]) {
+
+						$result01[$result02['feature_'.$myTreasuredSort]] = __("Unknown",$myTreasuresTextdomain);
+
+					}
+
+					$myTreasureArrayCount++;
+					$myTreasureArray[$result01[$result02['feature_'.$myTreasuredSort]]][] = $result01;
+
+				}
+
+				if($myTreasureArray) {
+
+					foreach($myTreasureArray AS $type => $tmparray) {
+
+						if($myTreasures_options['option27'] != 'no') {
+
+							$type .= " (".count($tmparray).")";
+
+						}
+
+						$content .= "<div class=\"mytreasures_ownsortview_groupheading\">".$type."</div>";
+						foreach($tmparray AS $result01) {
+
+							$rating = false;
+							$moreinfos = false;
+
+							if($myTreasuresTypInfos[$result01['type']]['listview_field02']) {
+
+								$moreinfos .= $result01['field02'].", ";
+
+							}
+
+							if($myTreasuresTypInfos[$result01['type']]['listview_field03']) {
+
+								$moreinfos .= $result01['field03'].", ";
+
+							}
+
+							if($moreinfos) {
+
+								$moreinfos = " [".substr($moreinfos,0,-2)."]";
+
+							}
+
+							if($myTreasures_options['option12'] == 'yes' && $myTreasures_options['option39'] != 'yes' && $result01['rating']) {
+
+								$rating = " ".myTreasuresRating($result01['rating']);
+
+							}
+
+							$content .= $myTreasures_options['option02']."<a href=\"".myTresuresBuildLink($result01['id'],"mytreasureid")."\">".$result01['field01']."</a>".$moreinfos.$rating."<br />";
+
+						}
+
+						$content .= "<div class=\"mytreasures_ownsortview_groupspacer\"></div>";
+
+					}
+
+				}
+
+				if($myTreasures_options['option16'] == 'yes') {
+
+					$content .= "<div class=\"mytreasures_ownsortview_entriecount\"><span class=\"mytreasures_ownsortview_entriecount_heading\">".__("Overall",$myTreasuresTextdomain).":</span> <span class=\"mytreasures_ownsortview_entriecount_count\">".$myTreasureArrayCount."</span></div>";
+
+				}
+
+			} else {
+
+				$content .= "<b>".__("Please check your config, because you choose a default view which this mediatype can't use or didn't have!",$myTreasuresTextdomain)."</b>";
+
+			}
+
+			$content .= "</div></div>";
 
 		}
 
 		if($myTreasuredSort == "covers") {
 
-			$content = "<p>";
-			if($_POST[mytreasuressearch]) { if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
-			$query01 = mysql_query("SELECT `id`, `image`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `field01`");
+			$content = "<div class=\"mytreasures_coverview_container\"><div class=\"mytreasures_coverview_entries\">";
+			if($_POST['mytreasuressearch']) {
+
+				if($myTreasuresTypesQuery) {
+
+					$myTreasuresTypesQuery .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')";
+
+				} else {
+
+					$myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'";
+
+				}
+
+			}
+
+			$myTreasureArrayCount = "0";
+			$query01 = mysql_query("SELECT `id`, `image`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` ".$myTreasuresTypesQuery." ORDER BY `field01`");
 			while($result01 = mysql_fetch_array($query01)) {
 
-				++$myTreasuresCountMedia;
-				if($result01[image] && file_exists(ABSPATH."wp-content/mytreasures/".$result01[image])) {
+				++$myTreasureArrayCount;
+				if($result01['image'] && file_exists(ABSPATH."wp-content/mytreasures/".$result01['image'])) {
 
-					$imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image];
+					$imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01['image'];
 
 				} else {
 
@@ -717,9 +1293,9 @@ Author URI: http://www.crazyiven.de/
 
 				}
 
-				if($myTreasures_options[option30] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01[image])) {
+				if($myTreasures_options['option30'] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01['image'])) {
 
-					$tooltip = "class=\"tooltip\"";
+					$tooltip = " class=\"tooltip\"";
 
 				} else {
 
@@ -727,67 +1303,118 @@ Author URI: http://www.crazyiven.de/
 
 				}
 
-				$content .= "<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid",$result01[field01])."\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\" ".$tooltip."></a>";
-				if(preg_match("/^([0-9]+)$/",$myTreasures_options[option09]) && $myTreasures_options[option09] > 0) { if($myTreasuresCountMedia % $myTreasures_options[option09] == 0) { $content .= "<br />"; } }
+				$content .= "<a href=\"".myTresuresBuildLink($result01['id'],"mytreasureid",$result01['field01'])."\"><img src=\"".$imagelink."\" style=\"padding: 5px;\" border=\"0\"".$tooltip."></a>";
+
+				if(preg_match("/^([0-9]+)$/",$myTreasures_options['option09']) && $myTreasures_options['option09'] > 0) {
+
+					if(!($myTreasureArrayCount%$myTreasures_options['option09'])) {
+
+						$content .= "<br />";
+
+					}
+
+				}
 
 			}
 
-			$content .= "</p>";
-			if($myTreasures_options[option16] == 'yes') { $content .= "<p><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."</p>"; }
-			if($myTreasures_options[option30] == 'yes') { $content .= "<script type=\"text/javascript\"> jQuery(document).ready(function($) { jQuery('.tooltip').tooltip({ track: true, delay: 0, showURL: false, bodyHandler: function() { return $(\"<img/>\").attr(\"src\", this.src.replace(\"\/mytreasures\/\", \"/mytreasures/big_\")); } }); });</script>"; }
+			if($myTreasures_options['option16'] == 'yes') {
+
+				$content .= "<div class=\"mytreasures_coverview_entriecount\"><span class=\"mytreasures_coverview_entriecount_heading\">".__("Overall",$myTreasuresTextdomain).":</span> <span class=\"mytreasures_coverview_entriecount_count\">".$myTreasureArrayCount."</span></div>";
+
+			}
+
+			$content .= "</div></div>";
+
+			if($myTreasures_options['option30'] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01['image'])) {
+
+				$content .= "<script type=\"text/javascript\"> jQuery(document).ready(function($) { jQuery('.tooltip').tooltip({ track: true, delay: 0, showURL: false, bodyHandler: function() { return $(\"<img/>\").attr(\"src\", this.src.replace(\"\/mytreasures\/\", \"/mytreasures/big_\")); } }); });</script>";
+
+			}
 
 		}
 
 		if(!$myTreasuredSort && preg_match("/^([0-9]+)$/",$myTreasuredID)) {
 
+			$jquery = false;
+			$moreusers = false;
+			$morelinks = false;
 			$moreimages = false;
-			if($myTreasures_options[option17] == 'fancybox') { $imagesystems = "class=\"fancybox\" rel=\"gallery\""; $jquery = "jQuery('a.fancybox').fancybox();"; }
-			if($myTreasures_options[option17] == 'colorbox') { $imagesystems = "rel=\"colorbox\""; $jquery = "jQuery('a[rel^=\"colorbox\"]').colorbox();"; }
-			if($myTreasures_options[option17] == 'thickbox') { $imagesystems = "class=\"thickbox\" rel=\"gallery\""; }
-			if($myTreasures_options[option17] == 'prettyphoto') { $imagesystems = "rel=\"prettyPhoto[gallery]\""; $jquery = "jQuery('a[rel^=\"prettyPhoto\"]').prettyPhoto();"; }
-			if($myTreasures_options[option17] == 'myown' && $myTreasures_options[option18]) { $imagesystems = $myTreasures_options[option18]; }
+			$checkedloginuserisusingthis = "0";
 
-			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '$myTreasuredID'");
+			if($myTreasures_options['option17'] == 'fancybox') {
+
+				$imagesystems = "class=\"fancybox\"";
+				$jquery = "jQuery('a.fancybox').fancybox();";
+
+			}
+
+			if($myTreasures_options['option17'] == 'colorbox') {
+
+				$imagesystems = "rel=\"colorbox\"";
+				$jquery = "jQuery('a[rel^=\"colorbox\"]').colorbox();";
+
+			}
+
+			if($myTreasures_options['option17'] == 'thickbox') {
+
+				$imagesystems = "class=\"thickbox\" rel=\"gallery\"";
+
+			}
+
+			if($myTreasures_options['option17'] == 'prettyphoto') {
+
+				$imagesystems = "rel=\"prettyPhoto\"";
+				$jquery = "jQuery('a[rel^=\"prettyPhoto\"]').prettyPhoto();";
+
+			}
+
+			if($myTreasures_options['option17'] == 'myown' && $myTreasures_options['option18']) {
+
+				$imagesystems = $myTreasures_options['option18'];
+
+			}
+
+			$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures` WHERE `id` = '".$myTreasuredID."'");
 			$result01 = mysql_fetch_array($query01);
 
-			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '$result01[type]'");
+			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '".$result01['type']."'");
 			$result02 = mysql_fetch_array($query02);		
 
-			if(($_POST[addtomedia] || $_POST[removefrommedia]) && $current_user->ID) {
+			if(($_POST['addtomedia'] || $_POST['removefrommedia']) && $current_user->ID) {
 
-				$query03 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_users` WHERE `treasureid` = '$result01[id]' AND `userid` = '".$current_user->ID."'");
+				$query03 = mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures_users` WHERE `treasureid` = '".$result01['id']."' AND `userid` = '".$current_user->ID."'");
 				$result03 = mysql_fetch_array($query03);
-				if($result03[id]) {
+				if($result03['id']) {
 
-					mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_users` WHERE `id` = '$result03[id]'");
+					mysql_query("DELETE FROM `".$wpdb->prefix."mytreasures_users` WHERE `id` = '".$result03['id']."'");
 
 				} else {
 
-					mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_users` (`treasureid`, `userid`, `username`) VALUES ('$result01[id]', '".$current_user->ID."', '".$current_user->display_name."')");
+					mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_users` (`treasureid`, `userid`, `username`) VALUES ('".$result01['id']."', '".$current_user->ID."', '".$current_user->display_name."')");
 
 				}
 				
 			}
 
-			$query03 = mysql_query("SELECT `name`, `comment` FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '$result01[id]' ORDER BY `orderid`");
+			$query03 = mysql_query("SELECT `name`, `comment` FROM `".$wpdb->prefix."mytreasures_images` WHERE `treasureid` = '".$result01['id']."' ORDER BY `orderid`");
 			while($result03 = mysql_fetch_array($query03)) {
 
-				$moreimages .= "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/big/".$result03[name]."\" target=\"_target\" ".$imagesystems." title=\"".$result03[comment]."\"><img src=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/small/".$result03[name]."\" border=\"0\"></a> ";
+				$moreimages .= "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/big/".$result03['name']."\" target=\"_target\" ".$imagesystems." title=\"".$result03['comment']."\"><img src=\"".get_bloginfo('wpurl')."/wp-content/mytreasuresimages/small/".$result03['name']."\" border=\"0\" class=\"tooltipmoreimages\"></a> ";
 
 			}
 
-			$query04 = mysql_query("SELECT `link`, `name` FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '$result01[id]' ORDER BY `name`");
+			$query04 = mysql_query("SELECT `link`, `name` FROM `".$wpdb->prefix."mytreasures_links` WHERE `treasureid` = '".$result01['id']."' ORDER BY `name`");
 			while($result04 = mysql_fetch_array($query04)) {
 
-				$morelinks .= "<a href=\"".$result04['link']."\" target=\"_blank\">".$result04[name]."</a><br />";
+				$morelinks .= "<a href=\"".$result04['link']."\" target=\"_blank\">".$result04['name']."</a><br />";
 
 			}
 
-			$query05 = mysql_query("SELECT `userid`, `username` FROM `".$wpdb->prefix."mytreasures_users` WHERE `treasureid` = '$result01[id]' ORDER BY `username`");
+			$query05 = mysql_query("SELECT `userid`, `username` FROM `".$wpdb->prefix."mytreasures_users` WHERE `treasureid` = '".$result01['id']."' ORDER BY `username`");
 			while($result05 = mysql_fetch_array($query05)) {
 
-				if($current_user->ID == $result05[userid]) { ++$checkedloginuserisusingthis; }
-				$moreusers .= "- ".$result05[username]."<br />";
+				if($current_user->ID == $result05['userid']) { ++$checkedloginuserisusingthis; }
+				$moreusers .= "- ".$result05['username']."<br />";
 
 			}
 
@@ -801,9 +1428,13 @@ Author URI: http://www.crazyiven.de/
 
 			}
 
-			if($result01[image] && file_exists(ABSPATH."wp-content/mytreasures/".$result01[image])) {
+			if($myTreasures_options['option45'] == 'yes' && $result01['image'] && file_exists(ABSPATH."wp-content/mytreasures//medium_".$result01['image'])) {
 
-				$imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01[image];
+				$imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/medium_".$result01['image'];
+
+			} elseif($result01['image'] && file_exists(ABSPATH."wp-content/mytreasures/".$result01['image'])) {
+
+				$imagelink = get_bloginfo('wpurl')."/wp-content/mytreasures/".$result01['image'];
 
 			} else {
 
@@ -811,9 +1442,15 @@ Author URI: http://www.crazyiven.de/
 
 			}
 
-			if($myTreasures_options[option30] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01[image])) {
+			if($myTreasures_options['option30'] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01['image'])) {
 
-				$tooltip = "class=\"tooltip\"";
+				$tooltip = " class=\"tooltip\"";
+				$jquery .= "jQuery('.tooltip').tooltip({ track: true, delay: 0, showURL: false, bodyHandler: function() { return $(\"<img/>\").attr(\"src\", this.src.replace(\"\/mytreasures\/\", \"/mytreasures/big_\")); } });";
+				if($moreimages) {
+
+					$jquery .= "jQuery('.tooltipmoreimages').tooltip({ track: true, delay: 0, showURL: false, bodyHandler: function() { return $(\"<img/>\").attr(\"src\", this.src.replace(\"\/small\/\", \"/big/\")); } });";
+
+				}
 
 			} else {
 
@@ -821,29 +1458,30 @@ Author URI: http://www.crazyiven.de/
 
 			}
 			
-			$coverimage = "<img src=\"".$imagelink."\" style=\"padding: 0px 10px;\" ".$tooltip." title=\"".$result01[field01]."\">";
-			if($myTreasures_options[option14] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01[image])) {
+			$coverimage = "<img src=\"".$imagelink."\" style=\"padding: 0px 10px;\"".$tooltip." title=\"".$result01['field01']."\">";
 
-				$coverimage = "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01[image]."\" target=\"_blank\" ".$imagesystems." title=\"".$result01[field01]."\">".$coverimage."</a>";
+			if($myTreasures_options['option14'] == 'yes' && file_exists(ABSPATH."wp-content/mytreasures/big_".$result01['image'])) {
+
+				$coverimage = "<a href=\"".get_bloginfo('wpurl')."/wp-content/mytreasures/big_".$result01['image']."\" target=\"_blank\" ".$imagesystems." title=\"".$result01['field01']."\">".$coverimage."</a>";
 
 			}
 
-			if($result01[tracklist]) {
+			if($result01['tracklist']) {
 
-				$result01[description] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>";
-				$all_tracks = explode("#NT#",$result01[tracklist]);
+				$result01['description'] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>";
+				$all_tracks = explode("#NT#",$result01['tracklist']);
 				foreach($all_tracks AS $track) {
 
 					list($name,$length) = explode("#L#",$track);
 					if($name) {
 
-						$result01[description] .= "<br />".sprintf('%02d',(++$i)).". ".$name; 
+						$result01['description'] .= "<br />".sprintf('%02d',(++$i)).". ".$name; 
 
 					}
 
 					if($name && $length) {
 
-						$result01[description] .= " (".$length." Min)"; 
+						$result01['description'] .= " (".$length." Min)"; 
 
 					} 
 
@@ -851,108 +1489,219 @@ Author URI: http://www.crazyiven.de/
 
 			}
 
-			$content = "<p><h2>".$result01[field01]."</h2><table><tr><td>";
-			if($myTreasures_options[option13] != 'table') {
+			$content = "<div class=\"mytreasures_singleview_container\"><div class=\"mytreasures_singleview_heading\">".$result01['field01']."</div>";
+			if($myTreasures_options['option13'] != 'table') {
 
-				$content .= "<div style=\"float: left;\">".$coverimage."</div>".str_replace("\n","<br />",$result01[description])."</td></tr>";
-
-			} else {
-
-				$content .= "<table cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" valign=\"top\">".$coverimage."</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[description])."</td></tr></table></td></tr>";
-
-			}
-
-			if($result01[comment]) {
-
-				$content .= "<tr><td height=\"10\">&nbsp;</tr><tr><td><b>".__("My comment",$myTreasuresTextdomain).":</b><br /><i>".str_replace("\n","<br />",$result01[comment])."</i></td>";
-			}
-
-			if($myTreasures_options[option24]) {
-
-				if($checkedloginuserisusingthis && current_user_can($myTreasures_options[option24])) {
-
-					$buttonforuserlist = "<br /><br /><input type=\"submit\" name=\"addtomedia\" value=\" ".__("Remove my name",$myTreasuresTextdomain)." \">";
-
-				} elseif(current_user_can($myTreasures_options[option24])) {
-
-					$buttonforuserlist = "<br /><br /><input type=\"submit\" name=\"removefrommedia\" value=\" ".__("Add my name",$myTreasuresTextdomain)." \">";
-
-				}
-
-			}
-
-			$content .= "</table><table><tr><td colspan=\"2\" height=\"20\"></td></tr>";
-			if($result01[field02] && $result02[field02] && $result02[public_field02])	{ $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field02].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field02])."</td></tr>"; }
-			if($result01[field03] && $result02[field03] && $result02[public_field03]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field03].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field03])."</td></tr>"; }
-			if($result01[field04] && $result02[field04] && $result02[public_field04]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field04].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field04])."</td></tr>"; }
-			if($result01[field05] && $result02[field05] && $result02[public_field05]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field05].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field05])."</td></tr>"; }
-			if($result01[field06] && $result02[field06] && $result02[public_field06]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field06].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field06])."</td></tr>"; }
-			if($result01[field07] && $result02[field07] && $result02[public_field07]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field07].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field07])."</td></tr>"; }
-			if($result01[field08] && $result02[field08] && $result02[public_field08]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field08].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field08])."</td></tr>"; }
-			if($result01[field09] && $result02[field09] && $result02[public_field09]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field09].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field09])."</td></tr>"; }
-			if($result01[field10] && $result02[field10] && $result02[public_field10]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field10].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field10])."</td></tr>"; }
-			if($result01[field11] && $result02[field11] && $result02[public_field11]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field11].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field11])."</td></tr>"; }
-			if($result01[field12] && $result02[field12] && $result02[public_field12]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field12].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field12])."</td></tr>"; }
-			if($result01[field13] && $result02[field13] && $result02[public_field13]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field13].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field13])."</td></tr>"; }
-			if($result01[field14] && $result02[field14] && $result02[public_field14]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field14].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field14])."</td></tr>"; }
-			if($result01[field15] && $result02[field15] && $result02[public_field15]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field15].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field15])."</td></tr>"; }
-			if($result01[field16] && $result02[field16] && $result02[public_field16]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field16].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field16])."</td></tr>"; }
-			if($result01[field17] && $result02[field17] && $result02[public_field17]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field17].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field17])."</td></tr>"; }
-			if($result01[field18] && $result02[field18] && $result02[public_field18]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field18].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field18])."</td></tr>"; }
-			if($result01[field19] && $result02[field19] && $result02[public_field19]) { $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field19].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field19])."</td></tr>"; }
-			if($result01[field20] && $result02[field20] && $result02[public_field20])	{ $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".$result02[field20].":</td><td align=\"left\" valign=\"top\">".str_replace("\n","<br />",$result01[field20])."</td></tr>"; }
-			if($myTreasures_options[option11] == 'yes')								{ $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>".__("User with this media",$myTreasuresTextdomain).":</td><td align=\"left\" valign=\"top\"><form action=\"\" method=\"post\" style=\"display: inline;\">".$moreusers.$buttonforuserlist."</form></td></tr>"; }
-			if($myTreasures_options[option20] == 'no' || $morelinks)	{ $content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\" nowrap>Links</td><td align=\"left\" valign=\"top\">".$morelinks; }
-			if($myTreasures_options[option20] == 'no')								{ $content .= "<a type=amzn search=\"".str_replace("\"","",$result01[field01])."\">Amazon.de</a><SCRIPT charset=\"utf-8\" type=\"text/javascript\" src=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822/DE/crazyivende-21/8005/fa48ef75-2c02-4e40-a251-4ac49ca85046\"></SCRIPT><NOSCRIPT><A HREF=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822%2FDE%2Fcrazyivende-21%2F8005%2Ffa48ef75-2c02-4e40-a251-4ac49ca85046&Operation=NoScript\">Amazon.de Widgets</A></NOSCRIPT>"; }
-			if($myTreasures_options[option20] == 'no' || $morelinks)	{ $content .= "</td></tr>"; }
-			if($result01[rating]) 																		{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Rating",$myTreasuresTextdomain).":<br /><font style=\"font-size: 10px; font-weight: normal;\">".__("max. 5 stars",$myTreasuresTextdomain)."</font></td><td align=\"left\" valign=\"top\">".myTreasuresRating($result01[rating])."</td></tr>"; }
-			if(current_user_can('edit_plugins')) 											{	$content .= "<tr><td align=\"left\" valign=\"top\" style=\"font-weight: bold;\">".__("Options",$myTreasuresTextdomain)."</td><td align=\"left\" valign=\"top\"><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresedit.php&type=media&id=".$result01[id]."\" target=\"_blank\">".__("Edit this entry",$myTreasuresTextdomain)."</a></td></tr>"; } 
-			if($moreimages) 																					{ $content .= "<tr><td align=\"left\" height=\"10\" colspan=\"2\">&nbsp;</tr><tr><td align=\"left\" colspan=\"2\"><b>".__("Images",$myTreasuresTextdomain).":</b><br />".$moreimages."</td>"; }
-			$content .= "</table></p>";
-			if(get_post_type() == 'post' && $myTreasureGlossar != 'single') { $content .= "<p><a href=\"".get_permalink()."\">".__("Back",$myTreasuresTextdomain)."</a></p>"; }
-			if($myTreasures_options[option30] == 'yes' || $jquery) { $content .= "<script type=\"text/javascript\"> jQuery(document).ready(function($) { ".$jquery." jQuery('.tooltip').tooltip({ track: true, delay: 0, showURL: false, bodyHandler: function() { return $(\"<img/>\").attr(\"src\", this.src.replace(\"\/mytreasures\/\", \"/mytreasures/big_\")); } }); });</script>"; }
-
-		}
-
-		if($myTreasuredSort == "sort1" || $myTreasuredSort == "sort2" || $myTreasuredSort == "sort3" || $myTreasuredSort == "sort4" || $myTreasuredSort == "sort5") {
-
-			$query02 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$myTreasureType'");
-			$result02 = mysql_fetch_array($query02);
-
-			$content = "<p>";
-			if($result02["feature_".$myTreasuredSort]) {
-
-				if($_POST[mytreasuressearch]) { $myTreasuresTypesQueryCount .= " AND (`field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%')"; if($myTreasuresTypesQuery) { $myTreasuresTypesQuery .= " AND `field01` LIKE '%$_POST[mytreasuressearch]%'"; } else { $myTreasuresTypesQuery = "WHERE `field01` LIKE '%".$_POST['mytreasuressearch']."%' OR `field02` LIKE '%".$_POST['mytreasuressearch']."%' OR `field03` LIKE '%".$_POST['mytreasuressearch']."%' OR `field04` LIKE '%".$_POST['mytreasuressearch']."%' OR `field05` LIKE '%".$_POST['mytreasuressearch']."%' OR `field06` LIKE '%".$_POST['mytreasuressearch']."%' OR `field07` LIKE '%".$_POST['mytreasuressearch']."%' OR `field08` LIKE '%".$_POST['mytreasuressearch']."%' OR `field09` LIKE '%".$_POST['mytreasuressearch']."%' OR `field10` LIKE '%".$_POST['mytreasuressearch']."%' OR `field11` LIKE '%".$_POST['mytreasuressearch']."%' OR `field12` LIKE '%".$_POST['mytreasuressearch']."%' OR `field13` LIKE '%".$_POST['mytreasuressearch']."%' OR `field14` LIKE '%".$_POST['mytreasuressearch']."%' OR `field15` LIKE '%".$_POST['mytreasuressearch']."%' OR `field16` LIKE '%".$_POST['mytreasuressearch']."%' OR `field17` LIKE '%".$_POST['mytreasuressearch']."%' OR `field18` LIKE '%".$_POST['mytreasuressearch']."%' OR `field19` LIKE '%".$_POST['mytreasuressearch']."%' OR `field20` LIKE '%".$_POST['mytreasuressearch']."%'"; } }
-				$query01 = mysql_query("SELECT `id`, `type`, `rating`, `field01`, `field02`, `field03` FROM `".$wpdb->prefix."mytreasures` $myTreasuresTypesQuery ORDER BY `".$result02["feature_".$myTreasuredSort]."`, `field01`");
-				$myTreasuresCountMedia = mysql_num_rows($query01);
-				while($result01 = mysql_fetch_array($query01)) {
-
-					$moreinfos = false;
-					if($myTreasuresTypInfos[$result01[type]][listview_field02]) { $moreinfos .= $result01[field02].", "; }
-					if($myTreasuresTypInfos[$result01[type]][listview_field03]) { $moreinfos .= $result01[field03].", "; }
-					if($moreinfos) { $moreinfos = "[".substr($moreinfos,0,-2)."] "; }
-					$showdetails = false;
-					if($myTreasures_options[option12] == 'yes' && $result01[rating]) { $rating = myTreasuresRating($result01[rating]); } else { $rating = false; }
-					if($result01[$result02["feature_".$myTreasuredSort]] == "") { $result01[$result02["feature_".$myTreasuredSort]] = __("Unknown",$myTreasuresTextdomain); $searchsort = ""; } else { $result01[$result02["feature_".$myTreasuredSort]] = $result01[$result02["feature_".$myTreasuredSort]]; $searchsort = $result01[$result02["feature_".$myTreasuredSort]]; }
-					if($myTreasures_options[option27] != 'no') { $showdetails = " (".mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `".$result02["feature_".$myTreasuredSort]."` = '$searchsort' $myTreasuresTypesQueryCount")).")"; }
-					if($sorttype != $result01[$result02["feature_".$myTreasuredSort]]) { $content .= "<h2>".$result01[$result02["feature_".$myTreasuredSort]].$showdetails."</h2>"; }
-					$content .= $myTreasures_options[option02]."<a href=\"".myTresuresBuildLink($result01[id],"mytreasureid")."\">".$result01[field01]."</a> ".$moreinfos.$rating."<br />";
-					$sorttype = $result01[$result02["feature_".$myTreasuredSort]];
-
-				}
-
-				if($myTreasures_options[option16] == 'yes') {
-
-					$content .= "<br /><b>".__("Overall",$myTreasuresTextdomain).":</b> ".$myTreasuresCountMedia."<br />";
-
-				}
+				$content .= "<div style=\"float: left;\">".$coverimage."</div>".str_replace("\n","<br />",$result01['description']);
 
 			} else {
 
-				$content .= "<br /><b>".__("Please check your config, because you choose a default view which this mediatype can't use or didn't have!",$myTreasuresTextdomain);
+				$content .= "<div class=\"mytreasures_singleview_nameanddescriptiontable\"><div class=\"mytreasures_singleview_nameanddescriptiontable_cell\">".$coverimage."</div><div class=\"mytreasures_singleview_nameanddescriptiontable_cell\">".str_replace("\n","<br />",$result01['description'])."</div></div>";
 
 			}
-			$content .= "</p>";
+
+			if($result01['comment']) {
+
+				$content .= "<div class=\"mytreasures_singleview_mycomment\"><div class=\"mytreasures_singleview_mycomment_heading\">".__("My comment",$myTreasuresTextdomain).":</div><div class=\"mytreasures_singleview_mycomment_comment\">".str_replace("\n","<br />",$result01['comment'])."</div></div>";
+
+			}
+
+			$content .= "<div class=\"mytreasures_singleview_detailstable\">";
+
+			if($result01['field02'] && $result02['field02'] && $result02['public_field02'])	{
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field02'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field02'])."</div></div>";
+
+			}
+
+			if($result01['field03'] && $result02['field03'] && $result02['public_field03']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field03'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field03'])."</div></div>";
+
+			}
+
+			if($result01['field04'] && $result02['field04'] && $result02['public_field04']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field04'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field04'])."</div></div>";
+
+			}
+
+			if($result01['field05'] && $result02['field05'] && $result02['public_field05']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field05'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field05'])."</div></div>";
+
+			}
+
+			if($result01['field06'] && $result02['field06'] && $result02['public_field06']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field06'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field06'])."</div></div>";
+
+			}
+
+			if($result01['field07'] && $result02['field07'] && $result02['public_field07']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field07'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field07'])."</div></div>";
+
+			}
+
+			if($result01['field08'] && $result02['field08'] && $result02['public_field08']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field08'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field08'])."</div></div>";
+
+			}
+
+			if($result01['field09'] && $result02['field09'] && $result02['public_field09']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field09'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field09'])."</div></div>";
+
+			}
+
+			if($result01['field10'] && $result02['field10'] && $result02['public_field10']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field10'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field10'])."</div></div>";
+
+			}
+
+			if($result01['field11'] && $result02['field11'] && $result02['public_field11']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field11'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field11'])."</div></div>";
+
+			}
+
+			if($result01['field12'] && $result02['field12'] && $result02['public_field12']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field12'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field12'])."</div></div>";
+
+			}
+
+			if($result01['field13'] && $result02['field13'] && $result02['public_field13']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field13'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field13'])."</div></div>";
+
+			}
+
+			if($result01['field14'] && $result02['field14'] && $result02['public_field14']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field14'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field14'])."</div></div>";
+
+			}
+
+			if($result01['field15'] && $result02['field15'] && $result02['public_field15']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field15'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field15'])."</div></div>";
+
+			}
+
+			if($result01['field16'] && $result02['field16'] && $result02['public_field16']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field16'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field16'])."</div></div>";
+
+			}
+
+			if($result01['field17'] && $result02['field17'] && $result02['public_field17']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field17'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field17'])."</div></div>";
+
+			}
+
+			if($result01['field18'] && $result02['field18'] && $result02['public_field18']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field18'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field18'])."</div></div>";
+
+			}
+
+			if($result01['field19'] && $result02['field19'] && $result02['public_field19']) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field19'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field19'])."</div></div>";
+
+			}
+
+			if($result01['field20'] && $result02['field20'] && $result02['public_field20'])	{
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".$result02['field20'].":</div><div class=\"mytreasures_singleview_detailstable_cell\">".str_replace("\n","<br />",$result01['field20'])."</div></div>";
+
+			}
+
+			if($myTreasures_options['option11'] == 'yes') {
+
+				if($myTreasures_options['option24']) {
+
+					if($checkedloginuserisusingthis && current_user_can($myTreasures_options['option24'])) {
+
+						$buttonforuserlist = "<br /><br /><input type=\"submit\" name=\"addtomedia\" value=\" ".__("Remove my name",$myTreasuresTextdomain)." \">";
+
+					} elseif(current_user_can($myTreasures_options['option24'])) {
+
+						$buttonforuserlist = "<br /><br /><input type=\"submit\" name=\"removefrommedia\" value=\" ".__("Add my name",$myTreasuresTextdomain)." \">";
+
+					}
+
+				}
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".__("User with this media",$myTreasuresTextdomain).":</div><div class=\"mytreasures_singleview_detailstable_cell\"><form action=\"\" method=\"post\" style=\"display: inline;\">".$moreusers.$buttonforuserlist."</form></div></div>";
+
+			}
+
+			if($myTreasures_options['option20'] == 'no' || $morelinks) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">Links</div><div class=\"mytreasures_singleview_detailstable_cell\">".$morelinks;
+
+				if($myTreasures_options['option20'] == 'no') {
+
+					$content .= "<a type=amzn search=\"".str_replace("\"","",$result01['field01'])."\">Amazon.de</a><script charset=\"utf-8\" type=\"text/javascript\" src=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822/DE/crazyivende-21/8005/fa48ef75-2c02-4e40-a251-4ac49ca85046\"></script><noscript><a href=\"http://ws.amazon.de/widgets/q?ServiceVersion=20070822&MarketPlace=DE&ID=V20070822%2FDE%2Fcrazyivende-21%2F8005%2Ffa48ef75-2c02-4e40-a251-4ac49ca85046&Operation=NoScript\">Amazon.de Widgets</a></noscript>";
+
+				}
+
+				$content .= "</div></div>";
+
+			}
+
+			if($result01['rating'] && $myTreasures_options['option39'] != 'yes')	{
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".__("Rating",$myTreasuresTextdomain).":<div class=\"mytreasures_singleview_detailstable_cell_heading_ratinghint\">".__("max. 5 stars",$myTreasuresTextdomain)."</div></div><div class=\"mytreasures_singleview_detailstable_cell\">".myTreasuresRating($result01['rating'])."</div></div>";
+
+			}
+
+			if(current_user_can('edit_plugins')) {
+
+				$adminmorelinks = false;
+				$adminmoreimages = false;
+
+				if($morelinks) {
+
+					$adminmorelinks = "<br /><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasureslinks.php&id=".$result01['id']."\" target=\"_blank\">".__("Administrate links",$myTreasuresTextdomain)."</a>";
+
+				}
+
+				if($moreimages) {
+
+					$adminmoreimages = "<br /><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresimages.php&id=".$result01['id']."\" target=\"_blank\">".__("Administrate images",$myTreasuresTextdomain)."</a>";
+
+				}
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".__("Options",$myTreasuresTextdomain)."</div><div class=\"mytreasures_singleview_detailstable_cell\"><a href=\"".get_bloginfo('wpurl')."/wp-admin/admin.php?page=mytreasures/mytreasuresedit.php&type=media&id=".$result01['id']."\" target=\"_blank\">".__("Edit this entry",$myTreasuresTextdomain)."</a>".$adminmorelinks.$adminmoreimages."</div></div>";
+
+			} 
+
+			if($moreimages) {
+
+				$content .= "<div class=\"mytreasures_singleview_detailstable_row\"><div class=\"mytreasures_singleview_detailstable_cell_heading\">".__("Images",$myTreasuresTextdomain)."</div><div class=\"mytreasures_singleview_detailstable_cell\">".$moreimages."</div></div>";
+
+			}
+
+			if(get_post_type() == 'post' && $myTreasureGlossar != 'single') { 
+
+				$content .= "<a href=\"".get_permalink()."\" class=\"mytreasures_singleview_backtolist\">".__("Back",$myTreasuresTextdomain)."</a>";
+
+			}
+
+			$content .= "</div></div>";
+
+			if($jquery) {
+
+				$content .= "<script type=\"text/javascript\"> jQuery(document).ready(function($) { ".$jquery." });</script>";
+
+			}
 
 		}
 
@@ -962,6 +1711,7 @@ Author URI: http://www.crazyiven.de/
 
 	function myTreasuresRating($rating) {
 
+		$images = false;
 		for($i = ($rating/10); $i > 0.5; $i--) {
 
 			$images .= "<img src=\"".get_bloginfo('wpurl')."/wp-content/plugins/mytreasures/images/star.gif\" border=\"0\">";
@@ -981,15 +1731,15 @@ Author URI: http://www.crazyiven.de/
 	function myTreasuresDefaultview($type) {
 
 		global $myTreasures_options, $wpdb;
-		$view = $myTreasures_options[option01];
+		$view = $myTreasures_options['option01'];
 
 		if($type) {
 
 			$query01 = mysql_query("SELECT `view` FROM `".$wpdb->prefix."mytreasures_type` WHERE `short` = '$type'");
 			$result01 = mysql_fetch_array($query01);
-			if($result01[view]) {
+			if($result01['view']) {
 
-				$view = $result01[view];
+				$view = $result01['view'];
 
 			}
 
@@ -1235,7 +1985,7 @@ Author URI: http://www.crazyiven.de/
 
 		global $myTreasuresPluginVersion;
 		$sub 	= "myTreasures Support";
-		$msg 	= "Folgendes Problem wurde gemeldet:\n\nLink zum Blog:\n".get_bloginfo('wpurl')."\n\nServer:\n".$_SERVER["SERVER_SOFTWARE"]."\n\nClient:\n".$_SERVER["HTTP_USER_AGENT"]."\n\nMySQL Version:\n".mysql_get_client_info()."\n\nmyTreasures Version:\n".$myTreasuresPluginVersion."\n\nProblem:\n".$problem;
+		$msg 	= "Folgendes Problem wurde gemeldet:\n\nLink zum Blog:\n".get_bloginfo('wpurl')."\n\nServer:\n".$_SERVER["SERVER_SOFTWARE"]."\n\nClient:\n".$_SERVER["HTTP_USER_AGENT"]."\n\nPHP Version:\n".phpversion()."\n\nMySQL Version:\n".mysql_get_client_info()."\n\nmyTreasures Version:\n".$myTreasuresPluginVersion."\n\nProblem:\n".$problem;
 		$to 	= "support@mytreasures.de";
 		$xtra	= "From: ".get_bloginfo('admin_email')." (".get_bloginfo('name').")\nContent-Type: text/plain\nContent-Transfer-Encoding: 8bit\nX-Mailer: PHP ". phpversion();
 		@mail($to,$sub,$msg,$xtra);
@@ -1245,27 +1995,27 @@ Author URI: http://www.crazyiven.de/
 	function myTreasuresAddHeader() {
 
 		global $myTreasures_options;
-		if($myTreasures_options[option17] == 'fancybox') {
+		if($myTreasures_options['option17'] == 'fancybox') {
 
 			wp_enqueue_script('fancybox',WP_PLUGIN_URL . '/mytreasures/js/fancybox/jquery.fancybox-1.2.5.pack.js',array('jquery'));
 			wp_enqueue_style('fancybox', WP_PLUGIN_URL . '/mytreasures/js/fancybox/jquery.fancybox-1.2.5.css');
 		}
 
-		if($myTreasures_options[option17] == 'colorbox') {
+		if($myTreasures_options['option17'] == 'colorbox') {
 
 			wp_enqueue_script('colorbox',WP_PLUGIN_URL . '/mytreasures/js/colorbox/jquery.colorbox-min.js',array('jquery'));
 			wp_enqueue_style('colorbox', WP_PLUGIN_URL . '/mytreasures/js/colorbox/colorbox.css');
 
 		}
 
-		if($myTreasures_options[option17] == 'thickbox') {
+		if($myTreasures_options['option17'] == 'thickbox') {
 
 			wp_enqueue_script('thickbox');
 			wp_enqueue_style('thickbox');
 
 		}
 
-		if($myTreasures_options[option17] == 'prettyphoto') {
+		if($myTreasures_options['option17'] == 'prettyphoto') {
 
 			wp_enqueue_script('prettyphoto',WP_PLUGIN_URL . '/mytreasures/js/prettyphoto/jquery.prettyPhoto.js',array('jquery'));
 			wp_enqueue_style('prettyphoto', WP_PLUGIN_URL . '/mytreasures/js/prettyphoto/css/prettyPhoto.css');
@@ -1274,6 +2024,14 @@ Author URI: http://www.crazyiven.de/
 
 		wp_enqueue_script('tooltip',WP_PLUGIN_URL . '/mytreasures/js/tooltip/jquery.tooltip.pack.js',array('jquery'));
 		wp_enqueue_style('tooltip', WP_PLUGIN_URL . '/mytreasures/js/tooltip/jquery.tooltip.css');
+
+		wp_enqueue_style('mytreasures', WP_PLUGIN_URL . '/mytreasures/css/mytreasures.css');
+
+		if(file_exists(ABSPATH."wp-content/plugins/mytreasures/css/custom.css")) {
+
+			wp_enqueue_style('mytreasures-custom', WP_PLUGIN_URL . '/mytreasures/css/custom.css');
+
+		}
 
 	}
 
@@ -1297,20 +2055,20 @@ Author URI: http://www.crazyiven.de/
 
 		global $wpdb, $myTreasuresCodeSearch;
 
-		if($myTreasuresCodeSearch[medialist] && $myTreasuresCodeSearch[standalone] && $myTreasuresCodeSearch[singlemedia]) {
+		if($myTreasuresCodeSearch['medialist'] && $myTreasuresCodeSearch['standalone'] && $myTreasuresCodeSearch['singlemedia']) {
 
 			$query01 = mysql_query("SELECT `post_content`, `post_parent`, `post_name` FROM `".$wpdb->prefix."posts` WHERE `post_content` LIKE '%[my%' AND `post_type` = 'page'");
 			while($result01 = mysql_fetch_array($query01)) {
 
-				if(preg_match($myTreasuresCodeSearch[medialist],$result01[post_content]) || preg_match($myTreasuresCodeSearch[standalone],$result01[post_content]) || preg_match($myTreasuresCodeSearch[singlemedia],$result01[post_content])) {
+				if(preg_match($myTreasuresCodeSearch['medialist'],$result01['post_content']) || preg_match($myTreasuresCodeSearch['standalone'],$result01['post_content']) || preg_match($myTreasuresCodeSearch['singlemedia'],$result01['post_content'])) {
 
-					$name = $result01[post_name];
-					$result02[post_parent] = $result01[post_parent];
-					while($result02[post_parent] != 0) {
+					$name = $result01['post_name'];
+					$result02['post_parent'] = $result01['post_parent'];
+					while($result02['post_parent'] != 0) {
 
-						$query02 = mysql_query("SELECT `post_content`, `post_parent`, `post_name` FROM `".$wpdb->prefix."posts` WHERE `id` = '$result02[post_parent]' AND `post_type` = 'page'");
+						$query02 = mysql_query("SELECT `post_content`, `post_parent`, `post_name` FROM `".$wpdb->prefix."posts` WHERE `id` = '".$result02['post_parent']."' AND `post_type` = 'page'");
 						$result02 = mysql_fetch_array($query02);
-						$name = $result02[post_name]."/".$name;
+						$name = $result02['post_name']."/".$name;
 
 					}
 
@@ -1328,17 +2086,18 @@ Author URI: http://www.crazyiven.de/
 	function myTreasuresResetRewriteRules()  {
 
 		global $wpdb;
-		mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option24` = '' WHERE `id` = '1'");
-		$myTreasures_options[option24] = '';
+		mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option34` = '' WHERE `id` = '1'");
+		$myTreasures_options['option34'] = '';
 
 	}
 
 	function myTreasuresCheckOrder($table,$where = false) {
 
+		$i = "0";
 		$query01 = mysql_query("SELECT `id` FROM `$table` $where ORDER BY `orderid`");
 		while($result01 = mysql_fetch_array($query01)) {
 
-			mysql_query("UPDATE `$table` SET `orderid` = '".(++$i)."' WHERE `id` = '$result01[id]'");
+			mysql_query("UPDATE `$table` SET `orderid` = '".(++$i)."' WHERE `id` = '".$result01['id']."'");
 
 		}
 
@@ -1426,44 +2185,50 @@ Author URI: http://www.crazyiven.de/
 
 	function myTreasuresXML2Array2Return($feedback) {
 
-		if($feedback[0][0][1][name] == 'rcodedesc' && $feedback[0][0][1][value] == 'Ok') {
+		$regie = false;
+		$produzent = false;
+		$besetzung = false;
+		$soundtrack = false;
+		$produktionsland = false;
+
+		if($feedback[0][0][1]['name'] == 'rcodedesc' && $feedback[0][0][1]['value'] == 'Ok') {
 
 			foreach($feedback[0][1] AS $key1 => $value1) {
 
-				if(strlen($feedback[0][1][$key1][name]) > 1 && $feedback[0][1][$key1][name] != 'bild' && $feedback[0][1][$key1][name] != 'bewertung' && $feedback[0][1][$key1][name] != 'fassungen') {
+				if(strlen($feedback[0][1][$key1]['name']) > 1 && $feedback[0][1][$key1]['name'] != 'bild' && $feedback[0][1][$key1]['name'] != 'bewertung' && $feedback[0][1][$key1]['name'] != 'fassungen') {
 									
-					if($feedback[0][1][$key1][name] == 'genre') {
+					if(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'genre') {
 
-						$returnarray[$feedback[0][1][$key1][name]] = htmlentities($feedback[0][1][$key1][0][value],ENT_QUOTES, "UTF-8");
+						$returnarray[$feedback[0][1][$key1]['name']] = htmlentities($feedback[0][1][$key1][0]['value'],ENT_QUOTES, "UTF-8");
 
-					} elseif($feedback[0][1][$key1][name] == 'produktionsland') {
+					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'produktionsland') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if($feedback[0][1][$key1][$tmpid][value]) { $produktionsland .= htmlentities($feedback[0][1][$key1][$tmpid][value],ENT_QUOTES, "UTF-8").", "; } } } }
-						if($produktionsland) { $returnarray[$feedback[0][1][$key1][name]] = substr($produktionsland,0,-2); }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid]['value']) { $produktionsland .= htmlentities($feedback[0][1][$key1][$tmpid]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if($produktionsland) { $returnarray[$feedback[0][1][$key1]['name']] = substr($produktionsland,0,-2); }
 
-					} elseif($feedback[0][1][$key1][name] == 'soundtrack') {
+					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'soundtrack') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if($feedback[0][1][$key1][$tmpid][1][value]) { $soundtrack .= htmlentities($feedback[0][1][$key1][$tmpid][1][value],ENT_QUOTES, "UTF-8").", "; } } } }
-						if($soundtrack) { $returnarray[$feedback[0][1][$key1][name]] = substr($soundtrack,0,-2); }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $soundtrack .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if($soundtrack) { $returnarray[$feedback[0][1][$key1]['name']] = substr($soundtrack,0,-2); }
 
-					} elseif($feedback[0][1][$key1][name] == 'regie') {
+					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'regie') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if($feedback[0][1][$key1][$tmpid][1][value]) { $regie .= htmlentities($feedback[0][1][$key1][$tmpid][1][value],ENT_QUOTES, "UTF-8").", "; } } } }
-						if($regie) { $returnarray[$feedback[0][1][$key1][name]] = substr($regie,0,-2); }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $regie .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if($regie) { $returnarray[$feedback[0][1][$key1]['name']] = substr($regie,0,-2); }
 
-					} elseif($feedback[0][1][$key1][name] == 'produzent') {
+					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'produzent') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if($feedback[0][1][$key1][$tmpid][1][value]) { $produzent .= htmlentities($feedback[0][1][$key1][$tmpid][1][value],ENT_QUOTES, "UTF-8").", "; } } } }
-						if($produzent) { $returnarray[$feedback[0][1][$key1][name]] = substr($produzent,0,-2); }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $produzent .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if($produzent) { $returnarray[$feedback[0][1][$key1]['name']] = substr($produzent,0,-2); }
 
-					} elseif($feedback[0][1][$key1][name] == 'besetzung') {
+					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'besetzung') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if($feedback[0][1][$key1][$tmpid][1][value]) { if($feedback[0][1][$key1][$tmpid][2][value]) { $addbesetzung = " (".htmlentities($feedback[0][1][$key1][$tmpid][2][value],ENT_QUOTES, "UTF-8").")"; } else { $addbesetzung = false; } $besetzung .= htmlentities($feedback[0][1][$key1][$tmpid][1][value],ENT_QUOTES, "UTF-8").$addbesetzung.", "; } } } }
-						if($besetzung) { $returnarray[$feedback[0][1][$key1][name]] = substr($besetzung,0,-2); }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { if(isset($feedback[0][1][$key1][$tmpid][2]['value']) && $feedback[0][1][$key1][$tmpid][2]['value']) { $addbesetzung = " (".htmlentities($feedback[0][1][$key1][$tmpid][2]['value'],ENT_QUOTES, "UTF-8").")"; } else { $addbesetzung = false; } $besetzung .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").$addbesetzung.", "; } } } }
+						if($besetzung) { $returnarray[$feedback[0][1][$key1]['name']] = substr($besetzung,0,-2); }
 
-					} elseif($feedback[0][1][$key1][value]) {
+					} elseif(isset($feedback[0][1][$key1]['value']) && $feedback[0][1][$key1]['value']) {
 
-						$returnarray[$feedback[0][1][$key1][name]] = htmlentities($feedback[0][1][$key1][value],ENT_QUOTES,"UTF-8");
+						$returnarray[$feedback[0][1][$key1]['name']] = htmlentities($feedback[0][1][$key1]['value'],ENT_QUOTES,"UTF-8");
 
 					}
 
@@ -1499,27 +2264,27 @@ Author URI: http://www.crazyiven.de/
 
 			return Array("message" => "<div class=\"wrap\"><h2>Error</h2><div id=\"message\" class=\"updated fade\"><p>".__("<strong>Note</strong><br />You need administrator rights to use myTreasures!",$myTreasuresTextdomain)."</p></div></div>");
 
-		} elseif($myTreasures_options[option25] != 'doneit') {
+		} elseif($myTreasures_options['option25'] != 'doneit') {
 
 			return Array("include" => "mytreasuresinstall.php");
 
-		} elseif($myTreasures_options[changelog] != $myTreasuresPluginVersion) {
+		} elseif($myTreasures_options['changelog'] != $myTreasuresPluginVersion) {
 
 			return Array("include" => "mytreasureschangelog.php");
 
-		} elseif($myTreasures_options[option20] != "no" && $myTreasures_options[option20] != "yes") {
+		} elseif($myTreasures_options['option20'] != "no" && $myTreasures_options['option20'] != "yes") {
 
 			return Array("message" => "<div class=\"wrap\"><h2>myTreasures</h2><p>".__("Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited ~5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?",$myTreasuresTextdomain)."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" name=\"amazonok\" value=\" ".__("Yes, please activate",$myTreasuresTextdomain)." \">&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"amazonnok\" value=\" ".__("No thanks, I don't want the Amazon link",$myTreasuresTextdomain)." \"></form></div></div>");
 
-		} elseif($special == 'backup' && (!is_writeable($myTreasuresPathArray[backup]) || !is_dir($myTreasuresPathArray[backup]))) {
+		} elseif($special == 'backup' && (!is_writeable($myTreasuresPathArray['backup']) || !is_dir($myTreasuresPathArray['backup']))) {
 
 			return Array("message" => "<div class=\"wrap\"><h2>Error</h2><div id=\"message\" class=\"updated fade\"><p><strong>".__("Please create a folder \"mytreasuresbackup\" in \"/wp-content/\" with writings rights!",$myTreasuresTextdomain)."</strong></p></div></div>");
 
-		} elseif($special == 'images' && (!is_writeable($myTreasuresPathArray[image_small]) || !is_dir($myTreasuresPathArray[image_small]) || !is_writeable($myTreasuresPathArray[image_big]) || !is_dir($myTreasuresPathArray[image_big]))) {
+		} elseif($special == 'images' && (!is_writeable($myTreasuresPathArray['image_small']) || !is_dir($myTreasuresPathArray['image_small']) || !is_writeable($myTreasuresPathArray['image_big']) || !is_dir($myTreasuresPathArray['image_big']))) {
 
 			return Array("message" => "<div class=\"wrap\"><h2>Error</h2><div id=\"message\" class=\"updated fade\"><p><strong>".__("Please create a folder \"mytreasuresimages\" with subfolders \"small\" and \"big\" in \"/wp-content/\" with writings rights!",$myTreasuresTextdomain)."</strong></p></div></div>");
 
-		} elseif(!is_writeable($myTreasuresPathArray[cover]) || !is_dir($myTreasuresPathArray[cover])) {
+		} elseif(!is_writeable($myTreasuresPathArray['cover']) || !is_dir($myTreasuresPathArray['cover'])) {
 
 			return Array("message" => "<div class=\"wrap\"><h2>Error</h2><div id=\"message\" class=\"updated fade\"><p><strong>".__("Please create a folder \"mytreasures\" in \"/wp-content/\" with writings rights!",$myTreasuresTextdomain)."</strong></p></div></div>");
 
@@ -1538,39 +2303,39 @@ Author URI: http://www.crazyiven.de/
 	function myTreasuresSaveMediaCover($data,$name) {
 
 		global $myTreasures_options, $myTreasuresPathArray;
-		@unlink($myTreasuresPathArray[cover].$name);
-		@unlink($myTreasuresPathArray[cover]."big_".$name);
+		@unlink($myTreasuresPathArray['cover'].$name);
+		@unlink($myTreasuresPathArray['cover']."big_".$name);
 		$imagename = "ownupload_".time().".".myTreasuresGetImageType($data['name']);
-		if($myTreasures_options[option03] == 'yes') {
+		if($myTreasures_options['option03'] == 'yes') {
 
-			if($myTreasures_options[option04] == 'fixedheight') {
+			if($myTreasures_options['option04'] == 'fixedheight') {
 
-				$height 	= $myTreasures_options[option05];
+				$height 	= $myTreasures_options['option05'];
 				$width 		= "0";
 				$resizeby	= "height";
 				$cutimage	= false;
 
 			}
 
-			if($myTreasures_options[option04] == 'fixedwidth') {
+			if($myTreasures_options['option04'] == 'fixedwidth') {
 
 				$height 	= "0";
-				$width 		= $myTreasures_options[option06];
+				$width 		= $myTreasures_options['option06'];
 				$resizeby	= "width";
 				$cutimage	= false;
 
 			}
 
-			if($myTreasures_options[option04] == 'fixedboth') {
+			if($myTreasures_options['option04'] == 'fixedboth') {
 
-				$height 	= $myTreasures_options[option07];
-				$width 		= $myTreasures_options[option08];
+				$height 	= $myTreasures_options['option07'];
+				$width 		= $myTreasures_options['option08'];
 				$resizeby	= "width";
 				$cutimage	= true;
 
 			}
 
-			if(!myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray[cover].$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options[option32])) {
+			if(!myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray['cover'].$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options['option32'])) {
 
 				$imagename = false;
 
@@ -1578,13 +2343,55 @@ Author URI: http://www.crazyiven.de/
 
 		} else {
 
-			myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray[cover].$imagename,"","","","",$myTreasures_options[option32]);
-			chmod($myTreasuresPathArray[cover].$imagename, 0666);
+			myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray['cover'].$imagename,"","","","",$myTreasures_options['option32']);
+			chmod($myTreasuresPathArray['cover'].$imagename, 0666);
 
 		}
 
-		myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray[cover]."big_".$imagename,"","","","",$myTreasures_options[option32]);
-		chmod($myTreasuresPathArray[cover]."big_".$imagename, 0666);
+		if($myTreasures_options['option03'] == 'yes') {
+
+			if($myTreasures_options['option40'] == 'fixedheight') {
+
+				$height 	= $myTreasures_options['option41'];
+				$width 		= "0";
+				$resizeby	= "height";
+				$cutimage	= false;
+
+			}
+
+			if($myTreasures_options['option40'] == 'fixedwidth') {
+
+				$height 	= "0";
+				$width 		= $myTreasures_options['option42'];
+				$resizeby	= "width";
+				$cutimage	= false;
+
+			}
+
+			if($myTreasures_options['option40'] == 'fixedboth') {
+
+				$height 	= $myTreasures_options['option43'];
+				$width 		= $myTreasures_options['option44'];
+				$resizeby	= "width";
+				$cutimage	= true;
+
+			}
+
+			if(!myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray['cover']."medium_".$imagename,$width,$height,$resizeby,$cutimage,$myTreasures_options['option32'])) {
+
+				$imagename = false;
+
+			}
+
+		} else {
+
+			myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray['cover']."medium_".$imagename,"","","","",$myTreasures_options['option32']);
+			chmod($myTreasuresPathArray['cover'].$imagename, 0666);
+
+		}
+
+		myTreasuresImageResize($data['tmp_name'],$myTreasuresPathArray['cover']."big_".$imagename,"","","","",$myTreasures_options['option32']);
+		chmod($myTreasuresPathArray['cover']."big_".$imagename, 0666);
 		return $imagename;
 
 	}
@@ -1595,31 +2402,31 @@ Author URI: http://www.crazyiven.de/
 
 	function myTreasuresAdmin() {
 
-		global $myTreasuresTextdomain, $wpdb;
+		global $myTreasuresTextdomain, $myTreasures_options, $wpdb;
 		if(function_exists('add_menu_page')) {
 
-			add_menu_page('myTreasures Adminpage', 'myTreasures',6,dirname(__FILE__).'/mytreasuresadmin.php');
+			add_menu_page('myTreasures Adminpage', 'myTreasures', 'edit_plugins', dirname(__FILE__).'/mytreasuresadmin.php');
 
 		}
 
 		if(function_exists('add_submenu_page')) {
 
 			$waiting_rating = mysql_num_rows(mysql_query("SELECT `id` FROM `".$wpdb->prefix."mytreasures` WHERE `rating` = '' OR `rating` = '0'"));
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("CSV Import",$myTreasuresTextdomain), 'myTreasures'), __(__("CSV Import",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasurescsv.php');	
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresadd.php');	
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("OFDB Gateway",$myTreasuresTextdomain), 'myTreasures'), __(__("OFDB Gateway",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresofdb.php');
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresmediatype.php');
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("CSV Import",$myTreasuresTextdomain), 'myTreasures'), __(__("CSV Import",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasurescsv.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), __(__("Add single",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresadd.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("OFDB Gateway",$myTreasuresTextdomain), 'myTreasures'), __(__("OFDB Gateway",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresofdb.php');
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), __(__("Media types",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresmediatype.php');
 
-			if($waiting_rating) {
+			if($waiting_rating && $myTreasures_options['option39'] != 'yes') {
 
-				add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(sprintf(__("(%s) waiting rating(s)",$myTreasuresTextdomain),$waiting_rating), 'myTreasures'), __(sprintf(__("(%s) waiting rating(s)",$myTreasuresTextdomain),$waiting_rating), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresrating.php');	
+				add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(sprintf(__("(%s) waiting rating(s)",$myTreasuresTextdomain),$waiting_rating), 'myTreasures'), __(sprintf(__("(%s) waiting rating(s)",$myTreasuresTextdomain),$waiting_rating), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresrating.php');	
 
 			}
 
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Options",$myTreasuresTextdomain), 'myTreasures'), __(__("Options",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresoptions.php');	
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Backup",$myTreasuresTextdomain), 'myTreasures'), __(__("Backup",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresbackup.php');	
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Help / Support",$myTreasuresTextdomain), 'myTreasures'), __(__("Help / Support",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasureshelp.php');	
-			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Infos",$myTreasuresTextdomain), 'myTreasures'), __(__("Infos",$myTreasuresTextdomain), 'myTreasures'), 6,dirname(__FILE__).'/mytreasuresinfo.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Options",$myTreasuresTextdomain), 'myTreasures'), __(__("Options",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresoptions.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Backup",$myTreasuresTextdomain), 'myTreasures'), __(__("Backup",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresbackup.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Help / Support",$myTreasuresTextdomain), 'myTreasures'), __(__("Help / Support",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasureshelp.php');	
+			add_submenu_page( dirname(__FILE__).'/mytreasuresadmin.php', __(__("Infos",$myTreasuresTextdomain), 'myTreasures'), __(__("Infos",$myTreasuresTextdomain), 'myTreasures'), 'edit_plugins',dirname(__FILE__).'/mytreasuresinfo.php');	
 
 		}
 
@@ -1642,11 +2449,11 @@ Author URI: http://www.crazyiven.de/
 	add_action('add_option', 'myTreasuresResetRewriteRules');
 	add_action('delete_option', 'myTreasuresResetRewriteRules');
 	if(ini_get('allow_url_fopen')) { add_action('wp_dashboard_setup', 'myTreasuresOFDBWidgetAdd2Dashboard'); }
-	load_plugin_textdomain($myTreasuresTextdomain,'wp-content/plugins/mytreasures/language');
+	load_plugin_textdomain($myTreasuresTextdomain,false,dirname(plugin_basename(__FILE__)).'/language');
 
-	if(get_lastpostdate() > $myTreasures_options[option24] || get_lastpostmodified() > $myTreasures_options[option24] || $myTreasures_options[option26] == 'yes') {
+	if(get_lastpostdate() > $myTreasures_options['option34'] || get_lastpostmodified() > $myTreasures_options['option34'] || $myTreasures_options['option26'] == 'yes') {
 
-		mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option24` = '".current_time(mysql)."' WHERE `id` = '1'");
+		mysql_query("UPDATE `".$myTreasuresDBPrefix."mytreasures_options` SET `option34` = '".date("Y-d-m H:i:s")."' WHERE `id` = '1'");
 		add_action('init', 'myTreasuresRewriteRules');
 		add_action('generate_rewrite_rules', 'myTreasuresUpdateRewriteRules');
 

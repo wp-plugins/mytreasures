@@ -1,5 +1,6 @@
 <?php
 
+	$all_type_help_array = "0";
 	$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`");
 	while($result01 = mysql_fetch_array($query01)) {
 
@@ -37,7 +38,7 @@
 	for($i2 = 0; $i2 < $all_type_help_array; $i2++) {
 
 		if(++$i%2 != 0) { $class = "class='alternate'"; } else { $class = false; }
-		echo "<tr ".$class."><td align=\"left\" style=\"border-bottom: 1px solid #000000; padding: 5px;\">[my".$type_help_array[$i2][short]."treasures]</td><td align=\"left\" style=\"border-bottom: 1px solid #000000; padding: 5px;\">".sprintf(__("Shows all media of type \"%s\"",$myTreasuresTextdomain),$type_help_array[$i2][name])."</td></tr>";
+		echo "<tr ".$class."><td align=\"left\" style=\"border-bottom: 1px solid #000000; padding: 5px;\">[my".$type_help_array[$i2]['short']."treasures]</td><td align=\"left\" style=\"border-bottom: 1px solid #000000; padding: 5px;\">".sprintf(__("Shows all media of type \"%s\"",$myTreasuresTextdomain),$type_help_array[$i2]['name'])."</td></tr>";
 
 	}
 
@@ -49,9 +50,15 @@
 <h2><?php echo __("Support",$myTreasuresTextdomain); ?></h2>
 <?php
 
-	if($_POST[mytreasuresproblemhelp] && $_POST[sendmytreasuresproblemhelp]) {
+	if(!isset($_POST['mytreasuresproblemhelp'])) {
 
-		myTreasuresSupportEMail($_POST[mytreasuresproblemhelp]);
+		$_POST['mytreasuresproblemhelp'] = false;
+
+	}
+
+	if($_POST['mytreasuresproblemhelp'] && $_POST['sendmytreasuresproblemhelp']) {
+
+		myTreasuresSupportEMail($_POST['mytreasuresproblemhelp']);
 		echo __("Your Problem has been send to support@mytreasures.de",$myTreasuresTextdomain);
 
 	} else {
@@ -74,10 +81,14 @@
 	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo $_SERVER["HTTP_USER_AGENT"]; ?>" disabled /></td>
 </tr>
 <tr class='alternate'>
+	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("PHP Version",$myTreasuresTextdomain); ?></b></td>
+	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo phpversion(); ?>" disabled /></td>
+</tr>
+<tr>
 	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("MySQL Version",$myTreasuresTextdomain); ?></b></td>
 	<td align="left"  valign="top"><input style="width: 350px;" type="text" value="<?php echo mysql_get_client_info(); ?>" disabled /></td>
 </tr>
-<tr>
+<tr class='alternate'>
 	<td align="right" valign="top" style="padding: 5px;"><b><?php echo __("Your Problem",$myTreasuresTextdomain); ?></b></td>
 	<td align="left"  valign="top"><textarea style="width: 350px; height: 250px;" name="mytreasuresproblemhelp"></textarea></td>
 </tr>

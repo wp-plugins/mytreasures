@@ -1,17 +1,24 @@
 <?php
 
-	if($_POST['amazonok']) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'no' WHERE `id` = '1'"); $myTreasures_options['option20'] = "no"; } 
-	if($_POST['amazonnok']) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'yes' WHERE `id` = '1'"); $myTreasures_options['option20'] = "yes"; } 
 	$checksystem = myTreasuresCheckWorkspace(current_user_can('edit_plugins'));
 
 	if($checksystem) {
 
-		if($checksystem['message']) { echo $checksystem['message']; }
-		if($checksystem['include']) { include($checksystem['include']); }
+		if(isset($checksystem['message'])) {
+
+			echo $checksystem['message'];
+
+		}
+
+		if(isset($checksystem['include'])) {
+
+			include($checksystem['include']);
+
+		}
 
 	} else {
 
-		if($_POST['multipleimageupload']) {
+		if(isset($_POST['multipleimageupload'])) {
 
 			$uploadedimagescount = "0";
 			foreach($_POST['multipleimageupload'] AS $uploadedimage => $id) {
@@ -26,7 +33,7 @@
 					while(file_exists($myTreasuresPathArray['cover'].$imagename)) {
 						$imagename = "ownupload_".time().".".myTreasuresGetImageType($uploadedimage);
 					}
-					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `image` = '$imagename' WHERE `id` = '$result01[id]'");
+					mysql_query("UPDATE `".$wpdb->prefix."mytreasures` SET `image` = '$imagename' WHERE `id` = '".$result01['id']."'");
 					if($myTreasures_options['option03'] == 'yes') {
 
 						if($myTreasures_options['option04'] == 'fixedheight') { $height = $myTreasures_options['option05']; $width = "0"; $resizeby = "height"; $cutimage = false; }
@@ -58,7 +65,7 @@
 
 		}
 
-		if($_FILES['csvfile'] && $_POST['treasuretype']) {
+		if(isset($_FILES['csvfile']['tmp_name']) && $_POST['treasuretype']) {
 
 			if(preg_match("/.csv$/",strtolower($_FILES['csvfile']['name']))) {
 
@@ -166,7 +173,7 @@
 			
 		}
 
-		if($message) {
+		if(isset($message)) {
 
 			echo '<div id="message" class="updated fade"><p><strong>'. $message .'</strong></p></div>';
 
@@ -178,9 +185,9 @@
 <h2>myTreasures</h2>
 <form method="post" action="" ENCTYPE="multipart/form-data">
 <p><h3>CSV Upload</h3><?php echo __("You can update your myTreasures database with a csv upload / import. Just use the given csv fields to create your csv file. Keep in mind, that the system just checks title / name to find entries for an update.",$myTreasuresTextdomain); ?>
-<br /><br /><?php echo __("Your local csv file:",$myTreasuresTextdomain); ?> (<u><?php echo __("field delimiter:",$myTreasuresTextdomain); ?></u> <b><?php echo $myTreasures_options[option15]; ?></b> <?php if($myTreasures_options[option21]) { echo "<u>".__("text block delimiter",$myTreasuresTextdomain)."</u> <b>".$myTreasures_options[option21]."</b>"; } ?>)<br /><input type="file" name="csvfile" size="35" class="uploadform">
+<br /><br /><?php echo __("Your local csv file:",$myTreasuresTextdomain); ?> (<u><?php echo __("field delimiter:",$myTreasuresTextdomain); ?></u> <b><?php echo $myTreasures_options['option15']; ?></b> <?php if($myTreasures_options['option21']) { echo "<u>".__("text block delimiter",$myTreasuresTextdomain)."</u> <b>".$myTreasures_options['option21']."</b>"; } ?>)<br /><input type="file" name="csvfile" size="35" class="uploadform">
 <br /><br /><b><?php echo __("Media type of csv file",$myTreasuresTextdomain); ?></b>
-<?php $query99 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`"); while($result99 = mysql_fetch_array($query99)) { $csv = false; for($i2 = 1; $i2 <= 20; $i2++) { if($i2 < 10) { $i2 = "0".$i2; } if($result99["field".$i2]) { if($myTreasures_options[option21]) { $description = $myTreasures_options[option21].__("Description",$myTreasuresTextdomain).$myTreasures_options[option21]; $csv .= $myTreasures_options[option15].$myTreasures_options[option21].$result99["field".$i2].$myTreasures_options[option21]; } else{ $description = __("Description",$myTreasuresTextdomain); $csv .= $myTreasures_options[option15].$result99["field".$i2]; } } } echo "<br /><input type=\"radio\" name=\"treasuretype\" value=\"".$result99[id]."\"> ".$result99[name]." (".__("csv format:",$myTreasuresTextdomain)." <i>".$description.$csv."</i>)"; } ?>
+<?php $query99 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`"); while($result99 = mysql_fetch_array($query99)) { $csv = false; for($i2 = 1; $i2 <= 20; $i2++) { if($i2 < 10) { $i2 = "0".$i2; } if($result99["field".$i2]) { if($myTreasures_options['option21']) { $description = $myTreasures_options['option21'].__("Description",$myTreasuresTextdomain).$myTreasures_options['option21']; $csv .= $myTreasures_options['option15'].$myTreasures_options['option21'].$result99["field".$i2].$myTreasures_options['option21']; } else{ $description = __("Description",$myTreasuresTextdomain); $csv .= $myTreasures_options['option15'].$result99["field".$i2]; } } } echo "<br /><input type=\"radio\" name=\"treasuretype\" value=\"".$result99['id']."\"> ".$result99['name']." (".__("csv format:",$myTreasuresTextdomain)." <i>".$description.$csv."</i>)"; } ?>
 <div class="submit"><input type="submit" class="button-primary" value=" <?php echo __("Upload csv file",$myTreasuresTextdomain); ?> "></form></div>
 </p>
 <br />
@@ -193,15 +200,22 @@
 			echo __("Just upload your covers to \"wp-content/mytreasures/coverupload/\" and you can manager multiple covers in this area!",$myTreasuresTextdomain); 
 			
 			$coverarray = false;
-			if($directoryhandler = opendir($myTreasuresPathArray['coverupload'])) { while (($file = readdir($directoryhandler)) !== false) { $filetype = myTreasuresGetImageType($file); if($filetype == 'jpeg' || $filetype == 'jpg' || $filetype == 'gif' || $filetype == 'png') { $coverarray[] = $file; } } } closedir($directoryhandler);
+			if($directoryhandler = opendir($myTreasuresPathArray['coverupload'])) { while (($file = readdir($directoryhandler)) !== false) { $filetype = strtolower(myTreasuresGetImageType($file)); if($filetype == 'jpeg' || $filetype == 'jpg' || $filetype == 'gif' || $filetype == 'png') { $coverarray[] = $file; } } } closedir($directoryhandler);
 			if($coverarray) {
 
+				$checkcover = "0";
 				$selectoptions = "<option value=\"0\">".__("Please choose:",$myTreasuresTextdomain)."</option>";
 				$query01 = mysql_query("SELECT `media`.`id`, `media`.`field01`, `mediatype`.`name` FROM `".$wpdb->prefix."mytreasures` AS `media` LEFT JOIN `".$wpdb->prefix."mytreasures_type` AS `mediatype` ON `mediatype`.`id` = `media`.`type` WHERE `media`.`image` = '' ORDER BY `media`.`field01`");
-				while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01[id]."\">".$result01[field01]."</option>"; }
-				$selectoptions .= "<option value=\"0\">".__("Following media already have cover:",$myTreasuresTextdomain)."</option>";
-				$query01 = mysql_query("SELECT `media`.`id`, `media`.`field01`, `mediatype`.`name` FROM `".$wpdb->prefix."mytreasures` AS `media` LEFT JOIN `".$wpdb->prefix."mytreasures_type` AS `mediatype` ON `mediatype`.`id` = `media`.`type` WHERE `media`.`image` != '' ORDER BY `media`.`field01`");
-				while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01[id]."\">".$result01[field01]."</option>"; }
+				while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01['id']."\">".$result01['field01']."</option>"; $checkcover++; }
+
+				if($checkcover) {
+
+					$selectoptions .= "<option value=\"0\">".__("Following media already have cover:",$myTreasuresTextdomain)."</option>";
+					$query01 = mysql_query("SELECT `media`.`id`, `media`.`field01`, `mediatype`.`name` FROM `".$wpdb->prefix."mytreasures` AS `media` LEFT JOIN `".$wpdb->prefix."mytreasures_type` AS `mediatype` ON `mediatype`.`id` = `media`.`type` WHERE `media`.`image` != '' ORDER BY `media`.`field01`");
+					while($result01 = mysql_fetch_array($query01)) { $selectoptions .= "<option value=\"".$result01['id']."\">".$result01['field01']."</option>"; }
+
+				}
+
 				echo "<form method=\"post\" action=\"\">";
 				foreach($coverarray AS $image) { echo "<br /><br /><img src=\"../wp-content/mytreasures/coverupload/".$image."\"><br /><select name=\"multipleimageupload[".$image."]\" style=\"width: 80%;\">".$selectoptions."</select>"; }
 				echo "<br /><br /><div class=\"submit\"><input type=\"submit\"  class=\"button-primary\" value=\" ".__("Update media",$myTreasuresTextdomain)." \"></form></div></form>";

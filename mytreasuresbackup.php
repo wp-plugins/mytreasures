@@ -1,13 +1,20 @@
 <?php
 
-	if($_POST[amazonok]) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'no' WHERE `id` = '1'"); $myTreasures_options[option20] = "no"; } 
-	if($_POST[amazonnok]) { mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option20` = 'yes' WHERE `id` = '1'"); $myTreasures_options[option20] = "yes"; } 
 	$checksystem = myTreasuresCheckWorkspace(current_user_can('edit_plugins'),'backup');
 
 	if($checksystem) {
 
-		if($checksystem['message']) { echo $checksystem['message']; }
-		if($checksystem['include']) { include($checksystem['include']); }
+		if(isset($checksystem['message'])) {
+
+			echo $checksystem['message'];
+
+		}
+
+		if(isset($checksystem['include'])) {
+
+			include($checksystem['include']);
+
+		}
 
 	} else {
 

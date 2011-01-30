@@ -1,6 +1,6 @@
 <?php
 
-	if($_POST[donereadingchangelog]) {
+	if(isset($_POST['donereadingchangelog'])) {
 
 		mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `changelog` = '".$myTreasuresPluginVersion."' WHERE `id` = '1'");
 		echo "<div class=\"wrap\"><h2>Changelog</h2><p>Have fun with the new Version!</p></div>" ;
@@ -14,15 +14,25 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
+<p><b>New in 2.4 // Neues in 2.4</b>
+<ul>
+	<li>Option to deactivate ratingsystem // M&ouml;glichkeit geschaffen das Bewertungssystem abzuschalten</li>
+	<li>Added new medium size cover for details page (Optional instead of small cover) // Neues Cover in mittlere Gr&ouml;&szlig;e hinzugef&uuml;gt für die Detail Ansicht (Optional statt dem normalen)</li>
+	<li>Added article style list view // Es wurde eine Artikel&auml;hnliche Ansicht hinzugef&uuml;gt</li>
+	<li>Added full css support for all views // F&uuml;r alle Ansichten gibt es nun vollen CSS Support</li>
+	<li>Fixed minor problems with options // Kleinere Probleme mit den Optionen behoben</li>
+	<li>Big code cleanup // Umfangreiche S&auml;uberung des Quellcodes</li>
+</ul>
+</p>
+<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
+</form>
+<p>&nbsp;</p><p>&nbsp;</p>
 <p><b>New in 2.3 // Neues in 2.3</b>
 <ul>
 	<li>Expand search to all fields, not just name // Erweiterung der Suche auf alle Felder, nicht nur den Namen</li>
 	<li>Added sort type (Name or ID) and order typ (asc or desc) to list view // Die Listenansicht wurde um die Wahl zwischen Sortierung nach Namen oder ID, sowie auf- oder absteigend erweitert</li>
 </ul>
 </p>
-<div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
-</form>
-<p>&nbsp;</p><p>&nbsp;</p>
 <p><b>New in 2.2 (.4/.5/.6) // Neues in 2.2 (.4/.5/.6)</b>
 <ul>
 	<li>Fixed CSV Import problem with activ field & text delimiter // CSV Import Probleme bei der Nutzung von Text- & Feldtrennzeichen behoben</li>

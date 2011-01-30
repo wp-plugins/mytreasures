@@ -1,8 +1,26 @@
 <?php
 
-	if($myTreasures_options[option25] != 'doneit') {
+	if($myTreasures_options['option25'] != 'doneit') {
 
-		if($_POST[doneinstall]) {
+		if(!isset($_POST['doneinstall'])) {
+
+			$_POST['doneinstall'] = false;
+
+		}
+
+		if(!isset($_POST['setupmoreinfos'])) {
+
+			$_POST['setupmoreinfos'] = false;
+
+		}
+
+		if(!isset($_POST['setupmediatype'])) {
+
+			$_POST['setupmediatype'] = false;
+
+		}
+
+		if($_POST['doneinstall']) {
 
 			mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option25` = 'doneit', `changelog` = '".$myTreasuresPluginVersion."' WHERE `id` = '1'");
 
@@ -18,7 +36,7 @@
 
 		} else {
 
-			if($_POST[setupmoreinfos]) { 
+			if($_POST['setupmoreinfos']) { 
 
 				mysql_query("UPDATE `".$wpdb->prefix."mytreasures_options` SET `option25` = 'doneit', `changelog` = '".$myTreasuresPluginVersion."' WHERE `id` = '1'");
 
@@ -38,7 +56,7 @@
 
 <?php
 
-			} elseif($_POST[setupmediatype]) {
+			} elseif($_POST['setupmediatype']) {
 
 				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures_type` (`short`, `name`, `field01`, `field02`, `field03`, `field04`) VALUES ('dummy', 'Dummy', 'Title / Name', 'Anzahl DVDs / Number of discs', 'Jahr / Year', 'Farbe / Color')");
 
