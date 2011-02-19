@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.4
+Version: 2.4.1
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -18,7 +18,7 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion			= "036";
-	$myTreasuresPluginVersion	= "2.4";
+	$myTreasuresPluginVersion	= "2.4.1";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	$myTreasuresPathArray			= Array("coverupload" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/coverupload/"), "cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
@@ -2208,22 +2208,22 @@ Author URI: http://www.crazyiven.de/
 
 					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'soundtrack') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $soundtrack .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid][1]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $soundtrack .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
 						if($soundtrack) { $returnarray[$feedback[0][1][$key1]['name']] = substr($soundtrack,0,-2); }
 
 					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'regie') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $regie .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid][1]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $regie .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
 						if($regie) { $returnarray[$feedback[0][1][$key1]['name']] = substr($regie,0,-2); }
 
 					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'produzent') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $produzent .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid][1]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { $produzent .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").", "; } } } }
 						if($produzent) { $returnarray[$feedback[0][1][$key1]['name']] = substr($produzent,0,-2); }
 
 					} elseif(isset($feedback[0][1][$key1]['name']) && $feedback[0][1][$key1]['name'] == 'besetzung') {
 
-						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { if(isset($feedback[0][1][$key1][$tmpid][2]['value']) && $feedback[0][1][$key1][$tmpid][2]['value']) { $addbesetzung = " (".htmlentities($feedback[0][1][$key1][$tmpid][2]['value'],ENT_QUOTES, "UTF-8").")"; } else { $addbesetzung = false; } $besetzung .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").$addbesetzung.", "; } } } }
+						if(is_array($feedback[0][1][$key1])) { foreach($feedback[0][1][$key1] AS $tmpid => $tmpvalue) { if(is_array($feedback[0][1][$key1][$tmpid])) { if(isset($feedback[0][1][$key1][$tmpid][1]['value']) && $feedback[0][1][$key1][$tmpid][1]['value']) { if(isset($feedback[0][1][$key1][$tmpid][2]['value']) && $feedback[0][1][$key1][$tmpid][2]['value']) { $addbesetzung = " (".htmlentities($feedback[0][1][$key1][$tmpid][2]['value'],ENT_QUOTES, "UTF-8").")"; } else { $addbesetzung = false; } $besetzung .= htmlentities($feedback[0][1][$key1][$tmpid][1]['value'],ENT_QUOTES, "UTF-8").$addbesetzung.", "; } } } }
 						if($besetzung) { $returnarray[$feedback[0][1][$key1]['name']] = substr($besetzung,0,-2); }
 
 					} elseif(isset($feedback[0][1][$key1]['value']) && $feedback[0][1][$key1]['value']) {
