@@ -119,7 +119,19 @@
 
 				}
 
-				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (`type`, `rating`, `description`, `comment`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`) VALUES ('".$_POST['treasuretype']."', '".$_POST['rating']."',  '".$_POST['description']."', '".$_POST['comment']."', '".$_POST['field01']."', '".$_POST['field02']."', '".$_POST['field03']."', '".$_POST['field04']."', '".$_POST['field05']."', '".$_POST['field06']."', '".$_POST['field07']."', '".$_POST['field08']."', '".$_POST['field09']."', '".$_POST['field10']."', '".$_POST['field11']."', '".$_POST['field12']."', '".$_POST['field13']."', '".$_POST['field14']."', '".$_POST['field15']."', '".$_POST['field16']."', '".$_POST['field17']."', '".$_POST['field18']."', '".$_POST['field19']."', '".$_POST['field20']."')");
+				$imagename = false;
+				if($_FILES['image']['type'] == "image/pjpeg" || $_FILES['image']['type'] == "image/jpeg" || $_FILES['image']['type'] == "image/gif" || $_FILES['image']['type'] == "image/png") {
+
+					$checknewimage = myTreasuresSaveMediaCover($_FILES['image'],$imagename);
+					if($checknewimage) {
+
+						$imagename = $checknewimage;
+
+					}
+
+				}
+
+				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (`type`, `rating`, `description`, `comment`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`, `image`) VALUES ('".$_POST['treasuretype']."', '".$_POST['rating']."',  '".$_POST['description']."', '".$_POST['comment']."', '".$_POST['field01']."', '".$_POST['field02']."', '".$_POST['field03']."', '".$_POST['field04']."', '".$_POST['field05']."', '".$_POST['field06']."', '".$_POST['field07']."', '".$_POST['field08']."', '".$_POST['field09']."', '".$_POST['field10']."', '".$_POST['field11']."', '".$_POST['field12']."', '".$_POST['field13']."', '".$_POST['field14']."', '".$_POST['field15']."', '".$_POST['field16']."', '".$_POST['field17']."', '".$_POST['field18']."', '".$_POST['field19']."', '".$_POST['field20']."', '".$imagename."')");
 				$message = "<div id=\"message\" class=\"updated fade\"><p><strong>".sprintf(__("The media <i>%s</i> was created successfully!",$myTreasuresTextdomain),trim($_POST['field01']))."</strong></p></div><p><a href=\"?page=mytreasures/mytreasuresofdb.php\" class=\"button\">".__("New search for movie in ofdb",$myTreasuresTextdomain)."</a>&nbsp;&nbsp;<a href=\"?page=mytreasures/mytreasuresadmin.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a></p>";
 
 			} elseif($_POST['ofdbid'] && $_POST['treasuretype']) {
@@ -131,7 +143,7 @@
 					$query_type = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` WHERE `id` = '".$_POST['treasuretype']."'");
 					$result_type = mysql_fetch_array($query_type);
 					foreach($returnarray AS $name => $value) { $select .= "<option value=\"".$value."\">".$name." | ".$value."</option>"; }
-					if($_POST['doit'] && !$_POST['field01']) { $result02['field01'] = "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />".$result02['field01']; }
+					if($_POST['doit'] && !$_POST['field01']) { $result_type['field01'] = "<img src=\"../wp-content/plugins/mytreasures/images/missing.gif\" />".$result_type['field01']; }
 					$message = "<p><b>".sprintf(__("Add media of typ <i>%s</i>",$myTreasuresTextdomain),$result_type['name'])."</b><br />".__("Please choose the OFDB Data you want to use. All mandatory fields are marked with a <font style=\"color: #FF0000;\">*</font>",$myTreasuresTextdomain)."</p><form action=\"\" method=\"post\" enctype=\"multipart/form-data\"><input type=\"hidden\" name=\"treasuretype\" value=\"".$_POST['treasuretype']."\"><input type=\"hidden\" name=\"ofdbid\" value=\"".$_POST['ofdbid']."\"><p>".$result_type["field01"]."<font style=\"color: #FF0000;\">*</font>";
 					$message .= "<br /><select style=\"width: 90%;\" name=\"field01\"><option value=\"\">".__("Please choose or fill in your own value",$myTreasuresTextdomain)."</option>".$select."</select><br /><textarea style=\"height: 45px; width: 90%;\" name=\"field01a\">".stripslashes($_POST['field01a'])."</textarea>";
 					for($i = 2; $i <= 20; $i++) {

@@ -90,8 +90,6 @@
 
 				}
 
-
-
 				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (`type`, `rating`, `description`, `comment`, `tracklist`, `image`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`) VALUES ('".$_POST['treasuretype']."', '".$_POST['rating']."',  '".$_POST['description']."', '".$_POST['comment']."', '$tracks', '$imagename', '".$_POST['field01']."', '".$_POST['field02']."', '".$_POST['field03']."', '".$_POST['field04']."', '".$_POST['field05']."', '".$_POST['field06']."', '".$_POST['field07']."', '".$_POST['field08']."', '".$_POST['field09']."', '".$_POST['field10']."', '".$_POST['field11']."', '".$_POST['field12']."', '".$_POST['field13']."', '".$_POST['field14']."', '".$_POST['field15']."', '".$_POST['field16']."', '".$_POST['field17']."', '".$_POST['field18']."', '".$_POST['field19']."', '".$_POST['field20']."')");
 				$message = "<p>".sprintf(__("The media <i>%s</i> was created successfully!",$myTreasuresTextdomain),trim($_POST['field01']))."</p><div class=\"submit\"><form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"submit\" class=\"button-primary\" value=\" ".__("Add media of a different media type",$myTreasuresTextdomain)." \"></form> <form action=\"\" method=\"post\" style=\"display: inline;\"><input type=\"hidden\" name=\"treasuretype\" value=\"".$_POST['treasuretype']."\"><input type=\"submit\" value=\" ".__("Add media of the same media type",$myTreasuresTextdomain)."\"></form></div>";
 

@@ -14,14 +14,19 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
-<p><b>New in 2.4.1 // Neues in 2.4.1</b>
+<p><b>New in 2.4.2 // Neues in 2.4.2</b>
 <ul>
-	<li>Fixed missing fields of OFDB gateway // Fehlende Felder in der OFDB Anbindung korrigiert</li>
+	<li>Fixed missing image saving adding media through OFDB gateway // Fehlendes Speichern des Covers durch die OFDB Anbindung korrigiert</li>
 </ul>
 </p>
 <div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
 </form>
 <p>&nbsp;</p><p>&nbsp;</p>
+<p><b>New in 2.4.1 // Neues in 2.4.1</b>
+<ul>
+	<li>Fixed missing fields of OFDB gateway // Fehlende Felder in der OFDB Anbindung korrigiert</li>
+</ul>
+</p>
 <p><b>New in 2.4 // Neues in 2.4</b>
 <ul>
 	<li>Option to deactivate ratingsystem // M&ouml;glichkeit geschaffen das Bewertungssystem abzuschalten</li>
