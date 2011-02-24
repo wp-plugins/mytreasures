@@ -68,6 +68,7 @@
 		$query01 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY ".$orderquery."");
 		if(mysql_num_rows($query01)) {
 
+			$i = "0";
 			if($order == 'title') { $italic1 = "font-style:italic;"; } else { $italic1 = false; }
 			if($order == 'tag') { $italic2 = "font-style:italic;"; } else { $italic2 = false; }
 			if($order == 'id') { $italic3 = "font-style:italic;"; } else { $italic3 = false; }
