@@ -96,11 +96,7 @@
 
 						}
 
-						if($result01["field".$i]) {
-
-							$dbarray[] = "field".$i;
-
-						}
+						$dbarray[] = "field".$i;
 
 					}
 
@@ -138,7 +134,7 @@
 
 						} else {
 
-							mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (".$insert_fields."`type`) VALUES (".$insert_values."'".$_POST['treasuretype']."')");
+							mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (".$insert_fields."`type`, `comment`, `image`, `rentto`, `tracklist`, `rating`) VALUES (".$insert_values."'".$_POST['treasuretype']."', '', '', '', '', '0')");
 							++$myTreasuresadd;
 
 						}

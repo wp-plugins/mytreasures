@@ -129,7 +129,7 @@ function markallmedia() {
 </script>
 <div class="wrap">
 <h2><?php echo __("Activ links",$myTreasuresTextdomain); ?> (<?php echo $result01['field01']; ?>)</h2>
-<form action="" method="post"><p><h3><?php echo __("Add new link:",$myTreasuresTextdomain); ?></h3><b><?php echo __("Link target",$myTreasuresTextdomain); ?>:</b><br /><input type="text" style="width: 75%;" name="target" value="http://"><br /><br /><b><?php echo __("Link name",$myTreasuresTextdomain); ?></b><br /><input type="text" style="width: 75%;" name="name"></p><div class="submit"><input type="submit" name="doit" class="button-primary" value=" <?php echo __("Create new link",$myTreasuresTextdomain); ?> "></div></form></div>
+<form action="" method="post"><p><h3><?php echo __("Add new link:",$myTreasuresTextdomain); ?></h3><b><?php echo __("Link target",$myTreasuresTextdomain); ?>:</b><br /><input type="text" style="width: 75%;" name="target" value="http://"><br /><br /><b><?php echo __("Link name",$myTreasuresTextdomain); ?>:</b><br /><input type="text" style="width: 75%;" name="name"></p><div class="submit"><input type="submit" name="doit" class="button-primary" value=" <?php echo __("Create new link",$myTreasuresTextdomain); ?> "></div></form></div>
 
 <?php
 
