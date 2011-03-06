@@ -835,7 +835,7 @@ msgid "Any media type can hold up to 20 details to display! The first one has to
 msgstr "Ein Medientyp kann bis zu 20 Eigenschaften haben die das System sp&auml;ter anzeigen wird. Der 1. Typ muss immer der Name des zu speichernden Mediums sein. Also der Titel/Name der DVD, des Ger&auml;ts, des Freizeitparks oder oder oder. Die anderen Werte sind absolut frei w&auml;hlbar!"
 
 #
-msgid "Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. But of course the webserver and the traffic have to be paid for. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited 5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?"
+msgid "Dear user,<br /><br />the development of myTreasures takes up a lot of time and I offer it to you free of charge. If you allow this installation to post an Amazon Partner link (just a plain text link saying \"Amazon.de\" that will only be displayed in the Detail view) it would be a reward for my work. If anyone buys anything using that link I get credited ~5%.<br /><br />There are no costs for you! If you'd like to contribute in another way, please have a look at the Info page.<br /><br />Would you like to activate the Amazon link and support the development of myTreasures?"
 msgstr "Lieber User!<br /><br />Die Entwicklung von myTreasures nimmt recht viel Zeit in Anspruch und ich gebe das Plugin nat&uuml;rlich komplett kostenlos an euch raus! Doch auch der Webserver bzw. der Traffic will bezahlt werden. Dank des Amazon Partner Systems k&ouml;nnte ich ein wenig entlohnt werden f&uuml;r diese Arbeit. Wenn Ihr mir helfen wollt, k&ouml;nnt ihr dem System erlauben einen kleinen Amazon Link zu erstellen. Dieser erscheint in der Detailansicht und auch nur als Textlink (Es steht dort nur Amazon.de) und sollte jemand &uuml;ber diesen Link etwas kaufen bekomme ich 5% gutgeschrieben.<br /><br />F&uuml;r euch entstehen keine Kosten und mir kommt so vielleicht ein wenig Geld zu gute! Wer mir anders helfen m&ouml;chte, schaut einfach auf die Info Seite.<br /><br />Willst Du die Amazon Verlinkung aktivieren und so ein wenig die Entwicklung von myTreasures &uuml;nterst&uuml;tzen?"
 
 #
@@ -972,7 +972,7 @@ msgstr "Neuen Link anlegen:"
 
 #
 msgid "Link target"
-msgstr "Link Ziel:"
+msgstr "Link Ziel"
 
 #
 msgid "Link name"
