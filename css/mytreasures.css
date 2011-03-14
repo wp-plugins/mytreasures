@@ -1,0 +1,312 @@
+/*
+
+	This is the default myTreasures CSS file.
+	If you want to change the look of myTreasures please
+	create a custom.css in this folder. Don't change this file!
+	
+	Das ist die Standard myTreasures CSS Datei. Wenn Sie selber
+	Aenderungen am Aussehen von myTreasures vornehmen wollen,
+	erstellen Sie bitte eine custom.css in diesem Ordner.
+	Bearbeiten Sie nicht diese Datei!
+
+*/
+
+	div.mytreasures_header_container {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	div.mytreasures_header_heading {
+		width: 100%;
+		font-weight: bold;
+	}
+
+	div.mytreasures_header_links {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	div.mytreasures_header_links a {
+
+	}
+
+	div.mytreasures_header_links a:hover {
+
+	}
+
+	div.mytreasures_header_searchform {
+		width: 70%;
+	}
+
+	div.mytreasures_header_searchform form {
+		display: inline;
+	}
+
+	div.mytreasures_header_searchform input {
+		width: 100%;
+		margin: 0px;
+	}
+
+
+	div.mytreasures_glossarview_container {
+		width: 100%;
+	}
+
+	div.mytreasures_glossarview_navigation {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	div.mytreasures_glossarview_navigation a {
+
+	}
+
+	div.mytreasures_glossarview_navigation a:hover {
+
+	}
+
+	div.mytreasures_glossarview_navigation a.activ {
+		font-weight: bold;
+	}
+
+	div.mytreasures_glossarview_navigation a.activ:hover {
+
+	}
+
+	div.mytreasures_glossarview_entries {
+		width: 100%;
+	}
+
+	div.mytreasures_glossarview_entriecount {
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	span.mytreasures_glossarview_entriecount_heading {
+		font-weight: bold;
+	}
+
+	span.mytreasures_glossarview_entriecount_count {
+
+	}
+
+
+	div.mytreasures_articleview_container {
+		width: 100%;
+		display: table;
+		margin-bottom: 10px;
+		-moz-border-radius: 5px;
+		-khtml-border-radius: 5px;
+		border: 1px solid #000000;
+	}
+
+	div.mytreasures_articleview_cell {
+		padding: 5px;
+		display: table-cell;
+	}
+
+	div.mytreasures_articleview_image {
+		width: 20%;
+		text-align: center;
+		white-space: nowrap;
+		vertical-align: top;
+	}
+
+	div.mytreasures_articleview_data {
+		width: 80%;
+		vertical-align: top;
+	}
+
+	div.mytreasures_articleview_data_header {
+
+	}
+
+	div.mytreasures_articleview_data_description {
+
+	}
+
+	div.mytreasures_articleview_entriecount {
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	span.mytreasures_articleview_entriecount_heading {
+		font-weight: bold;
+	}
+
+	span.mytreasures_articleview_entriecount_count {
+
+	}
+
+
+	div.mytreasures_listview_container {
+
+	}
+
+	div.mytreasures_listview_entries {
+
+	}
+
+	div.mytreasures_listview_entriecount {
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	span.mytreasures_listview_entriecount_heading {
+		font-weight: bold;
+	}
+
+	span.mytreasures_listview_entriecount_count {
+
+	}
+
+
+	div.mytreasures_ratingview_container {
+
+	}
+
+	div.mytreasures_ratingview_entries {
+
+	}
+
+	div.mytreasures_ratingview_groupheading {
+		font-weight: bold;
+	}
+
+	div.mytreasures_ratingview_groupspacer {
+		height: 20px;
+	}
+
+	div.mytreasures_ratingview_entriecount {
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	span.mytreasures_ratingview_entriecount_heading {
+		font-weight: bold;
+	}
+
+	span.mytreasures_ratingview_entriecount_count {
+
+	}
+
+
+	div.mytreasures_ownsortview_container {
+
+	}
+
+	div.mytreasures_ownsortview_entries {
+
+	}
+
+	div.mytreasures_ownsortview_groupheading {
+		font-weight: bold;
+	}
+
+	div.mytreasures_ownsortview_groupspacer {
+		height: 20px;
+	}
+
+	div.mytreasures_ownsortview_entriecount {
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	span.mytreasures_ownsortview_entriecount_heading {
+		font-weight: bold;
+	}
+
+	span.mytreasures_ownsortview_entriecount_count {
+
+	}
+
+
+	div.mytreasures_coverview_container {
+
+	}
+
+	div.mytreasures_coverview_entries {
+
+	}
+
+	div.mytreasures_coverview_entriecount {
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	span.mytreasures_coverview_entriecount_heading {
+		font-weight: bold;
+	}
+
+	span.mytreasures_coverview_entriecount_count {
+
+	}
+
+
+	div.mytreasures_singleview_container {
+
+	}
+
+	div.mytreasures_singleview_heading {
+		font-weight: bold;
+	}
+
+	div.mytreasures_singleview_nameanddescriptiontable_table {
+		width: 100%;
+		display: table;
+	}
+
+	div.mytreasures_singleview_nameanddescriptiontable_cell {
+		text-align: left;
+		display: table-cell;
+		vertical-align: top;
+	}
+
+	div.mytreasures_singleview_mycomment {
+		margin-top: 10px;
+	}
+
+	div.mytreasures_singleview_mycomment_heading {
+		font-weight: bold;
+	}
+
+	div.mytreasures_singleview_mycomment_comment {
+		font-style: italic;
+	}
+
+	div.mytreasures_singleview_detailstable {
+		width: 100%;
+		display: table;
+		margin-top: 10px;
+	}
+
+	div.mytreasures_singleview_detailstable_row {
+		display: table-row;
+	}
+
+	div.mytreasures_singleview_detailstable_cell_heading {
+		text-align: left;
+		font-weight: bold;
+		padding-right: 5px;
+		padding-bottom: 5px;
+		display: table-cell;
+		vertical-align: top;
+		white-space: nowrap;
+	}
+
+	div.mytreasures_singleview_detailstable_cell_heading_ratinghint {
+		font-size: 10px;
+		font-weight: normal;
+	}
+
+	div.mytreasures_singleview_detailstable_cell {
+		text-align: left;
+		display: table-cell;
+		vertical-align: top;
+		padding-bottom: 5px;
+	}
+
+	a.mytreasures_singleview_backtolist {
+		display: block;
+		margin-top: 10px;
+	}
