@@ -59,6 +59,7 @@
 
 			if(!isset($_POST['comment'])) {
 
+
 				$_POST['comment'] = false;
 
 			}
@@ -131,7 +132,7 @@
 
 				}
 
-				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (`type`, `rating`, `description`, `tracklist`, `image`, `rentto`,`comment`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`) VALUES ('".$_POST['treasuretype']."', '".$_POST['rating']."',  '".$_POST['description']."', '".$_POST['comment']."', '', '".$imagename."', '', '".$_POST['field01']."', '".$_POST['field02']."', '".$_POST['field03']."', '".$_POST['field04']."', '".$_POST['field05']."', '".$_POST['field06']."', '".$_POST['field07']."', '".$_POST['field08']."', '".$_POST['field09']."', '".$_POST['field10']."', '".$_POST['field11']."', '".$_POST['field12']."', '".$_POST['field13']."', '".$_POST['field14']."', '".$_POST['field15']."', '".$_POST['field16']."', '".$_POST['field17']."', '".$_POST['field18']."', '".$_POST['field19']."', '".$_POST['field20']."')");
+				mysql_query("INSERT INTO `".$wpdb->prefix."mytreasures` (`type`, `rating`, `description`, `tracklist`, `image`, `rentto`,`comment`, `field01`, `field02`, `field03`, `field04`, `field05`, `field06`, `field07`, `field08`, `field09`, `field10`, `field11`, `field12`, `field13`, `field14`, `field15`, `field16`, `field17`, `field18`, `field19`, `field20`) VALUES ('".$_POST['treasuretype']."', '".$_POST['rating']."',  '".$_POST['description']."', '', '".$imagename."', '', '".$_POST['comment']."', '".$_POST['field01']."', '".$_POST['field02']."', '".$_POST['field03']."', '".$_POST['field04']."', '".$_POST['field05']."', '".$_POST['field06']."', '".$_POST['field07']."', '".$_POST['field08']."', '".$_POST['field09']."', '".$_POST['field10']."', '".$_POST['field11']."', '".$_POST['field12']."', '".$_POST['field13']."', '".$_POST['field14']."', '".$_POST['field15']."', '".$_POST['field16']."', '".$_POST['field17']."', '".$_POST['field18']."', '".$_POST['field19']."', '".$_POST['field20']."')");
 				$message = "<div id=\"message\" class=\"updated fade\"><p><strong>".sprintf(__("The media <i>%s</i> was created successfully!",$myTreasuresTextdomain),trim($_POST['field01']))."</strong></p></div><p><a href=\"?page=mytreasures/mytreasuresofdb.php\" class=\"button\">".__("New search for movie in ofdb",$myTreasuresTextdomain)."</a>&nbsp;&nbsp;<a href=\"?page=mytreasures/mytreasuresadmin.php\" class=\"button\">".__("Overview",$myTreasuresTextdomain)."</a></p>";
 
 			} elseif($_POST['ofdbid'] && $_POST['treasuretype']) {

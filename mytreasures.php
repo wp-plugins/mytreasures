@@ -4,7 +4,7 @@
 Plugin Name: myTreasures
 Plugin URI: http://www.mytreasures.de
 Description: Show your treasures (DVDs, Games, Cars & many more) in Wordpress
-Version: 2.4.4
+Version: 2.4.5
 Author: Marcus Jaentsch
 Author URI: http://www.crazyiven.de/
 
@@ -18,7 +18,7 @@ Author URI: http://www.crazyiven.de/
 
 	$myTreasutesRewriteDebug	= false;
 	$myTreasuresDBVersion			= "037";
-	$myTreasuresPluginVersion	= "2.4.4";
+	$myTreasuresPluginVersion	= "2.4.5";
 	$myTreasuresCopyRight			= "<p style=\"font-size: 10px;\"><a href=\"http://www.mytreasures.de/\" target=\"_blank\">myTreasures Plugin (v".$myTreasuresPluginVersion.")</a> by <a href=\"http://www.crazyiven.de\" target=\"_blank\">Marcus J&auml;ntsch</a></p>";
 	$myTreasuresTextdomain		= "myTreasures";
 	$myTreasuresPathArray			= Array("coverupload" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/coverupload/"), "cover" => str_replace("//","/",WP_CONTENT_DIR."/mytreasures/"), "image_small" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/small/"), "image_big" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresimages/big/"), "backup" => str_replace("//","/",WP_CONTENT_DIR."/mytreasuresbackup/"));
@@ -1475,8 +1475,9 @@ Author URI: http://www.crazyiven.de/
 
 			}
 
-			if($result01['tracklist']) {
+			if($result01['tracklist'] == '1') {
 
+				$i = "0";
 				$result01['description'] = "<b>".__("Tracklist",$myTreasuresTextdomain).":</b>";
 				$all_tracks = explode("#NT#",$result01['tracklist']);
 				foreach($all_tracks AS $track) {
