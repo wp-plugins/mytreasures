@@ -947,13 +947,6 @@ Author URI: http://www.crazyiven.de/
 
 						}
 
-						if($myTreasures_options['option17'] == 'prettyphoto') {
-
-							$imagesystems = "rel=\"prettyPhoto[gallery]\"";
-							$jquery = "jQuery('a[rel^=\"prettyPhoto\"]').prettyPhoto();";
-
-						}
-
 						if($myTreasures_options['option17'] == 'myown' && $myTreasures_options['option18']) {
 
 							$imagesystems = $myTreasures_options['option18'];
@@ -1367,13 +1360,6 @@ Author URI: http://www.crazyiven.de/
 			if($myTreasures_options['option17'] == 'thickbox') {
 
 				$imagesystems = "class=\"thickbox\" rel=\"gallery\"";
-
-			}
-
-			if($myTreasures_options['option17'] == 'prettyphoto') {
-
-				$imagesystems = "rel=\"prettyPhoto\"";
-				$jquery = "jQuery('a[rel^=\"prettyPhoto\"]').prettyPhoto();";
 
 			}
 
@@ -2022,13 +2008,6 @@ Author URI: http://www.crazyiven.de/
 
 			wp_enqueue_script('thickbox');
 			wp_enqueue_style('thickbox');
-
-		}
-
-		if($myTreasures_options['option17'] == 'prettyphoto') {
-
-			wp_enqueue_script('prettyphoto',WP_PLUGIN_URL . '/mytreasures/js/prettyphoto/jquery.prettyPhoto.js',array('jquery'));
-			wp_enqueue_style('prettyphoto', WP_PLUGIN_URL . '/mytreasures/js/prettyphoto/css/prettyPhoto.css');
 
 		}
 

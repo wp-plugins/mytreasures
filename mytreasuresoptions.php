@@ -175,7 +175,6 @@
 <b><?php echo __("Image presentation script / gallerysystem",$myTreasuresTextdomain); ?></b>
 <br /><?php echo __("Which system do you want to use:",$myTreasuresTextdomain); ?>
 <br />&nbsp;&nbsp;&nbsp;<input name="option17" type="radio" value="" <?php if(!$result01['option17']) { echo "checked=\"checked\""; } ?>/> <?php echo __("no system, plain link to big image",$myTreasuresTextdomain); ?>
-<br />&nbsp;&nbsp;&nbsp;<input name="option17" type="radio" value="prettyphoto" <?php if($result01['option17'] == 'prettyphoto')  { echo "checked=\"checked\""; } ?>/> prettyPhoto (<a href="http://www.no-margin-for-errors.com/projects/prettyPhoto-jquery-lightbox-clone/" target="_blank">Homepage</a>)
 <br />&nbsp;&nbsp;&nbsp;<input name="option17" type="radio" value="thickbox" <?php if($result01['option17'] == 'thickbox')  { echo "checked=\"checked\""; } ?>/> Thickbox (<a href="http://jquery.com/demo/thickbox/" target="_blank">Homepage</a>)
 <br />&nbsp;&nbsp;&nbsp;<input name="option17" type="radio" value="colorbox" <?php if($result01['option17'] == 'colorbox') { echo "checked=\"checked\""; } ?>/> Colorbox (<a href="http://colorpowered.com/colorbox/" target="_blank">Homepage</a>)
 <br />&nbsp;&nbsp;&nbsp;<input name="option17" type="radio" value="fancybox" <?php if($result01['option17'] == 'fancybox') { echo "checked=\"checked\""; } ?>/> Fancybox (<a href="http://fancybox.net/" target="_blank">Homepage</a>)
