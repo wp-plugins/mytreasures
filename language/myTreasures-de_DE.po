@@ -1234,3 +1234,7 @@ msgstr "Das Bewertungssystem komplett deaktivieren"
 msgid "Activate rating system"
 msgstr "Das Bewertungssystem aktivieren"
 
+#
+msgid "Convert file to UTF8"
+msgstr "Daten nach UTF8 konvertieren"
+

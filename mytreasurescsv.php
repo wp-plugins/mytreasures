@@ -111,6 +111,12 @@
 						$insert_values = false;
 						$value = str_replace("\n","",str_replace("\r","",$value));
 
+						if(isset($_POST['convertfile']) && $_POST['convertfile']) {
+
+							$value = utf8_encode($value);
+
+						}
+
 						if($cutfromstart) {
 
 							$value = substr($value,0,-1);
@@ -182,6 +188,7 @@
 <form method="post" action="" ENCTYPE="multipart/form-data">
 <p><h3>CSV Upload</h3><?php echo __("You can update your myTreasures database with a csv upload / import. Just use the given csv fields to create your csv file. Keep in mind, that the system just checks title / name to find entries for an update.",$myTreasuresTextdomain); ?>
 <br /><br /><?php echo __("Your local csv file:",$myTreasuresTextdomain); ?> (<u><?php echo __("field delimiter:",$myTreasuresTextdomain); ?></u> <b><?php echo $myTreasures_options['option15']; ?></b> <?php if($myTreasures_options['option21']) { echo "<u>".__("text block delimiter",$myTreasuresTextdomain)."</u> <b>".$myTreasures_options['option21']."</b>"; } ?>)<br /><input type="file" name="csvfile" size="35" class="uploadform">
+<br /><input type="checkbox" name="convertfile" name="1" /> <?php echo __("Convert file to UTF8",$myTreasuresTextdomain); ?>
 <br /><br /><b><?php echo __("Media type of csv file",$myTreasuresTextdomain); ?></b>
 <?php $query99 = mysql_query("SELECT * FROM `".$wpdb->prefix."mytreasures_type` ORDER BY `name`"); while($result99 = mysql_fetch_array($query99)) { $csv = false; for($i2 = 1; $i2 <= 20; $i2++) { if($i2 < 10) { $i2 = "0".$i2; } if($result99["field".$i2]) { if($myTreasures_options['option21']) { $description = $myTreasures_options['option21'].__("Description",$myTreasuresTextdomain).$myTreasures_options['option21']; $csv .= $myTreasures_options['option15'].$myTreasures_options['option21'].$result99["field".$i2].$myTreasures_options['option21']; } else{ $description = __("Description",$myTreasuresTextdomain); $csv .= $myTreasures_options['option15'].$result99["field".$i2]; } } } echo "<br /><input type=\"radio\" name=\"treasuretype\" value=\"".$result99['id']."\"> ".$result99['name']." (".__("csv format:",$myTreasuresTextdomain)." <i>".$description.$csv."</i>)"; } ?>
 <div class="submit"><input type="submit" class="button-primary" value=" <?php echo __("Upload csv file",$myTreasuresTextdomain); ?> "></form></div>
