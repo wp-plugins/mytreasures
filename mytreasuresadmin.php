@@ -138,11 +138,47 @@
 
 		}
 
-		$query01 = mysql_query("SELECT `".$wpdb->prefix."mytreasures`.*, `".$wpdb->prefix."mytreasures_type`.`name` FROM `".$wpdb->prefix."mytreasures` LEFT JOIN `".$wpdb->prefix."mytreasures_type` ON `".$wpdb->prefix."mytreasures`.`type` = `".$wpdb->prefix."mytreasures_type`.`id` ".$extendquery." ORDER BY ".$orderquery."");
+		if($myTreasures_options['option46']) {
+
+			$pagenation = "<br /><br />".__("Page").":";
+			$query01 = mysql_query("SELECT `".$wpdb->prefix."mytreasures`.*, `".$wpdb->prefix."mytreasures_type`.`name` FROM `".$wpdb->prefix."mytreasures` LEFT JOIN `".$wpdb->prefix."mytreasures_type` ON `".$wpdb->prefix."mytreasures`.`type` = `".$wpdb->prefix."mytreasures_type`.`id` ".$extendquery." ORDER BY ".$orderquery."");
+			$allmedia = mysql_num_rows($query01);
+
+			if(!$_GET['pagenation'] || $_GET['pagenation'] > ceil($allmedia/$myTreasures_options['option46']) || $_GET['pagenation'] < 0) {
+
+				$_GET['pagenation'] = "1";
+
+			}
+
+			for($i = 1; $i <= ceil($allmedia/$myTreasures_options['option46']); $i++) {
+
+				if($i == $_GET['pagenation']) {
+
+					$style = " style=\"font-weight: bold;\"";
+
+				} else {
+
+					$style = false;
+
+				}
+
+				$pagenation .= " <a href=\"?page=mytreasures/mytreasuresadmin.php&pagenation=".$i."\"".$style.">".$i."</a>";
+
+			}
+
+			$query01 = mysql_query("SELECT `".$wpdb->prefix."mytreasures`.*, `".$wpdb->prefix."mytreasures_type`.`name` FROM `".$wpdb->prefix."mytreasures` LEFT JOIN `".$wpdb->prefix."mytreasures_type` ON `".$wpdb->prefix."mytreasures`.`type` = `".$wpdb->prefix."mytreasures_type`.`id` ".$extendquery." ORDER BY ".$orderquery." LIMIT ".(($_GET['pagenation']-1)*$myTreasures_options['option46']).", ".$myTreasures_options['option46']."");
+
+		} else {
+
+			$pagenation = false;
+			$query01 = mysql_query("SELECT `".$wpdb->prefix."mytreasures`.*, `".$wpdb->prefix."mytreasures_type`.`name` FROM `".$wpdb->prefix."mytreasures` LEFT JOIN `".$wpdb->prefix."mytreasures_type` ON `".$wpdb->prefix."mytreasures`.`type` = `".$wpdb->prefix."mytreasures_type`.`id` ".$extendquery." ORDER BY ".$orderquery."");
+
+		}
+
 		if(mysql_num_rows($query01)) {
 
 			$i = "0";
-			$message = "<p style=\"float: left\">".__("Please click on the heading to sort the list!",$myTreasuresTextdomain)."</p><form action=\"\" method=\"post\" style=\"display: inline;\"><p style=\"float: right\"><select name=\"showmedia\"><option value=\"\">".__("show all media",$myTreasuresTextdomain)."</option>".$selectfilter."</select> <input type=\"submit\" name=\"changefilter\" value=\"Filter\"></p></form><form name=\"myform\" action=\"?page=mytreasures/mytreasuresdelete.php&type=media\" method=\"post\" style=\"clear: both;\"><table class=\"widefat fixed\" cellspacing=\"0\"><thead><tr class=\"thead\"><th scope=\"col\" class=\"manage-column column-cb check-column\" style=\"\"><input type=\"checkbox\" /></th><th scope=\"col\" class=\"manage-column column-username\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=title".$extendlink."\" style=\"font-weight: bold; ".$italic1."\">Titel</a></th><th scope=\"col\" class=\"manage-column column-name\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=type".$extendlink."\" style=\"font-weight: bold; ".$italic2."\">".__("Type",$myTreasuresTextdomain)."</a></th><th scope=\"col\" class=\"manage-column column-posts num\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=id".$extendlink."\" style=\"font-weight: bold; ".$italic3."\">ID</a></th></tr></thead><tfoot><tr class=\"thead\"><th scope=\"col\" class=\"manage-column column-cb check-column\" style=\"\"><input type=\"checkbox\" /></th><th scope=\"col\" class=\"manage-column column-username\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=title".$extendlink."\" style=\"font-weight: bold; ".$italic1."\">Titel</a></th><th scope=\"col\" class=\"manage-column column-name\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=type".$extendlink."\" style=\"font-weight: bold; ".$italic2."\">".__("Type",$myTreasuresTextdomain)."</a></th><th scope=\"col\" class=\"manage-column column-posts num\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=id".$extendlink."\" style=\"font-weight: bold; ".$italic3."\">ID</a></th></tr></tfoot><tbody id=\"users\" class=\"list:user user-list\">";
+			$message = "<p style=\"float: left\">".__("Please click on the heading to sort the list!",$myTreasuresTextdomain).$pagenation."</p><form action=\"\" method=\"post\" style=\"display: inline;\"><p style=\"float: right\"><select name=\"showmedia\"><option value=\"\">".__("show all media",$myTreasuresTextdomain)."</option>".$selectfilter."</select> <input type=\"submit\" name=\"changefilter\" value=\"Filter\"></p></form><form name=\"myform\" action=\"?page=mytreasures/mytreasuresdelete.php&type=media\" method=\"post\" style=\"clear: both;\"><table class=\"widefat fixed\" cellspacing=\"0\"><thead><tr class=\"thead\"><th scope=\"col\" class=\"manage-column column-cb check-column\" style=\"\"><input type=\"checkbox\" /></th><th scope=\"col\" class=\"manage-column column-username\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=title".$extendlink."\" style=\"font-weight: bold; ".$italic1."\">Titel</a></th><th scope=\"col\" class=\"manage-column column-name\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=type".$extendlink."\" style=\"font-weight: bold; ".$italic2."\">".__("Type",$myTreasuresTextdomain)."</a></th><th scope=\"col\" class=\"manage-column column-posts num\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=id".$extendlink."\" style=\"font-weight: bold; ".$italic3."\">ID</a></th></tr></thead><tfoot><tr class=\"thead\"><th scope=\"col\" class=\"manage-column column-cb check-column\" style=\"\"><input type=\"checkbox\" /></th><th scope=\"col\" class=\"manage-column column-username\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=title".$extendlink."\" style=\"font-weight: bold; ".$italic1."\">Titel</a></th><th scope=\"col\" class=\"manage-column column-name\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=type".$extendlink."\" style=\"font-weight: bold; ".$italic2."\">".__("Type",$myTreasuresTextdomain)."</a></th><th scope=\"col\" class=\"manage-column column-posts num\" style=\"\"><a href=\"?page=mytreasures/mytreasuresadmin.php&sortlist=id".$extendlink."\" style=\"font-weight: bold; ".$italic3."\">ID</a></th></tr></tfoot><tbody id=\"users\" class=\"list:user user-list\">";
 			while($result01 = mysql_fetch_array($query01)) {
 
 				if(++$i%2 == 0) {

@@ -14,14 +14,19 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
-<p><b>New in 2.4.8 // Neues in 2.4.8</b>
+<p><b>New in 2.4.9 // Neues in 2.4.9</b>
 <ul>
-	<li>Added UTF8 Converter for csv import // UTF8 Konvertierung f&uuml;r CSV Import hinzugef&uuml;gt</li>
+	<li>Added pagenation on administration page // Seitenfunktion auf der Verwaltungssseite eingebaut</li>
 </ul>
 </p>
 <div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
 </form>
 <p>&nbsp;</p><p>&nbsp;</p>
+<p><b>New in 2.4.8 // Neues in 2.4.8</b>
+<ul>
+	<li>Added UTF8 Converter for csv import // UTF8 Konvertierung f&uuml;r CSV Import hinzugef&uuml;gt</li>
+</ul>
+</p>
 <p><b>New in 2.4.7 // Neues in 2.4.7</b>
 <ul>
 	<li>Updates for Wordpress Version 3.3.1 // Updates f&uuml;r Wordpress Version 3.3.1</li>

@@ -1235,6 +1235,10 @@ msgid "Activate rating system"
 msgstr "Das Bewertungssystem aktivieren"
 
 #
+msgid "Mediacount per page on administration page (0 means no pagenation)"
+msgstr "Anzahl der Medien pro Seite im Adminbereich (0 bedeutet alle)"
+
+#
 msgid "Convert file to UTF8"
 msgstr "Daten nach UTF8 konvertieren"
 

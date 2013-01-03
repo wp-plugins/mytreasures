@@ -3,8 +3,8 @@ Contributors: crazyiven
 Donate link: http://www.crazyiven.de/wordpress-plugins/donate/
 Tags: posts, archive, database
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 2.4.8
+Tested up to: 3.5
+Stable tag: 2.4.9
 
 The myTreasures project derived from the idea of presenting your own dvd collection nice and informatively in the internet.
 
