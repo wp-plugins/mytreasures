@@ -142,12 +142,12 @@
 		39 - Abschaltung des Bewertungssystems
 		40 - Wonach soll runter gerechnet werden (fixedheight / fixedwidth / fixedboth)
 		41 - Höhe des Bildes (Breite wird errechnet)
-		42 - Bretie des Bildes (Höhe wird errechnet)
+		42 - Breite des Bildes (Höhe wird errechnet)
 		43 - Höhe ist fest
 		44 - Breite ist fest
 		45 - Soll das Kleine oder Mittlere Cover in der Detailansicht angezeigt werden
-		46 - FREI
-		47 - FREI
+		46 - Anzahl der Medien pro Seite im Adminbereich
+		47 - Artikelansicht mit Zeilenumbruch
 		48 - FREI
 		49 - FREI
 		50 - FREI
@@ -213,6 +213,7 @@
 <br /><input name="option28" type="radio" value="glossar" <?php if($result01['option28'] == 'glossar') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show glossar view",$myTreasuresTextdomain); ?>
 <br /><input name="option28" type="radio" value="article1" <?php if($result01['option28'] == 'article1') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show article style view #1 (Picure & Name)",$myTreasuresTextdomain); ?>
 <br /><input name="option28" type="radio" value="article2" <?php if($result01['option28'] == 'article2') { echo "checked=\"checked\""; } ?>/> <?php echo __("Show article style view #2 (Picure, Name & Description)",$myTreasuresTextdomain); ?>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="option47" value="yes" <?php if($result01['option47'] == 'yes') { echo "checked=\"checked\""; } ?> /> <?php echo __("Show description with line break",$myTreasuresTextdomain); ?>
 <br /><input name="option35" type="radio" value="yes" <?php if($result01['option35'] == 'yes') { echo "checked=\"checked\""; } ?>/> <?php echo __("Do not link to detailspage",$myTreasuresTextdomain); ?>
 <br /><input name="option35" type="radio" value="no" <?php if($result01['option35'] == '' || $result01['option35'] == 'no') { echo "checked=\"checked\""; } ?>/> <?php echo __("Link to detailslink",$myTreasuresTextdomain); ?>
 <br /><input name="option38" type="radio" value="name" <?php if($result01['option38'] == '' || $result01['option38'] == 'name') { echo "checked=\"checked\""; } ?>/> <?php echo __("Order by name",$myTreasuresTextdomain); ?>

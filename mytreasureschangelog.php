@@ -14,14 +14,20 @@
 <h2>myTreasures</h2>
 <p>myTreasures frisst viel Zeit und Entwicklung. Bitte schaut doch mal auf die "Info" Seite, ob Ihr die Entwicklung von myTreasures nicht unterst&uuml;tzen wollt!<br />Developing myTreasures is a big time killer. Please have a look on the "info" site if you want to support this plugin!</p>
 <h2>Changelog</h2>
-<p><b>New in 2.4.9 // Neues in 2.4.9</b>
+<p><b>New in 2.4.10 // Neues in 2.4.10</b>
 <ul>
-	<li>Added pagenation on administration page // Seitenfunktion auf der Verwaltungssseite eingebaut</li>
+	<li>Added french translation - thx to Benjamin // Franz. &Uuml;bersetzung eingebaut - Danke an Benjamin</li>
+	<li>Option to show lie break in list view // Option hinzugef&uuml;gt um einen Zeilenumbruch in der Listenansicht zu erm&ouml;glichen.</li>
 </ul>
 </p>
 <div class="submit"><input type="submit" class="button-primary" name="donereadingchangelog" value=" <?php echo __("Read changelog, continue with normale use",$myTreasuresTextdomain); ?> "></div>
 </form>
 <p>&nbsp;</p><p>&nbsp;</p>
+<p><b>New in 2.4.9 // Neues in 2.4.9</b>
+<ul>
+	<li>Added pagenation on administration page // Seitenfunktion auf der Verwaltungssseite eingebaut</li>
+</ul>
+</p>
 <p><b>New in 2.4.8 // Neues in 2.4.8</b>
 <ul>
 	<li>Added UTF8 Converter for csv import // UTF8 Konvertierung f&uuml;r CSV Import hinzugef&uuml;gt</li>

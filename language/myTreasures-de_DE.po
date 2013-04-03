@@ -1242,3 +1242,7 @@ msgstr "Anzahl der Medien pro Seite im Adminbereich (0 bedeutet alle)"
 msgid "Convert file to UTF8"
 msgstr "Daten nach UTF8 konvertieren"
 
+#
+msgid "Show description with line break"
+msgstr "Zeige die Beschreibung mit Zeilenumbruch an"
+
