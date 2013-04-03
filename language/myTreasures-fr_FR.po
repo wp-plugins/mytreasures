@@ -1,0 +1,1529 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Marcus Jäntsch <contact@crazyiven.de>\n"
+"Language-Team: Marcus Jaentsch <contact@crazyiven.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#
+msgid "Order by name"
+msgstr "Ranger par noms"
+
+#
+msgid "Order by ID"
+msgstr "Ranger par ID"
+
+#
+msgid "Ascending order"
+msgstr "Ordre ascendant"
+
+#
+msgid "Descending order"
+msgstr "Ordre descendant"
+
+#
+msgid "List"
+msgstr "Liste"
+
+#
+msgid "Choose view"
+msgstr "Choisir l'affichage"
+
+#
+msgid "Covers"
+msgstr "Jaquettes"
+
+#
+msgid "Ratings"
+msgstr "Notes"
+
+#
+msgid "Rating"
+msgstr "Note"
+
+#
+msgid "Overall"
+msgstr "Global"
+
+#
+msgid "Tracklist"
+msgstr "Liste"
+
+#
+msgid "My comment"
+msgstr "Mon commentaire"
+
+#
+msgid "max. 5 stars"
+msgstr "Max. 5 &#233;toiles"
+
+#
+msgid "Edit this entry"
+msgstr "Modifier cette entr&#233;e"
+
+#
+msgid "Images"
+msgstr "Images"
+
+#
+msgid "Unknown"
+msgstr "Inconnu"
+
+#
+msgid "Options"
+msgstr "Options"
+
+#
+msgid "Add single"
+msgstr "Ajouter un seul"
+
+#
+msgid "Overview"
+msgstr "Aper&#231;u"
+
+#
+msgid "Media types"
+msgstr "Type de m&#233;dia"
+
+#
+msgid "Image overview"
+msgstr "Aper&#231;u image"
+
+#
+msgid "Backup"
+msgstr "Sauvegarde"
+
+#
+msgid "Help / Support"
+msgstr "Aide / Support"
+
+#
+msgid "Help"
+msgstr "Aide"
+
+#
+msgid "Support"
+msgstr "Support"
+
+#
+msgid "Infos"
+msgstr "Infos"
+
+#
+msgid "(%s) waiting rating(s)"
+msgstr "(%s) attente de note(s)"
+
+#
+msgid "Choose media type"
+msgstr "Choisir type de m&#233;dia"
+
+#
+msgid "Please choose which media type you want to add:"
+msgstr "Choisir quel type de m&#233;dia vous souhaitez ajouter :"
+
+#
+msgid "Continue to details"
+msgstr "Afficher d&#233;tails"
+
+#
+msgid "Add media of typ <i>%s</i>"
+msgstr "Ajouter un m&#233;dia de format <i>%s</i>"
+
+#
+msgid ""
+"Please insert your data. All mandatory fields are marked with a <font style="
+"\"color: #FF0000;\">*</font>"
+msgstr ""
+"S'il vous pla&#238;t ins&#233;rez vos donn&#233;es. Tous les champs "
+"obligatoires sont signal&#233;s par une <font style=\"color: #FF0000;\">*</"
+"font>."
+
+#
+msgid "This title is already in database, continue adding?"
+msgstr ""
+"Ce titre est d&#233;j&#224; dans la base de donn&#233;es, continuer "
+"d'ajouter ?"
+
+#
+msgid "Yes"
+msgstr "Oui"
+
+#
+msgid "No"
+msgstr "Non"
+
+#
+msgid "Track"
+msgstr "Piste / Track"
+
+#
+msgid "Length (in minutes)"
+msgstr "Dur&#233;e (en minutes)"
+
+#
+msgid "Description"
+msgstr "Description"
+
+#
+msgid "Rating (in stars)"
+msgstr "Notes (Etoiles)"
+
+#
+msgid "bad"
+msgstr "Mauvais"
+
+#
+msgid "good"
+msgstr "Bon"
+
+#
+msgid "Image / Cover"
+msgstr "Image / Jaquette"
+
+#
+msgid "System will take default image if no other is set"
+msgstr ""
+"Le syst&#232;me prendra la l'image par d&#233;faut si aucune n'est "
+"charg&#233;e"
+
+#
+msgid "Add media"
+msgstr "Ajouter m&#233;dia"
+
+#
+msgid "Important information"
+msgstr "Information importante"
+
+#
+msgid "The system had problems to save the image / cover. Please retry it!"
+msgstr ""
+"Le syst&#232;me a des probl&#232;mes pour sauvegarder l'image / couverture. "
+"S'il vous pla&#238;t ressayez !"
+
+#
+msgid "The media <i>%s</i> was created successfully!"
+msgstr "Le m&#233;dia <i>%s</i> a &#233;t&#233; correctement cr&#233;&#233; !"
+
+#
+msgid "Add media of a different media type"
+msgstr "Ajouter un m&#233;dia d'un type diff&#233;rent"
+
+#
+msgid "Add media of the same media type"
+msgstr "Ajouter m&#233;dia d'un m&#234;me type"
+
+#
+msgid "Please click on the heading to sort the list!"
+msgstr "S'il vous pla&#238;t cliquez sur 'titre' pour trier la liste!"
+
+#
+msgid "Type"
+msgstr "Type"
+
+#
+msgid "Edit"
+msgstr "Editer"
+
+#
+msgid "Delete"
+msgstr "Supprimer"
+
+#
+msgid "No media in database!"
+msgstr "Pas de m&#233;dia dans la base de donn&#233;es !"
+
+#
+msgid "No Image / Cover!"
+msgstr "Pas d'image / jaquette !"
+
+#
+msgid "Delete media"
+msgstr "Supprimer le m&#233;dia"
+
+#
+msgid "Do you want to delete <i>%s</i>?"
+msgstr "Voulez-vous supprimer <i>%s</i> ?"
+
+#
+msgid "The media <i>%s</i> was deleted successfully!"
+msgstr "Le m&#233;dia <i>%s</i> a &#233;t&#233; supprim&#233; correctement!"
+
+#
+msgid "The media <i>%s</i> has NOT be deleted!"
+msgstr "Le m&#233;dia <i>%s</i> n'a pas &#233;t&#233; supprim&#233;!"
+
+#
+msgid "Edit media"
+msgstr "Modifier le m&#233;dia"
+
+#
+msgid "The media <i>%s</i> was edited successfully!"
+msgstr "Le m&#233;dia <i>%s</i> a &#233;t&#233; modifi&#233; correctement!"
+
+#
+msgid "About myTreasures"
+msgstr "A propos de myTreasures"
+
+#
+msgid ""
+"The myTreasures project derived from the idea of presenting your own dvd / "
+"games / music cd collection nice and informatively in the internet. This "
+"project is non commercial and I'm not using it to enrich myself. "
+"Nevertheless, I would be glad to receive suggestions, & criticism, mentions "
+"in other blogs as well as emails (<a href=\"mailto:contact@crazyiven.de"
+"\">contact@crazyiven.de</a>). If anyone wants to support me you can easily "
+"do that by donating a small amount of money through paypal or getting me "
+"something from my <a href=\"http://www.amazon.de/gp/registry/CHGCGDZ3YZKH/\" "
+"target=\"_blank\">amazon wishlist</a>."
+msgstr ""
+"Le projet myTreasures vient de l'id&#233;e de pr&#233;senter votre propre "
+"collection de DVD / jeux / CD de musique de mani&#232;re agr&#233;able et "
+"informative sur Internet. Ce projet est non commercial et je ne souhaite pas "
+"l'utiliser pour m'enrichir. N&#233;anmoins, je serais heureux de recevoir "
+"des suggestions, et de la critique, des mentions dans d'autres blogs ainsi "
+"que des courriels (<a href=\"mailto:contact@crazyiven.de\"> "
+"contact@crazyiven.de </a>). Si quelqu'un veut me soutenir, vous pouvez "
+"facilement le faire en donnant une petite somme d'argent par paypal ou me "
+"procurer quelque chose de mon <a href =\"http://www.amazon.de/gp/registry/"
+"CHGCGDZ3YZKH/ \" target = \"_blank \"> liste de favoris Amazon </ a>."
+
+#
+msgid ""
+"Newest version can be found here: <a href=\"http://wordpress.org/extend/"
+"plugins/mytreasures/\" target=\"_blank\">Wordpress Plugin Directory</a>"
+msgstr ""
+"La nouvelle version peut &#234;tre trouv&#233;e ici : <a href=\"http://"
+"wordpress.org/extend/plugins/mytreasures/\" target=\"_blank\">Wordpress "
+"Plugin Directory</a>"
+
+#
+msgid ""
+"Newest information can be found here: <a href=\"http://www.mytreasures.de\" "
+"target=\"_blank\">myTreasures.de</a>"
+msgstr ""
+"Les derni&#232;res informations peuvent &#234;tre trouv&#233;e ici : <a href="
+"\"http://www.mytreasures.de\" target=\"_blank\">myTreasures.de</a>"
+
+#
+msgid "Import backup"
+msgstr "Importer sauvegarde"
+
+#
+msgid "Create backup"
+msgstr "Cr&#233;er sauvegarde"
+
+#
+msgid ""
+"Just push the button to create a backup of your running myTreasures "
+"installation. This will create a file in the \"mytreasuresbackup\" folder "
+"for a download troug ftp"
+msgstr ""
+"Il suffit d'appuyer sur le bouton pour cr&#233;er une sauvegarde de votre "
+"installation myTreasures marche. Cela va cr&#233;er un fichier dans le "
+"répertoire \"mytreasuresbackup \" dossier de t&#233;l&#233;chargement ftp "
+"troug"
+
+#
+msgid ""
+"To import a backup, there has to be a backup file in the \"mytreasuresbackup"
+"\" folder. The file format has to be \"myTreasuresBackUp_YYYYMMDD_HHMM.sql\"!"
+msgstr ""
+"Pour importer une sauvegarde, il doit y avoir un fichier de sauvegarde dans "
+"le r&#233;pertoire \"mytreasuresbackup \" dossier. Le format de fichier doit "
+"&#234;tre \"myTreasuresBackUp_YYYYMMDD_HHMM.sql \"!"
+
+#
+msgid "You can import following backups:"
+msgstr "Vous pouvez importer les sauvegardes suivantes :"
+
+#
+msgid "The're no backups for import!"
+msgstr "il n'y a aucune sauvegardes &#224; importer!"
+
+#
+msgid "Code list"
+msgstr "Liste de codes"
+
+#
+msgid ""
+"Following codes are valid for use with myTreasures. Just use a code in your "
+"page / post to display the data"
+msgstr ""
+"Les codes suivants sont valables pour une utilisation avec myTreasures. Il "
+"suffit d'utiliser un code dans votre page / article pour afficher les "
+"donn&#233;es"
+
+#
+msgid "Code to use"
+msgstr "Codes &#224; utiliser"
+
+#
+msgid "Displayed result"
+msgstr "R&#233;sultat affich&#233;"
+
+#
+msgid "&#36;Number"
+msgstr "&#36;Num&#233;ro"
+
+#
+msgid ""
+"Shows the single media with the ID &#36;Number (see overview to find the ID)"
+msgstr ""
+"Montrer le m&#233;dia avec l'ID &#36;Num&#233;ro (Voir l'ensemble pour "
+"trouver l'ID)"
+
+#
+msgid "&#36;type1,&#36;type2,&#36;type3"
+msgstr "&#36;format1,&#36;format2,&#36;format3"
+
+#
+msgid ""
+"Shows a combination of all selected media types (tags!) seperated with a "
+"comma."
+msgstr ""
+"Montrer une combinaison de tous les types de m&#233;dias s&#233;"
+"lectionn&#233;s (tags!) s&#233;par&#233;s par une virgule."
+
+#
+msgid "Shows all media"
+msgstr "Montrer tous les m&#233;dias"
+
+#
+msgid "Shows all media of type \"%s\""
+msgstr "Montrer tous les m&#233;dias de format  \"%s\""
+
+#
+msgid "Default view"
+msgstr "Vue par d&#233;faut"
+
+#
+msgid "Media type view definition #1 (If available!)"
+msgstr "D&#233;finition de la vue du format de m&#233;dia #1 (Disponible!)"
+
+#
+msgid "Media type view definition #2 (If available!)"
+msgstr "D&#233;finition de la vue du format de m&#233;dia #2 (Disponible!)"
+
+#
+msgid "Media type view definition #3 (If available!)"
+msgstr "D&#233;finition de la vue du format de m&#233;dia #3 (Disponible!)"
+
+#
+msgid "Media type view definition #4 (If available!)"
+msgstr "D&#233;finition de la vue du format de m&#233;dia #4 (Disponible!)"
+
+#
+msgid "Media type view definition #5 (If available!)"
+msgstr "D&#233;finition de la vue du format de m&#233;dia #5 (Disponible!)"
+
+#
+msgid "Minigallery and Bigcover options"
+msgstr "Options de la mini-gallerie et de la grande jaquette"
+
+#
+msgid "Which system do you want to use:"
+msgstr "Quel syst&#232;me voulez-vous utiliser:"
+
+#
+msgid "Is this system already installed?:"
+msgstr "Ce syst&#232;me est-il d&#233;j&#224; install&#233;?"
+
+#
+msgid "Options for list view"
+msgstr "Option pour la vue par liste"
+
+#
+msgid ""
+"You can setup a sign for the list view, which will displayed infront of "
+"every entry"
+msgstr ""
+"Vous pouvez configurer un signe pour l'affichage de la liste, qui sera "
+"affich&#233; en face de chaque entr&#233;e"
+
+#
+msgid "Do not show ratings"
+msgstr "Ne pas afficher les notes"
+
+#
+msgid "Show ratings"
+msgstr "Afficher les notes"
+
+#
+msgid "Do not show media count"
+msgstr "Ne pas afficher le comptage m&#233;dia"
+
+#
+msgid "Show media count"
+msgstr "Afficher le comptage m&#233;dia"
+
+#
+msgid "Cover options"
+msgstr "Options jaquette"
+
+#
+msgid "Force line break in cover view:"
+msgstr "Forcer le saut de ligne dans la vue par jaquettes"
+
+#
+msgid "No line break"
+msgstr "Pas de saut de ligne forc&#233;"
+
+#
+msgid "After %s cover"
+msgstr "Apr&#232;s %s jaquette"
+
+#
+msgid "Do not change cover"
+msgstr "Ne pas changer la jaquette"
+
+#
+msgid "Resize cover with following rules:"
+msgstr "Redimensionner la jaquette avec les r&#232;gles suivantes:"
+
+#
+msgid "Fixed height"
+msgstr "Hauteur fixe"
+
+#
+msgid "Fixed width"
+msgstr "Largeur fixe"
+
+#
+msgid "calculate width."
+msgstr "Largeur calcul&#233;e"
+
+#
+msgid "calculate height."
+msgstr "Hauteur calcul&#233;e"
+
+#
+msgid "Options for single view ([mytreasure=&#36;Number])"
+msgstr "Options pour vue unique ([mytreasure=&#36;Nummer])"
+
+#
+msgid "Just show name, cover, description and my comment"
+msgstr ""
+"Montrer seulement le nom, la jaquette, la descrition et mon commentaire"
+
+#
+msgid "Show all available details"
+msgstr "Montrer toutes les informations disponibles"
+
+#
+msgid ""
+"Options for combination view ([mytreasurelist=&#36;type1,&#36;type2...])"
+msgstr ""
+"Options pour une combinaison d'affichage ([mytreasurelist=&#36;Typ1,&#36;"
+"Typ2...])"
+
+#
+msgid "Show ratings view"
+msgstr "Montrer la vue des notes"
+
+#
+msgid "Show cover view"
+msgstr "Montrer la vue des jaquettes"
+
+#
+msgid "Rate media"
+msgstr "M&#233;dia not&#233;"
+
+#
+msgid "You've rated all media in database!"
+msgstr "Vous avez not&#233; tous les m&#233;dias de la base de donn&#233;es!"
+
+#
+msgid "Please give a rating for the following media"
+msgstr "S'il vous pla&#238;t donnez une note &#224; ce m&#233;dia"
+
+#
+msgid "Save ratings"
+msgstr "Sauvegarder les notes"
+
+#
+msgid "You've rated <i>%s</i> media successfully"
+msgstr "Vous avez not&#233; <i>%s</i> correctement"
+
+#
+msgid "Save options"
+msgstr "Sauvegarder les options"
+
+#
+msgid "Options for single view (global)"
+msgstr "Options pour vue unique (global)"
+
+#
+msgid "Text / tracklist float the picture"
+msgstr "Texte / Liste et image flottante"
+
+#
+msgid "Text / tracklist are strictly seperated from the picture"
+msgstr "Texte / Liste sont strictement s&#233;par&#233;s de l'image"
+
+#
+msgid "Common options"
+msgstr "Options communes"
+
+#
+msgid "Field delimiter CSV Import"
+msgstr "D&#233;limiteur de champ CSV d'importation"
+
+#
+msgid "Text block delimiter CSV Import"
+msgstr "D&#233;limiteur de bloc de texte CSV d'importation"
+
+#
+msgid "Create rewrite rules if something has changed"
+msgstr ""
+"Cr&#233;er des r&#232;gles r&#233;&#233;crites si quelque chose a chang&#233;"
+
+#
+msgid ""
+"Create rewrite rules with every call (if other plugins do this, you need "
+"myTreasures to do the same!)"
+msgstr ""
+"Cr&#233;er des r&#232;gles r&#233;&#233;crites avec toutes les modifications "
+"(si un autre plugin le fait, vous devez laissez myTresures faire de m&#234;"
+"me!)"
+
+#
+msgid "Activate search"
+msgstr "Activer les recherches"
+
+#
+msgid "Deactivate search"
+msgstr "D&#233;sactiver les recherches"
+
+#
+msgid "Link to amazon.de"
+msgstr "Mettre un lien vers Amazon.de"
+
+#
+msgid "Do not link to amazon.de"
+msgstr "Ne pas mettre de lien vers Amazon.de"
+
+#
+msgid ""
+"<b>Developer comment</b>:<br />If you link your media with amazon, my "
+"partnerID will be transmitted and if someone actual buy something, i'll get "
+"a refund of 5%. You don't have to active amazon.de linking for using this "
+"plugin!"
+msgstr ""
+"<b>Commentaire du d&#233;veloppeur</b>:<br />Si vous mettez un lien vers "
+"Amazon, mon \"IDpartner\" sera transmise et si quelqu'un ach&#232;te quelque "
+"chose, je r&#233;cup&#232;rerai 5% de commission. Vous n'avez pas besoin "
+"d'activer le lien vers Amazon.de pour utiliser ce plugin!"
+
+#
+msgid "Coverview activation"
+msgstr "Activation de la vue par jaquettes "
+
+#
+msgid "Please select which media types have a cover overview:"
+msgstr ""
+"S'il vous pla&#238;t s&#233;lectionnez quels types de m&#233;dias ont une "
+"vue d'ensemble par jaquettes:"
+
+#
+msgid "All media display"
+msgstr "Tous les m&#233;dias affich&#233;s"
+
+#
+msgid "Ratingview activation"
+msgstr "Vue par notes activ&#233;e"
+
+#
+msgid "Please select which media types have a rating overview:"
+msgstr ""
+"S'il vous pla&#238;t s&#233;lectionnez quels types de m&#233;dias ont une "
+"vue d'ensemble par notes:"
+
+#
+msgid "Options saved successfully"
+msgstr "Options sauvegard&#233;ss avec succ&#232;s"
+
+#
+msgid "The system had problems to save the image. Please retry it!"
+msgstr ""
+"Le syst&#232;me a rencontr&#233; des probl&#232;mes pour sauvegarder "
+"l'image. S'il vous pla&#238;t ressayez!"
+
+#
+msgid "Add new image:"
+msgstr "Ajouter une nouvelle image:"
+
+#
+msgid "Image"
+msgstr "Image"
+
+#
+msgid "Name / subtitle for image (optional)"
+msgstr "Nom / Sous-titre pour l'image (optionnel)"
+
+#
+msgid "Upload new image"
+msgstr "Ajouter une nouvelle image"
+
+#
+msgid "Activ images"
+msgstr "Activer les images"
+
+#
+msgid "Order:"
+msgstr "Ordre:"
+
+#
+msgid "Delete image"
+msgstr "Supprimer l'image"
+
+#
+msgid "Save changings"
+msgstr "Sauvegarder les changements"
+
+#
+msgid "Administrate images"
+msgstr "Administrer les images"
+
+#
+msgid "Add new media type"
+msgstr "Ajouter un nouveau type de m&#233;dia"
+
+#
+msgid "<b>Important information</b><br />This name is already in database!"
+msgstr ""
+"<b>Information importante</b><br />Ce nom est d&#224;ja dans la base de "
+"donn&#233;es!"
+
+#
+msgid "<b>Important information</b><br />This tag is already in database!"
+msgstr ""
+"<b>Information importante</b><br />Ces mots-cl&#233;s sont d&#233;j&#224; "
+"dans la base de donn&#233;es!"
+
+#
+msgid "(Not changeable, just numbers & letters!)"
+msgstr "(Pas modifiable, seulement des chiffres et des lettres!)"
+
+#
+msgid ""
+"<b>Information</b><br />Following fields are for your own details of this "
+"media type"
+msgstr ""
+"<b>Information</b><br />Les champs suivants sont pour vos propres d&#233;"
+"tails sur ce type de m&#233;dia"
+
+#
+msgid "detail"
+msgstr "Détail"
+
+#
+msgid "No view for this type"
+msgstr "Pas de vue pour ce type"
+
+#
+msgid "Content of %s (Must have content!)"
+msgstr "Contenu de %s (Il doit y avoir du contenu!)"
+
+#
+msgid "Views for this media type"
+msgstr "Vues pour ce type de média"
+
+#
+msgid "You can create own \"views\" for ech media type. Just select it here"
+msgstr ""
+"Vous pouvez cr&#233;er vos propres vues pour chaque type de m&#233;dias. "
+"Vous avez juste &#224; les s&#233;lectionner ici"
+
+#
+msgid "View"
+msgstr "Vue"
+
+#
+msgid "This media type has a tracklist"
+msgstr "Ce type de m&#233;dia a une liste"
+
+#
+msgid "If you want to have a default view for this media type, just choose it:"
+msgstr ""
+"Si vous voulez avoir une vue par d&#233;faut pour ce type de m&#233;dia, "
+"choisissez-l&#224;:"
+
+#
+msgid "Use global setttings"
+msgstr "Utiliser les r&#233;glages g&#233;n&#233;raux"
+
+#
+msgid "Edit media type"
+msgstr "Editer ce type de m&#233;dia"
+
+#
+msgid "Please select fields you want to switch"
+msgstr ""
+"S'il vous pla&#238;t s&#233;lectionnez les champs que vous voulez basculer"
+
+#
+msgid "Content of %s"
+msgstr "Contenu de %s"
+
+#
+msgid "Switch fields"
+msgstr "Basculer les champs"
+
+#
+msgid "You can switch fields for details if you have to!"
+msgstr ""
+"Vous pouvez changer les champs pour plus de d&#233;tails si vous devez!"
+
+#
+msgid "The media type <i>%s</i> was edited successfully!"
+msgstr ""
+"Le type de m&#233;dia <i>%s</i> a &#233;t&#233; &#233;dit&#233; avec "
+"succ&#232;s!"
+
+#
+msgid "You've switched <i>%s</i> and <i>%s</i> successfully!"
+msgstr "Vous avez bascul&#233; <i>%s</i> et <i>%s</i> avec succ&#232;s!"
+
+#
+msgid "Media type <i>%s</i> was created successfully!"
+msgstr ""
+"Le type de m&#233;dia <i>%s</i> a &#233;t&#233; cr&#233;&#233; avec "
+"succ&#232;s!"
+
+#
+msgid "Delete media type"
+msgstr "Supprimer le type de m&#233;dia"
+
+#
+msgid "The media type <i>%s</i> was deleted successfully!"
+msgstr ""
+"Le type de m&#233;dia <i>%s</i> a &#233;t&#233; supprim&#233; avec succ&#232;"
+"s!"
+
+#
+msgid "The media type <i>%s</i> has NOT be deleted!"
+msgstr "Le type de m&#233;dia <i>%s</i> n'a pas &#233;t&#233; supprim&#233;!"
+
+#
+msgid "Do you want to delete media type <i>%s</i>?"
+msgstr "Voulez-vous supprime le type de m&#233;dia <i>%s</i>?"
+
+#
+msgid ""
+"The're still %s media in database with this type. Please delete them first!"
+msgstr ""
+"Il reste encore %s de m&#233;dias de ce type dans la base de donn&#233;es. "
+"S'il vous pla&#224;t supprimez-les d'abord!"
+
+#
+msgid ""
+"You can update your myTreasures database with a csv upload / import. Just "
+"use the given csv fields to create your csv file. Keep in mind, that the "
+"system just checks title / name to find entries for an update."
+msgstr ""
+"Vous pouvez mettre &#224; jour votre base de donn&#233;es myTreasures avec "
+"un chargement CSV / importation. Il suffit d'utiliser les champs CSV pour "
+"cr&#233;er votre fichier CSV. Gardez &#224; l'esprit que le syst&#232;me "
+"v&#233;rifie juste titre / nom pour trouver des entr&#233;es pour une mise à "
+"jour."
+
+#
+msgid "Your local csv file:"
+msgstr "Votre fichier CSV en local:"
+
+#
+msgid "field delimiter:"
+msgstr "D&#233;limiteur de champs:"
+
+#
+msgid "text block delimiter"
+msgstr "D&#233;limiteur de bloc de texte:"
+
+#
+msgid "Media type of csv file:"
+msgstr "Type de m&#233;dia du fichier CSV:"
+
+#
+msgid "csv format:"
+msgstr "Format CSV:"
+
+#
+msgid "Upload csv file"
+msgstr "Chargement du fichier CSV"
+
+#
+msgid "You've added %s new media and updated %s media!"
+msgstr ""
+"Vous avez ajout&#233; %s nouveau(x) m&#233;dia(s) et actualis&#233; %s "
+"m&#233;dia(s)!"
+
+#
+msgid "You've added %s new media!"
+msgstr "Vous avez ajout&#233; %snouveau(x) m&#233;dia(s)!"
+
+#
+msgid "You've updated %s media!"
+msgstr "Vous avez actualis&#233; %s m&#233;dia(s)s!"
+
+#
+msgid "The file doesn't provide any content"
+msgstr "Le fichier n'a fourni aucun contenu"
+
+#
+msgid "Please use a csv file with the right format!"
+msgstr "S'il vous pla&#224;t utilisez un fichier CSV au bon format!"
+
+#
+msgid "myTreasures installation - Part 1/3"
+msgstr "myTreasures Installation - Partie 1/3"
+
+#
+msgid "myTreasures installation - Part 2/3"
+msgstr "myTreasures Installation - Partie 2/3"
+
+#
+msgid "myTreasures installation - Part 3/3"
+msgstr "myTreasures Installation - Partie 3/3"
+
+#
+msgid "continue to step 2"
+msgstr "Continuer vers l'&#233;tape 2"
+
+#
+msgid "continue to step 3"
+msgstr "Continuer vers l'&#233;tape 3"
+
+#
+msgid "skip installation"
+msgstr "Passer l'installation"
+
+#
+msgid ""
+"Thank you for choosing my plugin. The next steps will explain the usage of "
+"myTreasures. You can skip this installation if you like, but please only do "
+"so if you are already familiar with myTreasures."
+msgstr ""
+"Merci d'avoir chois mon plugin. Les prochaines &#233;tapes vous expliqueront "
+"l'utilisation de myTreasures. Vous poouvez passer cette isntallation si vous "
+"le souhaitez, mais faites-le seulement si vous &#234;tes d&#233;j&#224; "
+"famili&#233; avec l'utilisation de myTreasures."
+
+#
+msgid ""
+"<b>Generic Part</b><br />myTreasures was written to organize any kind of "
+"lists or collections by inputting media types. Therefor, in the first step, "
+"you have to create a media type."
+msgstr ""
+"<b>Partie générique</b><br />myTreasures a &#233;t&#233; faites pour "
+"organiser toute sorte de listes ou collections en inscrivant des types de "
+"médias. Pour ce faire, dans la premi&#232;re &#233;tapes vous devez cr&#233;"
+"er au moins un type de m&#233;dia."
+
+#
+msgid ""
+"Now that you have successfully created a media type you can start to list "
+"media of that type. Since the system is easy to understand I have forgone "
+"any explanations. The following explanations will help you though to "
+"understand on how to display the lists of your media in your blog."
+msgstr ""
+"Maintenant que vous avez cr&#233;&#233; avec succ&#232;s un type de m&#233;"
+"dia, vous pouvez commencer &#224; la liste des m&#233;dias de ce type. Comme "
+"le syst&#232;me est facile &#224; comprendre, j'ai renonc&#233; &#224; toute "
+"explication. Les explications suivantes vous aideront &#224; comprendre la "
+"façon d'afficher les listes de vos m&#233;dias sur votre blog."
+
+#
+msgid ""
+"<b>List of all media of a given type</b><br />To display all media of a "
+"given type insert [my'media tag'treasures] on your page. Replace 'media tag' "
+"with the name of the tag you have created."
+msgstr ""
+"<b>Lister tous les m&#233;dias d'un type donn&#233;</b><br />Pour afficher "
+"tous les m&#233;dias d'un type donn&#233; ins&#233;rez [my'media "
+"tag'treasures] dans votre page. Remplacez 'media tag\" par le nom du mot-clé "
+"que vous avez cr&#233;&#233;."
+
+#
+msgid ""
+"<b>List for a single medium</b><br />To display only one medium insert "
+"[mytreasure='media ID'] on your page. Replace 'media ID' with the ID number "
+"of your selected medium."
+msgstr ""
+"<b>Liste pour un seul support</b><br />Pour afficher un seul m&#233;dia "
+"ins&#233;rez [mytreasure='Media ID'] dans votre page. Remplacez 'Media ID' "
+"par le num&#233;ro d'ID de votre m&#233;dia."
+
+#
+msgid ""
+"<b>Lists for different types of media</b><br />To display a list with media "
+"of two or more types insert [mytreasurelist='media tag1','media tag2'] on "
+"your page. Replace 'media tag' with the tags of the media you want to "
+"display."
+msgstr ""
+"<b>Liste pour diff&#233;rents types de m&#233;dias</b><br />Pour afficher "
+"une liste de m&#233;dias de deux ou plusieurs types, ins&#233;rez "
+"[mytreasurelist='media tag1','media tag2'] dans votre page. Remplacez 'Media "
+"tag' par les mots-cl&#233;s des m&#233;dias que vous souhaitez afficher."
+
+#
+msgid ""
+"<b>List for all media</b><br />To display a full list of all media insert "
+"[mytreasures] on your page."
+msgstr ""
+"<b>Liste pour tous les m&#233;dias</b><br />Pour afficher la liste enti&#232;"
+"re de tous les m&#233;dias, ins&#233;rez [mytreasures] dans votre page."
+
+#
+msgid ""
+"<i>Please consider</i><br />Do not use ' ' when inserting the tags. If your "
+"tag is \"dvd\" for example write [mydvdtreasures]!"
+msgstr ""
+"<i>Attention</i>Ne pas utiliser ' ' quand vous ins&#233; des mots-cl&#233;s. "
+"Si votre mot-cl&#233;  est \"dvd\" not&#233; par exemple [mydvdtreasures]!"
+
+#
+msgid "And that's it! More options are available on the options page."
+msgstr ""
+"Et &#231;a y est! Plus d'options sont disponibles &#224; la page option."
+
+#
+msgid "Skipped installation"
+msgstr "Installation saut&#233;e"
+
+#
+msgid ""
+"You've skipped installation, you now can use myTreasures without any "
+"restrictions."
+msgstr ""
+"Vous avez saut&#233; l'installation, vous pouvez maintenant utiliser "
+"myTreasures sans restrictions."
+
+#
+msgid "Have fun with myTreasures!"
+msgstr "Amusez-vous bien avec myTreasures!"
+
+#
+msgid ""
+"myTreasures can manage and display different \"media types\". Right now a "
+"\"dummy\" has been created to show you the system."
+msgstr ""
+"myTreasures peut administrer et afficher diff&#233;rents \"types de m&#233;"
+"dias\". Actuellement type de m&#233;dia appel&#233; \"Dummy\" pour vous "
+"montrer comment fonctionne le syst&#232;me."
+
+#
+msgid ""
+"Any media type can hold up to 20 details to display! The first one has to be "
+"the name, but the rest is free for use!"
+msgstr ""
+"Chaque type de m&#233;dia peut contenir jusqu'&#224; 20 détails à afficher! "
+"Le premier doit &#234;tre le nom, mais le reste est livre d'utilisation!"
+
+#
+msgid ""
+"Dear user,<br /><br />the development of myTreasures takes up a lot of time "
+"and I offer it to you free of charge. If you allow this installation to post "
+"an Amazon Partner link (just a plain text link saying \"Amazon.de\" that "
+"will only be displayed in the Detail view) it would be a reward for my work. "
+"If anyone buys anything using that link I get credited ~5%.<br /><br />There "
+"are no costs for you! If you'd like to contribute in another way, please "
+"have a look at the Info page.<br /><br />Would you like to activate the "
+"Amazon link and support the development of myTreasures?"
+msgstr ""
+"Cher utilisateur, <br /> <br /> le d&#233;veloppement de myTreasures prend "
+"beaucoup de temps et je vous l'offre gratuitement. Si vous permettez à cette "
+"installation d'avoir un lien partenaire Amazon (juste un lien en texte clair "
+"en disant \"Amazon.de \" qui ne sera affich&#233; que dans la vue "
+"détaill&#233;e), ce serait une r&#233;compense pour mon travail. Si "
+"quelqu'un ach&#232;te quelque chose en utilisant ce lien que je cr&#233;"
+"dit&#233; de 5% du montant de l'achat. <br /> <br /> Il n'ya aucun frais "
+"pour vous! Si vous voulez contribuer d'une autre mani&#232;re, s'il vous "
+"pla&#238;t jetez un oeil &#224; la page Info. <br /> <br /> Voulez-vous "
+"activer le lien Amazon et soutenir le d&#233;veloppement de myTreasures?"
+
+#
+msgid "Yes, please activate"
+msgstr "Oui, activez s'il vous pla&#238;t"
+
+#
+msgid "No thanks, I don't want the Amazon link"
+msgstr "Non merci, je ne veux pas du lien vers Amazon"
+
+#
+msgid ""
+"<strong>Note</strong><br />You need administrator rights to use myTreasures!"
+msgstr ""
+"<strong>Hinweis</strong><br />Vous devez &#234;tre adminstrateur pour "
+"utiliser myTreasures!"
+
+#
+msgid ""
+"Please create a folder \"mytreasures\" in \"/wp-content/\" with writings "
+"rights!"
+msgstr ""
+"S'il vous pla&#224;t cr&#233;ez un dossier \"mytreasures\" dans \"/wp-"
+"content/\" avec des droits d'&#233;criture!"
+
+#
+msgid ""
+"Please create a folder \"mytreasuresimages\" with subfolder \"small\" in \"/"
+"wp-content/\" with writings rights!"
+msgstr ""
+"S'il vous pla&#238;t cr&#233;ez un dossier \"mytreasuresimages\" avec un "
+"sous-dossier \"small\" dans \"/wp-content/\" avec des droits d'&#233;criture!"
+
+#
+msgid ""
+"Please create a folder \"mytreasuresimages\" with subfolder \"big\" in \"/wp-"
+"content/\" with writings rights!"
+msgstr ""
+"S'il vous pla&#238;t cr&#233;ez un dossier \"mytreasuresimages\" avec un "
+"sous-dossier \"big\" dans \"/wp-content/\" avec des droits d'&#233;critures!"
+
+#
+msgid ""
+"Please create a folder \"mytreasuresbackup\" in \"/wp-content/\" with "
+"writings rights!"
+msgstr ""
+"S'il vous pla&#238;t cr&#233;ez un dossier \"mytreasuresbackup\" dans \"/wp-"
+"content/\" avec des droits d'&#233;criture!"
+
+#
+msgid "Don't show big cover / image"
+msgstr "Ne pas montrer la grande jaquette / image"
+
+#
+msgid "Show big cover / image"
+msgstr "Montrer la grande jaquette / image"
+
+#
+msgid "Don't show big cover / image on mouseover"
+msgstr ""
+"Ne pas afficher la grande jaquette / image lorsque la souris passe sur "
+"l'image"
+
+#
+msgid "Show big cover / image on mouseover"
+msgstr ""
+"Afficher la grande jaquette / image lorsque la souris passe sur l'image"
+
+#
+msgid "Do not show mediacount in rating / custom view"
+msgstr ""
+"Ne pas afficher comptage m&#233;dia lors que la vue s&#233;lectionn&#233;e "
+"est par notes ou personnalis&#233;e"
+
+#
+msgid "Show mediacount in rating / custom view"
+msgstr ""
+"Afficher comptage m&#233;dia lors que la vue s&#233;lectionn&#233;e est par "
+"notes ou personnalis&#233;e"
+
+#
+msgid "Show list view"
+msgstr "Montrer la vue par liste"
+
+#
+msgid "Show glossar view"
+msgstr "Montrer la vue par glossaire"
+
+#
+msgid ""
+"Please just change the media type if both types have similar / identical "
+"values for each field!"
+msgstr ""
+"S'il vous pla&#238;t changez le type de m&#233;dia si deux types sont "
+"similaires / identiques en valeurs dans chaque champs &#224; renseigner!"
+
+#
+msgid "No media"
+msgstr "Pas de m&#233;dias"
+
+#
+msgid "Back"
+msgstr "Retour"
+
+#
+msgid "Do not use the rent to system, to show rented media"
+msgstr ""
+"Ne pas utiliser le syst&#232;me 'Lou&#233; &#224;' pour montrer les films "
+"lou&#233;s."
+
+#
+msgid "Do use the rent to system, to show rented media"
+msgstr ""
+"Utiliser le syst&#232;me 'Lou&#233; &#224;' pour montrer les films lou&#233;"
+"s."
+
+#
+msgid "Rent to"
+msgstr "Lou&#233; &#224;"
+
+#
+msgid "Don't show big cover on mouseover (if available!)"
+msgstr ""
+"Ne pas montrer la grande jaquette lorsque la souris passe sur l'image (si "
+"disponible!)"
+
+#
+msgid "Show big cover on mouseover (if available!)"
+msgstr ""
+"Montrer la grande jaquette lorsque la souris passe sur l'image (si "
+"disponible!)"
+
+#
+msgid "You've updated %s cover!"
+msgstr "Vous avez charg&#233; %s jaquette(s)!"
+
+#
+msgid ""
+"Just upload your covers to \"wp-content/mytreasures/coverupload/\" and you "
+"can manager multiple covers in this area!"
+msgstr ""
+"Lade einfach Cover in den Ordner \"wp-content/mytreasures/coverupload/\" und "
+"Du kannst Sie hier den Medien zuordnen!"
+
+#
+msgid "Please choose:"
+msgstr "Choisissez s'il vous pla&#238;t:"
+
+#
+msgid "Please choose"
+msgstr "Choisissez s'il vous pla&#238;t"
+
+#
+msgid "Following media already have cover:"
+msgstr "Les m&#233;dias suivants ont d&#233;j&#224; une jaquette:"
+
+#
+msgid "Update media"
+msgstr "Actualiser le m&#233;dia"
+
+#
+msgid ""
+"You can manage multiple covers, if you create a folder \"coverupload\" in "
+"\"wp-content/mytreasures/\" with writings rights!"
+msgstr ""
+"Vous pouvez administrer plusieurs jaquettes, si vous cr&#233;ez un dossier "
+"\"coverupload\" dans \"wp-content/mytreasures/\" avec des droits d'écriture!"
+
+#
+msgid "Read changelog, continue with normale use"
+msgstr "Lire les modifications, continuer avec l'utilisation normale"
+
+#
+msgid "Administrate links"
+msgstr "Administer les liens"
+
+#
+msgid "Add new link:"
+msgstr "Ajouter un nouveau lien:"
+
+#
+msgid "Link target"
+msgstr "Cible du lien"
+
+#
+msgid "Link name"
+msgstr "Nom du lien"
+
+#
+msgid "Create new link"
+msgstr "Cr&#233;er un nouveau lien"
+
+#
+msgid "Activ links"
+msgstr "Liens actifs"
+
+#
+msgid "Delete marked links"
+msgstr "Supprimer les liens s&#233;lectionn&#233;s"
+
+#
+msgid "Search..."
+msgstr "Rechercher..."
+
+#
+msgid ""
+"If you need help, just fill out this form and try to explain your problem as "
+"good as you can."
+msgstr ""
+"Si vous avez besoin d'aide, vous n'avez qu'&#224; compl&#233;ter le "
+"formulaire et tenter d'expliquer votre probl&#232;me du mieux que vous "
+"pouvez."
+
+#
+msgid "Link to blog"
+msgstr "Lien ver le blog"
+
+#
+msgid "Link"
+msgstr "Lien"
+
+#
+msgid "Your Problem"
+msgstr "Votre probl&#232;me"
+
+#
+msgid "Send to support@mytreasures.de"
+msgstr "Envoyer &#224; support@mytreasures.de"
+
+#
+msgid "Your Problem has been send to support@mytreasures.de"
+msgstr ""
+"Votre problème a &#233;t&#233; envoy&#233; &#224; support@mytreasures.de"
+
+#
+msgid "Do you want to delete the following media?"
+msgstr "Voulez-vous supprimer le m&#233;dia suivant?"
+
+#
+msgid "Delete marked media"
+msgstr "Supprirmer le m&#233;dia coch&#233;"
+
+#
+msgid "Insert this branding text to the bottom right corner of the covers:"
+msgstr ""
+"Ins&#233;rer le texte s&#233;lectionn&#233; en bas &#224; droite des "
+"jaquettes:"
+
+#
+msgid "Delete current Image / Cover"
+msgstr "Supprimer l'Image / Jaquette actuelle"
+
+#
+msgid "Current Image / Cover"
+msgstr "Image / Jaquette actuelle"
+
+#
+msgid "Delete marked images"
+msgstr "Supprimer les images s&#233;lectionn&#233;es"
+
+#
+msgid "Save new order & comments"
+msgstr "Sauvegarder le nouvel ordre et commentaires"
+
+#
+msgid "Do you want to delete the following images?"
+msgstr "Voulez-vous supprimer les images suivantes?"
+
+#
+msgid "%s image(s) deleted successfully!"
+msgstr "%s image(s) supprim&#233;(s) avec succ&#232;s!"
+
+#
+msgid "Save new target & name"
+msgstr "Sauvegarder nouvelle cible et nom"
+
+#
+msgid "%s link(s) deleted successfully!"
+msgstr "%s Lien(s) supprim&#233;(s) avec succ&#232;s!"
+
+#
+msgid "Do you want to delete the following links?"
+msgstr "Voulez-vous supprimer les liens suivants?"
+
+#
+msgid "OFDB Gateway"
+msgstr "OFDB passerelle"
+
+#
+msgid ""
+"In order to use the OFDB Gateway your php.ini must allow external file "
+"inclusion. (PHP Setting allow_url_fopen has to be on)"
+msgstr ""
+"Dans le but d'utiliser la passerelle OFDB, votre php.ini doit autoriser "
+"l'int&#233;gration de fichiers externes (PHP Setting allow_url_fopen doit "
+"&#234;tre activ&#233;)."
+
+#
+msgid ""
+"Please choose the OFDB Data you want to use. All mandatory fields are marked "
+"with a <font style=\"color: #FF0000;\">*</font>"
+msgstr ""
+"S'il vous pla&#228;t choisissez la base donn&#233;es OFDB que vous souhaitez "
+"utiliser. Tous les champs obligatoires sont marqués par <font style=\"color: "
+"#FF0000;\">*</font>."
+
+#
+msgid "Search for movie in ofdb"
+msgstr "Chercher les films dans la base OFDB"
+
+#
+msgid "New search for movie in ofdb"
+msgstr "Nouvelle recherche de film dans la base OFDB"
+
+#
+msgid "There is no movie with this name in ofdb"
+msgstr "Il n'y aucun film de ce nom dans la base OFDB"
+
+#
+msgid "Searchresult"
+msgstr "Résultats de la recherche"
+
+#
+msgid "Titel"
+msgstr "Titre"
+
+#
+msgid "Original titel"
+msgstr "Titre original"
+
+#
+msgid "Year"
+msgstr "Année"
+
+#
+msgid "Add this movie to the database"
+msgstr "Ajouter ce film dans la base de donn&#233;es"
+
+#
+msgid "Please delete following old files & folders:"
+msgstr "S'il vous pla&#238;t supprimez les vieux films et fichiers suivants:"
+
+#
+msgid "show all media"
+msgstr "Montrer tous les m&#233;dias"
+
+#
+msgid "no rating"
+msgstr "Pas de notes"
+
+#
+msgid "show on list view"
+msgstr "Montrer la vue par liste"
+
+#
+msgid "show on details view"
+msgstr "Montrer la vue par détails"
+
+#
+msgid "no system, plain link to big image"
+msgstr "Pas de syt&#232;me, un lien clair vers la grande image"
+
+#
+msgid "my own code (will embedded into image link):"
+msgstr "Mon propre code (sera ins&#233;r&#233; dans le lien de l'image):"
+
+#
+msgid "Image presentation script / gallerysystem"
+msgstr "Script de pr&#233;sentation de l'image / Gallerysystem"
+
+#
+msgid "Maximum tracks for media with tracklist (min. 1 and max. 100)"
+msgstr ""
+"Nombre maximum de pistes pour m&#233;dias par liste (min. 1 et max. 100)"
+
+#
+msgid "Other users can't add their names to the \"User with this media\" list"
+msgstr ""
+"Les autres utilisateurs ne peuvent ajouter leurs noms &#224; la liste "
+"\"Utilisateur pour ce m&#233;dia\""
+
+#
+msgid "Other users can add their names to the \"User with this media\" list"
+msgstr ""
+"Les autres utilisateurs peuvent ajouter leurs noms &#224; la liste "
+"\"Utilisateur pour ce m&#233;dia\""
+
+#
+msgid "User with this media"
+msgstr "Utilisateur pour ce m&#233;dia"
+
+#
+msgid "Needed userlevel to use the \"User with this media\" list"
+msgstr ""
+"Niveau sup&#233;rieur d'utilisateur n&#233;cessaire pour utiliser la liste "
+"\"Utilisateur pour ce m&#233;dia\""
+
+#
+msgid "Administrator"
+msgstr "Administrateur"
+
+#
+msgid "Editor"
+msgstr "Editeur"
+
+#
+msgid "Author"
+msgstr "Auteur"
+
+#
+msgid "Contributor"
+msgstr "Contributeur"
+
+#
+msgid "Subscriber"
+msgstr "Abonn&#233;"
+
+#
+msgid "No user allowed"
+msgstr "Aucun utilisateur autoris&#233;"
+
+#
+msgid "Do not link to detailspage"
+msgstr "Ne pas ajouter le lien de d&#233;tails"
+
+#
+msgid "Link to detailslink"
+msgstr "Ajouter le lien de d&#233;tails"
+
+#
+msgid "Do show header list with view options & search field"
+msgstr ""
+"Afficher la liste en-t&#234;te avec les options d'affichage et le champ de "
+"recherche"
+
+#
+msgid "Do not show header list with view options & search field"
+msgstr ""
+"Ne pas afficher la liste en-t&#234;te avec les options d'affichage et le "
+"champ de recherche"
+
+#
+msgid "Small cover"
+msgstr "Petite jaquette"
+
+#
+msgid "Medium cover"
+msgstr "Moyenne jaquette"
+
+#
+msgid "Show small cover on details page"
+msgstr "Montrer la petite jaquette sur la page de d&#233;tails"
+
+#
+msgid "Show medium cover on details page"
+msgstr "Montrer la moyenne jaquette sur la page de d&#233;tails"
+
+#
+msgid "Show article style view #1 (Picure & Name)"
+msgstr "Montrer le style de vue #1 (Image & Nom)"
+
+#
+msgid "Show article style view #2 (Picure, Name & Description)"
+msgstr "Montrer le style de vue #2 (Image, Nom & Description)"
+
+#
+msgid "Deactivate rating system"
+msgstr "D&#233;sactiver le syst&#232;me de notation"
+
+#
+msgid "Activate rating system"
+msgstr "Activer le syst&#232;me de notation"
+
+#
+msgid "Mediacount per page on administration page (0 means no pagenation)"
+msgstr ""
+"Compteur de m&#233;dias par page sur la page d'administration (0 veut dire "
+"pas de pagination)"
+
+#
+msgid "Convert file to UTF8"
+msgstr "Convertir le fichier to UTF8"
